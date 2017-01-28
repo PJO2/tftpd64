@@ -9,3 +9,4 @@ They communicate together by messages sent through a TCP socket. In addition to 
 GUI processing is in the _gui directory, daemon or background processing is found into _services directory. 
 
 
+All code is released under the European Public License, which is compatible with the GPLv2.
