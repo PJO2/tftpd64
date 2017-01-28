@@ -11,6 +11,6 @@ GUI processing is in the _gui directory.
 Demon and background processing is found into _services directory.
 Initializations are in the _main directory
 
-
+tftpd32.sln and .vcxproj files are the project files necessary for building the executables.
 
 All code is released under the European Public License, which is compatible with the GPLv2.
