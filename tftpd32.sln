@@ -1,0 +1,75 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libs", "libs.vcxproj", "{03DA840D-A90F-4898-9752-9756FE2ECDFC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tftpd32", "tftpd32.vcxproj", "{D473F930-F0BE-4F67-9941-280EBD6D0026}"
+	ProjectSection(ProjectDependencies) = postProject
+		{03DA840D-A90F-4898-9752-9756FE2ECDFC} = {03DA840D-A90F-4898-9752-9756FE2ECDFC}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tftpd32_gui", "tftpd32_gui.vcxproj", "{FB022672-AC7E-4DB2-8405-845C838CCEC6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{03DA840D-A90F-4898-9752-9756FE2ECDFC} = {03DA840D-A90F-4898-9752-9756FE2ECDFC}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tftpd32_svc", "tftpd32_svc.vcxproj", "{F6533807-DC90-41CD-A8E4-0785DB31B92A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{03DA840D-A90F-4898-9752-9756FE2ECDFC} = {03DA840D-A90F-4898-9752-9756FE2ECDFC}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Itanium = Debug|Itanium
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		Release|Itanium = Release|Itanium
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{03DA840D-A90F-4898-9752-9756FE2ECDFC}.Debug|Itanium.ActiveCfg = Debug|x64
+		{03DA840D-A90F-4898-9752-9756FE2ECDFC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{03DA840D-A90F-4898-9752-9756FE2ECDFC}.Debug|Win32.Build.0 = Debug|Win32
+		{03DA840D-A90F-4898-9752-9756FE2ECDFC}.Debug|x64.ActiveCfg = Debug|x64
+		{03DA840D-A90F-4898-9752-9756FE2ECDFC}.Debug|x64.Build.0 = Debug|x64
+		{03DA840D-A90F-4898-9752-9756FE2ECDFC}.Release|Itanium.ActiveCfg = Release|x64
+		{03DA840D-A90F-4898-9752-9756FE2ECDFC}.Release|Win32.ActiveCfg = Release|Win32
+		{03DA840D-A90F-4898-9752-9756FE2ECDFC}.Release|Win32.Build.0 = Release|Win32
+		{03DA840D-A90F-4898-9752-9756FE2ECDFC}.Release|x64.ActiveCfg = Release|x64
+		{03DA840D-A90F-4898-9752-9756FE2ECDFC}.Release|x64.Build.0 = Release|x64
+		{D473F930-F0BE-4F67-9941-280EBD6D0026}.Debug|Itanium.ActiveCfg = Debug|Win32
+		{D473F930-F0BE-4F67-9941-280EBD6D0026}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D473F930-F0BE-4F67-9941-280EBD6D0026}.Debug|Win32.Build.0 = Debug|Win32
+		{D473F930-F0BE-4F67-9941-280EBD6D0026}.Debug|x64.ActiveCfg = Debug|x64
+		{D473F930-F0BE-4F67-9941-280EBD6D0026}.Debug|x64.Build.0 = Debug|x64
+		{D473F930-F0BE-4F67-9941-280EBD6D0026}.Release|Itanium.ActiveCfg = Release|Win32
+		{D473F930-F0BE-4F67-9941-280EBD6D0026}.Release|Win32.ActiveCfg = Release|Win32
+		{D473F930-F0BE-4F67-9941-280EBD6D0026}.Release|Win32.Build.0 = Release|Win32
+		{D473F930-F0BE-4F67-9941-280EBD6D0026}.Release|x64.ActiveCfg = Release|x64
+		{D473F930-F0BE-4F67-9941-280EBD6D0026}.Release|x64.Build.0 = Release|x64
+		{FB022672-AC7E-4DB2-8405-845C838CCEC6}.Debug|Itanium.ActiveCfg = Debug|Win32
+		{FB022672-AC7E-4DB2-8405-845C838CCEC6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FB022672-AC7E-4DB2-8405-845C838CCEC6}.Debug|Win32.Build.0 = Debug|Win32
+		{FB022672-AC7E-4DB2-8405-845C838CCEC6}.Debug|x64.ActiveCfg = Debug|x64
+		{FB022672-AC7E-4DB2-8405-845C838CCEC6}.Debug|x64.Build.0 = Debug|x64
+		{FB022672-AC7E-4DB2-8405-845C838CCEC6}.Release|Itanium.ActiveCfg = Release|Win32
+		{FB022672-AC7E-4DB2-8405-845C838CCEC6}.Release|Win32.ActiveCfg = Release|Win32
+		{FB022672-AC7E-4DB2-8405-845C838CCEC6}.Release|Win32.Build.0 = Release|Win32
+		{FB022672-AC7E-4DB2-8405-845C838CCEC6}.Release|x64.ActiveCfg = Release|x64
+		{FB022672-AC7E-4DB2-8405-845C838CCEC6}.Release|x64.Build.0 = Release|x64
+		{F6533807-DC90-41CD-A8E4-0785DB31B92A}.Debug|Itanium.ActiveCfg = Debug|Win32
+		{F6533807-DC90-41CD-A8E4-0785DB31B92A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F6533807-DC90-41CD-A8E4-0785DB31B92A}.Debug|Win32.Build.0 = Debug|Win32
+		{F6533807-DC90-41CD-A8E4-0785DB31B92A}.Debug|x64.ActiveCfg = Debug|x64
+		{F6533807-DC90-41CD-A8E4-0785DB31B92A}.Debug|x64.Build.0 = Debug|x64
+		{F6533807-DC90-41CD-A8E4-0785DB31B92A}.Release|Itanium.ActiveCfg = Release|Win32
+		{F6533807-DC90-41CD-A8E4-0785DB31B92A}.Release|Win32.ActiveCfg = Release|Win32
+		{F6533807-DC90-41CD-A8E4-0785DB31B92A}.Release|Win32.Build.0 = Release|Win32
+		{F6533807-DC90-41CD-A8E4-0785DB31B92A}.Release|x64.ActiveCfg = Release|x64
+		{F6533807-DC90-41CD-A8E4-0785DB31B92A}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
