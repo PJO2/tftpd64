@@ -1,4 +1,4 @@
-This is the complete source code for Tftpd32 and tftpd64.
+This is the complete source code for Tftpd32 and Tftpd64, the industry standard TFTP server.
 
 The code has been splitted into 2 parts : 
   - the GUI management
@@ -6,7 +6,11 @@ The code has been splitted into 2 parts :
 
 They communicate together by messages sent through a TCP socket. In addition to separate processing and display, this allow a remote monitoring for the service edition.
 
-GUI processing is in the _gui directory, daemon or background processing is found into _services directory. 
+_common and _libs directories contains files which belongs to both parts.
+GUI processing is in the _gui directory.
+Demon and background processing is found into _services directory.
+Initializations are in the _main directory
+
 
 
 All code is released under the European Public License, which is compatible with the GPLv2.
