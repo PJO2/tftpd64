@@ -21,7 +21,7 @@
 /* ------------------------------------------------- */
 void LB_LOG (HWND hListBox, const char *szTxt)
 {
-int        Ark, Rc;
+int        Ark, Rc, NbMsg;
 int        dwMaxExtent, dwExtent;
 SIZE       sTextSize = {0, 0};
 HDC        hDC;
@@ -57,13 +57,16 @@ static bInit=FALSE;
 
     // search the longest text 
     dwMaxExtent = 0;
-    for (Ark= (int) SendMessage (hListBox, LB_GETCOUNT, 0, 0); Ark>=0 ; Ark --)
+	NbMsg = (int)SendMessage(hListBox, LB_GETCOUNT, 0, 0);
+    for (Ark= NbMsg; Ark>=0 ; Ark --)
     {
         dwExtent = SendMessage (hListBox, LB_GETITEMDATA, Ark-1, (LPARAM) szBuf);
         if (dwExtent > dwMaxExtent)  dwMaxExtent = dwExtent ;
      }
 	// and extent horizontal scrollbar accordingly
     SendMessage (hListBox, LB_SETHORIZONTALEXTENT, dwMaxExtent, 0);
+	// scroll to the end of the list box
+	SendMessage (hListBox, LB_SETTOPINDEX, NbMsg-1, 0);
 #endif
 } // LB_LOG
 
