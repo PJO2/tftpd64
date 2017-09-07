@@ -1,8 +1,8 @@
 This is the complete source code for Tftpd32 and Tftpd64, the industry standard TFTP server.
 
-The code has been splitted into 2 parts : 
-  - the GUI management
-  - the background process
+The application has been splitted into 2 parts : 
+  - the GUI management (main thread)
+  - the background process (other threads)
 
 They communicate together by messages sent through a TCP socket. In addition to separate processing and display, this allow a remote monitoring for the service edition.
 
