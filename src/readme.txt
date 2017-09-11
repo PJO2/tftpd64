@@ -1,6 +1,6 @@
 This is the complete source code for Tftpd32 and Tftpd64, the industry standard TFTP server.
 
-The application has been splitted into 2 parts : 
+The code is splitted into 2 parts : 
   - the GUI management (main thread)
   - the background process (other threads)
 
@@ -11,6 +11,6 @@ GUI processing is in the _gui directory.
 Demon and background processing is found into _services directory.
 Initializations are in the _main directory
 
-tftpd32.sln and .vcxproj files are the project files necessary for building the executables.
+tftpd32.sln and .vcxproj files are the project files necessary for building the executables with Visual Studio.
 
 All code is released under the European Public License, which is compatible with the GPLv2.
