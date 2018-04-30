@@ -402,7 +402,7 @@ return pCurIP;
 //////////////////////////////////////////////////////////////////////////////////////////////
 // fill DHCP fields
 //////////////////////////////////////////////////////////////////////////////////////////////
-int DHCPOptionsReply (struct dhcp_packet  *pDhcpPkt, int nDhcpType)
+int DHCPOptionsReply (struct dhcp_packet  *pDhcpPkt, int nDhcpType, struct sockaddr_in* receivingAddress)
 {
 unsigned char  *pOpt = (unsigned char *) (pDhcpPkt->options + (sizeof DHCP_OPTIONS_COOKIE - 1));
 HANDLE            hFile;
@@ -415,13 +415,15 @@ unsigned char  szDhcpAgentOpt[1024];
 int				nDhcpAgentOpt=0;
 unsigned char  *pSub82;
 unsigned char szDhcpAgentOptSub1[128],szDhcpAgentOptSub2[128];
+int           msgSize;
 
 static struct S_DhcpOptions sDhcpOpt [] =       // 0 for unspecified
 {
     DHO_DHCP_MESSAGE_TYPE,      1,	  ~TFTPD32_NONE,
     DHO_DHCP_SERVER_IDENTIFIER, 4,	  ~TFTPD32_NONE,
     DHO_SUBNET_MASK,            4,	  ~TFTPD32_NONE,
-    DHO_ROUTERS,                4,	  ~TFTPD32_NONE,
+	// change : gateway not mandatory anymore
+    DHO_ROUTERS,                0,	  ~TFTPD32_NONE,
     DHO_DOMAIN_NAME_SERVERS,    0,	  ~TFTPD32_NONE,
     DHO_NETBIOS_NAME_SERVERS,   0,	  ~TFTPD32_NONE,
     DHO_DHCP_LEASE_TIME,        4,	  ~TFTPD32_NONE,
@@ -453,7 +455,11 @@ static struct S_DhcpOptions sDhcpOpt [] =       // 0 for unspecified
 	// pNearest points on the "good" LAN interface
 //   pNearest = FindNearestServerAddress (&pDhcpPkt->yiaddr, & sParamDHCP.dwMask, FALSE);
    in_Aux.s_addr=inet_addr(sParamDHCP.szMask);
-   pNearest = FindNearestServerAddress (&pDhcpPkt->yiaddr, & in_Aux, FALSE);
+   pNearest = FindNearestServerAddress (&pDhcpPkt->yiaddr, & in_Aux, TRUE);
+   // from Philip Taff : choose the receiving interface instead of a loopback
+   if (!pNearest) 
+       pNearest = &(receivingAddress->sin_addr);
+  
    //HACK -- If we are the bootp server, we are also the tftpserver
    if (sSettings.uServices & TFTPD32_TFTP_SERVER) 
       pDhcpPkt->siaddr = *pNearest;   // Next server (TFTP server is enabled)
@@ -484,10 +490,14 @@ static struct S_DhcpOptions sDhcpOpt [] =       // 0 for unspecified
      case DHO_SUBNET_MASK             :  * (DWORD *) pOpt = inet_addr(sParamDHCP.szMask); break ;
 //       case DHO_ROUTERS                 :  * (DWORD *) pOpt = (sParamDHCP.dwGateway.s_addr == 0xffffffff ? pDhcpPkt->yiaddr.s_addr : sParamDHCP.dwGateway.s_addr); break ;
      case DHO_ROUTERS                 : 
-		   if ((strlen(sParamDHCP.szGateway)==0 || inet_addr (sParamDHCP.szGateway)==0x0 ))
-			* (DWORD *) pOpt = pDhcpPkt->yiaddr.s_addr ;
-		   else
-			* (DWORD *) pOpt = inet_addr(sParamDHCP.szGateway); 
+			// if gateway is not valid, forget this option
+		   if ( inet_addr(sParamDHCP.szGateway)!=INADDR_NONE )
+		   {
+			   *pOpt++ = (unsigned char) DHO_ROUTERS ; 
+               *pOpt++ = 4;
+  			   * (DWORD *) pOpt = inet_addr(sParamDHCP.szGateway); 
+				pOpt += 4;
+		   }
 		   break ;
 //       case DHO_DOMAIN_NAME_SERVERS     :  * (DWORD *) pOpt = sParamDHCP.dwDns.s_addr;  break; 
 	 case DHO_DOMAIN_NAME_SERVERS: 
@@ -590,7 +600,7 @@ static struct S_DhcpOptions sDhcpOpt [] =       // 0 for unspecified
 					  nDhcpAgentOpt, szDhcpAgentOptSub1,szDhcpAgentOptSub2);
              }
              break;
-     case DHO_CUSTOM : // Manage custom options
+	 case DHO_CUSTOM : // Manage custom options
          for (Evan=0 ; Evan < SizeOfTab (sParamDHCP.t) ; Evan++)
                 if (sParamDHCP.t[Evan].nAddOption != 0)
                 {
@@ -608,7 +618,14 @@ static struct S_DhcpOptions sDhcpOpt [] =       // 0 for unspecified
      pOpt += sDhcpOpt[Ark].nLen ;    // points on next field
    } // for all option
 
-return (int) (pOpt - (unsigned char*) pDhcpPkt);
+   // 2017-11-05 pad to 64 bytes
+   msgSize = (int) (pOpt - (unsigned char*) pDhcpPkt);
+   if  (msgSize < 64)
+   {
+	   memset (pOpt, 0, 64 - msgSize);
+	   msgSize = 64;
+   }
+return msgSize;
 } // DHCPOptionsReply
 
 
@@ -616,7 +633,7 @@ return (int) (pOpt - (unsigned char*) pDhcpPkt);
 // Process DHCP msg : return TRUE if an answer has been prepared
 
 int iCounterDHCP=0;
-int ProcessDHCPMessage (struct dhcp_packet *pDhcpPkt, int *pSize)
+int ProcessDHCPMessage (struct dhcp_packet *pDhcpPkt, int *pSize,  struct sockaddr_in* receivingAddress)
 {
 unsigned char *p=NULL;
 struct LL_IP  *pCurIP=NULL, *pProposedIP=NULL;	// Thanks Sam Leitch !
@@ -690,7 +707,7 @@ DWORD sStaticIP;
             pDhcpPkt->op = BOOTREPLY;
             // translate $IP$ and $MAC$ from boot file name
             TranslateExp (sParamDHCP.szBootFile, pDhcpPkt->file, pDhcpPkt->yiaddr, pDhcpPkt->chaddr);
-           *pSize = DHCPOptionsReply (pDhcpPkt, DHCPOFFER);
+           *pSize = DHCPOptionsReply (pDhcpPkt, DHCPOFFER, receivingAddress);
             break ;
 
 		//NJW Changed how requests are handled to mimic linux -- requests are responded to even if we didn't originally allocate, but only if the requested address is in our pool range
@@ -707,7 +724,7 @@ DWORD sStaticIP;
                    pDhcpPkt->yiaddr.s_addr = sStaticIP;
                  // translate $IP$ and $MAC$ from boot file name
                  TranslateExp (sParamDHCP.szBootFile, pDhcpPkt->file, pDhcpPkt->yiaddr, pDhcpPkt->chaddr);
-                   *pSize = DHCPOptionsReply (pDhcpPkt, DHCPACK);
+                   *pSize = DHCPOptionsReply (pDhcpPkt, DHCPACK, receivingAddress);
 				   break;
 			}
 
@@ -757,7 +774,7 @@ DWORD sStaticIP;
 				pDhcpPkt->op = BOOTREPLY;
 				pDhcpPkt->yiaddr.s_addr = pProposedIP->dwIP.s_addr;
 				TranslateExp (sParamDHCP.szBootFile, pDhcpPkt->file, pDhcpPkt->yiaddr, pDhcpPkt->chaddr);
-				*pSize = DHCPOptionsReply (pDhcpPkt, DHCPACK);
+				*pSize = DHCPOptionsReply (pDhcpPkt, DHCPACK, receivingAddress);
 			}
 			else
 			{
@@ -1156,7 +1173,8 @@ int Rc;
 		for ( pCurrAddresses = pAddresses ;
 				pCurrAddresses != NULL && pCurrAddresses->IfIndex!=pPktInfo->ipi_ifindex; 
 				pCurrAddresses=pCurrAddresses->Next ) ;
-		if (pCurrAddresses!=NULL) 
+		// bug found by Chris Morris
+		if (pCurrAddresses!=NULL  && pCurrAddresses->FirstUnicastAddress !=NULL) 
 			* to =  * (struct sockaddr_in *) pCurrAddresses->FirstUnicastAddress->Address.lpSockaddr;
 		free (pAddresses);
 	}
@@ -1306,7 +1324,7 @@ BOOL                    bUniCast;
                       &&  SockFrom.sin_addr.s_addr!=htonl (INADDR_ANY)
                       // fix 5/02/2006 : 127.0.0.2 should be handle as a broadcast
                       &&  SockFrom.sin_addr.S_un.S_un_b.s_b1 != CLASS_A_LOOPBACK ) ; // class A 127
-        if (ProcessDHCPMessage ( & sDhcpPkt, & nSize ) )
+        if (ProcessDHCPMessage ( & sDhcpPkt, & nSize, &SockTo ) )
         {
 //            BinDump ((char *)&sDhcpPkt, sizeof sDhcpPkt, "DHCP");
 		   // send reply 

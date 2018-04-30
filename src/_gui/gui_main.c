@@ -683,7 +683,11 @@ int       Rc;
 			if (Rc == TCP4U_SOCKETCLOSED)
 				PostMessage (hWnd, WM_SOCKET_CLOSED, 0, 0);
 			else if (Rc<0)
+#ifdef SERVICE_EDITION
 				PostMessage (hWnd, WM_SOCKET_ERROR, 0, 0);
+#else
+				Rc=0;
+#endif
             else
 				WSAAsyncSelect (sService, hWnd, WM_RECV_FROM_THREAD, FD_READ | FD_CLOSE);
             break;           

@@ -56,6 +56,8 @@ struct S_Tftpd32Settings
 	BOOL                  bIgnoreLastBlockAck;
 	BOOL                  bIPv4;
 	BOOL                  bIPv6;
+
+	char				  szHttpDirectory [_MAX_PATH];
 	
 	// unsaved settings
 	DWORD				  dwMaxTftpTransfers;
@@ -123,6 +125,9 @@ BOOL Tftpd32DestroySettings (void);
 #define KEY_IPv4                   "Enable IPv4"
 #define KEY_IPv6                   "Enable IPv6"
 #define KEY_DONOTCHECK_FIREWALL    "Donot verify firewall"
+
+#define KEY_HTTP_DIR                "HttpBaseDirectory"
+
 
 #define TFTPD32_DHCP_KEY              "SOFTWARE\\TFTPD32\\DHCP"
 #define KEY_DHCP_POOL                 "IP_Pool"

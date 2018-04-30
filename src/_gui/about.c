@@ -43,13 +43,13 @@ const char LICENSE_TFTPD32 [] =
 "     for the Australian Department of Defence\r\n\r\n";
 #elif defined TFTP_CLIENT_ONLY
 const char LICENSE_TFTPD32 [] =
-"TFTPD32_Client is copyrighted 2017 by Philippe Jounin (philippe@jounin.net) "
+"TFTPD32_Client is copyrighted 2018 by Philippe Jounin (philippe@jounin.net) "
 "and released under the European Union Public License 1.1 "
 "(see either the help file or the file EUPL-EN.pdf for the full text of the license)\r\n\r\n"
 "Official site: http://tftpd32.jounin.net\r\n\r\n";
 #elif defined STANDALONE_EDITION
 const char LICENSE_TFTPD32 [] =
-"TFTPD32 and TFTPD64 are copyrighted 1998-2017 by Philippe Jounin (philippe@jounin.net) "
+"TFTPD32 and TFTPD64 are copyrighted 1998-2018 by Philippe Jounin (philippe@jounin.net) "
 "and released under the European Union Public License 1.1 "
 "(see either the help file or the file EUPL-EN.pdf for the full text of the license)\r\n\r\n"
 "Official site: http://tftpd32.jounin.net\r\n\r\n"
@@ -62,10 +62,10 @@ const char LICENSE_TFTPD32 [] =
 #elif defined SERVICE_EDITION
 #  ifdef _M_X64
 const char LICENSE_TFTPD32 [] =
-"Tftpd64 Service Edition copyrighted 2007-2017 by Philippe Jounin\r\n";
+"Tftpd64 Service Edition copyrighted 2007-2018 by Philippe Jounin\r\n";
 #  else
 const char LICENSE_TFTPD32 [] =
-"Tftpd32 Service Edition copyrighted 2007-2017 by Philippe Jounin\r\n";
+"Tftpd32 Service Edition copyrighted 2007-2018 by Philippe Jounin\r\n";
 #  endif
 #endif
 

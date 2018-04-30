@@ -448,7 +448,7 @@ char  szExtendedName [2 * _MAX_PATH];
 
     // ---------------------------------
     // loop to handle options
-    while ( (sSettings.bNegociate || sSettings.bPXECompatibility)  &&  Ark<TFTP_SEGSIZE)
+    while ( (sSettings.bNegociate || sSettings.bPXECompatibility)  &&  Ark<TFTP_SEGSIZE  &&  tp->th_stuff[Ark]!=0)
     {
         // if (tp->th_stuff[Ark] == 0) { Ark++; continue; }  // points on next word
         p = & tp->th_stuff[Ark];
@@ -463,6 +463,9 @@ char  szExtendedName [2 * _MAX_PATH];
 		// keyword or value beyond limits : do not use
 		if (Ark>=TFTP_SEGSIZE || tp->th_stuff[Ark]!=0)
 			break;
+		// PJO: Fix 04/30/2018, only one option is handled
+		Ark++; // points now on next option (safe since PopulateTftpdStruct set b.cnx frame to 0)
+
 
         LOG (12, "Option <%s>: value <%s>", p, pValue);
 

@@ -1,6 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src",
+    "\\src\\_gui"
   ],
+  "SelectedNode": "\\src\\_gui\\tftpd32.ico",
   "PreviewInSolutionExplorer": false
 }

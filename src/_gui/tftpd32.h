@@ -26,8 +26,13 @@
 
 #define  IDC_STATIC -1
 
-#define IDD_TFTPD32         101
+// icons
+#define IDI_TFTPD32NEW       82
 #define IDI_TFTPD32         102
+#define IDI_TFTPD32KILL     112
+
+// dialog box
+#define IDD_TFTPD32         101
 #define IDD_DIALOG_ABOUT    103
 #define IDD_TFTPD_CLIENT    104
 #define IDD_DIALOG_SETTINGS 107
@@ -35,7 +40,6 @@
 #define IDD_DIALOG_GAUGE    108
 #define IDD_DIALOG_SHDIR    110
 #define IDD_DIALOG_BROWSE   111
-#define IDI_TFTPD32KILL     112
 #define IDD_DIALOG_FIREWALL 113
 
 #define IDD_DIALOG_SETTINGS_TFTP 120
