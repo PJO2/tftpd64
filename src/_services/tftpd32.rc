@@ -23,7 +23,7 @@
 				VALUE "FileVersion",     ""
 				VALUE "FileDescription", "TFTP server"
 				VALUE "InternalName",    "tftpd32 service edition"
-				VALUE "LegalCopyright",  "Copyrighted 2017 by Ph. Jounin"
+				VALUE "LegalCopyright",  "Copyrighted 2018 by Ph. Jounin"
 				VALUE "LegalTrademarks", ""
 				VALUE "OriginalFileName", "tftpd32"
 				VALUE "ProductName",      "tftpd32 service edition"
@@ -45,6 +45,7 @@
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
+IDI_TFTPD32NEW      ICON    DISCARDABLE     "tftpd32_new.ico"
 IDI_TFTPD32      ICON    DISCARDABLE     "tftpd32.ico"
 IDI_TFTPD32KILL  ICON    DISCARDABLE     "tftpd32kill.ico"
 
