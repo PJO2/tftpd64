@@ -1098,7 +1098,8 @@ DWORD no=0;
 #endif
      if (! InitsConsoleConnection (szConsoleHost)) return 0;
 
-     // starts GUI
+
+	 // starts GUI
      OpenNewDialogBox (NULL, IDD_TFTPD32, (DLGPROC) WndProc, 0, hInstance);
 
      UnregisterClass (TFTPD32_ADDIP_CLASS, hInstance);

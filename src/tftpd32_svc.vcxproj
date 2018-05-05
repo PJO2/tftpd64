@@ -28,27 +28,27 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v100</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v100</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>NotSet</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v100</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>NotSet</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v100</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -76,14 +76,14 @@
     <IntDir>\tftpd32\BIN\$(PlatformShortName)\$(ProjectName)\$(Configuration)\</IntDir>
     <TargetExt>.exe</TargetExt>
     <TargetName>$(ProjectName).$(PlatformShortName)</TargetName>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);_common;.</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);_common;.;E:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Include;E:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IntDir>\tftpd32\BIN\$(PlatformShortName)\$(ProjectName)\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <TargetExt>.exe</TargetExt>
     <TargetName>$(ProjectName).$(PlatformShortName)</TargetName>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);_common;.</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);_common;.;E:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Include;E:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>\tftpd32\BIN\$(Configuration)\</OutDir>
@@ -92,7 +92,7 @@
     <IntDir>\tftpd32\BIN\$(PlatformShortName)\$(ProjectName)\$(Configuration)\</IntDir>
     <TargetExt>.exe</TargetExt>
     <TargetName>$(ProjectName).$(PlatformShortName)</TargetName>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);_common;.</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);_common;.;E:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Include;E:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>\tftpd32\BIN\$(Configuration)\</OutDir>
@@ -101,7 +101,7 @@
     <IntDir>\tftpd32\BIN\$(PlatformShortName)\$(ProjectName)\$(Configuration)\</IntDir>
     <TargetExt>.exe</TargetExt>
     <TargetName>$(ProjectName).$(PlatformShortName)</TargetName>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);_common;.</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);_common;.;E:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Include;E:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -117,7 +117,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>shell32.lib;ws2_32.lib;comctl32.lib;iphlpapi.lib;libs.$(PlatformShortName).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>\tftpd32\BIN\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <Version>4.61</Version>
+      <Version>4.62</Version>
       <AdditionalOptions>/SUBSYSTEM:CONSOLE,"5.01" %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Manifest>
@@ -140,7 +140,7 @@
       <AdditionalDependencies>shell32.lib;ws2_32.lib;comctl32.lib;iphlpapi.lib;libs.$(PlatformShortName).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>\tftpd32\BIN\$(Configuration)\;C:\Program Files\Microsoft SDKs\Windows\v7.1\Lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <Version>4.61</Version>
+      <Version>4.62</Version>
       <AdditionalOptions>/SUBSYSTEM:CONSOLE,"5.02" %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Manifest>
@@ -167,7 +167,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>shell32.lib;ws2_32.lib;comctl32.lib;iphlpapi.lib;libs.$(PlatformShortName).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>\tftpd32\BIN\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <Version>4.61</Version>
+      <Version>4.62</Version>
       <AdditionalOptions>/SUBSYSTEM:CONSOLE,"5.01" %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Manifest>
@@ -194,7 +194,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>shell32.lib;ws2_32.lib;comctl32.lib;iphlpapi.lib;libs.$(PlatformShortName).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>\tftpd32\BIN\$(Configuration)\;C:\Program Files\Microsoft SDKs\Windows\v7.1\Lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <Version>4.61</Version>
+      <Version>4.62</Version>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
@@ -230,6 +230,9 @@
     <ClCompile Include=".\_services\tftpd_util.c" />
     <ClCompile Include=".\_services\tftp_dbg.c" />
     <ClCompile Include=".\_services\to_console.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="_services\tftpd32.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

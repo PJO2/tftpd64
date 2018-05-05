@@ -208,6 +208,7 @@ RECT sParentRect;
 int Ark, nIconIdx, nDefButtonIdx;
 int x,y, xButtonsWidth;
 HICON    hParentIcon;
+HWND     hParentWnd;
 	
 		// Since this procedure is responsible for resources allocation
 		// we can safely initialize the resources shared memory
@@ -215,7 +216,11 @@ HICON    hParentIcon;
 
 		// retrieve the size cx and cy of the texte to be displayed
 		MLGetTextExtentPoint (hwndDlg, lpData->text, lstrlen (lpData->text), & Size);
-		GetWindowRect (GetParent (hwndDlg), & sParentRect);
+		// PJO : 5/5/2018 : GetWindowRect(NULL,..) does not return anymore size of desktop 
+		hParentWnd = GetParent(hwndDlg);
+		if (hParentWnd == NULL)   
+			  hParentWnd = GetDesktopWindow();
+		GetWindowRect (hParentWnd, & sParentRect);
 
 		// Create a passive multi line edit control to display the text
 		res->hwndText = CreateWindow  ( "Edit",  // Predefined class; Unicode assumed 

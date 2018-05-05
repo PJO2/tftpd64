@@ -12,13 +12,13 @@
 #include "headers.h"
 
 #ifdef _M_X64
-#  define TFTPD_STRING   "TFTPD64 v4.61 Build " __DATE__ " " __TIME__
+#  define TFTPD_STRING   "TFTPD64 v4.62 Build " __DATE__ " " __TIME__
 #  define TFTPD_ABOUT_TITLE   "About TFTPD64"
 #else
 #ifndef TFTP_CLIENT_ONLY
-#     define TFTPD_STRING   "TFTPD32 v4.61 Build " __DATE__ " " __TIME__
+#     define TFTPD_STRING   "TFTPD32 v4.62 Build " __DATE__ " " __TIME__
 #else
-#     define TFTPD_STRING   "TFTPD32 Client v4.61 Build " __DATE__ " " __TIME__
+#     define TFTPD_STRING   "TFTPD32 Client v4.62 Build " __DATE__ " " __TIME__
 #endif
 #  define TFTPD_ABOUT_TITLE   "About TFTPD32"
 #endif

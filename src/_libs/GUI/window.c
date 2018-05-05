@@ -38,6 +38,8 @@ int       Rc;
 								hParentWnd,
 								lpProc,
 								lParam);
+
+
 return Rc;
 } /* OpenNewDialogBox */
 
