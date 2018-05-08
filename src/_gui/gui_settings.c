@@ -710,7 +710,12 @@ char  sz[128];
     GetWindowRect (hMainWnd, &R);
     wsprintf (sz, "%d %d %d %d ", R.left, R.top, R.right, R.bottom);
 
-    Rc = RegCreateKeyEx (HKEY_LOCAL_MACHINE,
+    Rc = RegCreateKeyEx (
+#ifdef  _WIN64
+						 HKEY_CURRENT_USER,
+#else
+						 HKEY_LOCAL_MACHINE,
+#endif
                          TFTPD32_MAIN_KEY,
                          0,
                          NULL,
@@ -718,8 +723,8 @@ char  sz[128];
                          KEY_WRITE,
                          NULL,
                         &hKey,
-                        &dwState) == ERROR_SUCCESS;
-    Rc &=      SAVEKEY (KEY_WINDOW_POS,sz,REG_SZ);
+                        &dwState);
+    if (Rc == ERROR_SUCCESS)   SAVEKEY (KEY_WINDOW_POS,sz,REG_SZ);
     if (hKey!=INVALID_HANDLE_VALUE)  RegCloseKey (hKey);
 return Rc;
 } // Tftpd32SaveWindowPos
@@ -735,8 +740,13 @@ INT   Rc, Ark=0;
 char  sz[128], *pCur, *pNext;
 
 
-   Rc = RegOpenKeyEx (HKEY_LOCAL_MACHINE,    // Key handle at root level.
-                      TFTPD32_MAIN_KEY,      // Path name of child key.
+   Rc = RegOpenKeyEx ( // Key handle at root level.
+#ifdef  _WIN64
+					  HKEY_CURRENT_USER,
+#else
+					  HKEY_LOCAL_MACHINE,
+#endif
+					  TFTPD32_MAIN_KEY,      // Path name of child key.
                       0,                      // Reserved.
                       KEY_READ,                // Requesting read access.
                     & hKey);                 // Address of key to be returned.
