@@ -13,7 +13,7 @@
 /////////////////////////////
 // The background window
 //
-long CALLBACK TftpAddIPProc (HWND hWnd, UINT message, WPARAM wParam, LONG lParam)
+long CALLBACK TftpAddIPProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 static char buf[MAXGETHOSTSTRUCT];
 

@@ -499,9 +499,9 @@ struct S_RestartTable *pRestart = (struct S_RestartTable *) lparam;
 
 void Scheduler (void *param)
 {
-int Ark, Rc;
+int Ark;
 HANDLE tHdle[TH_NUMBER];
-int nCount;
+DWORD Rc, nCount;
 int  nTime=1000;
 
 	// Increase thread priority in order to return asap in the Wait function

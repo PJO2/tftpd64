@@ -112,7 +112,7 @@ DWORD           dummy;
                                 break;
   }
   /* s+1 normally unused but better for a lot of bugged TCP Stacks */
-  Rc = select (s+1, & ReadMask, NULL, NULL, pTO);
+  Rc = select ((int) s+1, & ReadMask, NULL, NULL, pTO);
   if (Rc<0) 
   {
 	 LogToMonitor ("select returns error %d\n", WSAGetLastError());

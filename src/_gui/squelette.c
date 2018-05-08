@@ -71,7 +71,7 @@ return FALSE;
 /////////////////////////////
 // Fenetre Background gestion des appels TCP
 //
-long CALLBACK SntpDProc (HWND hWnd, UINT message, WPARAM wParam, LONG lParam)
+long CALLBACK SntpDProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 static SOCKET   sSntpListenSocket=INVALID_SOCKET;
 static char     szSyslogBuf[SYSLOG_MAXMSG+1]; // Buffer

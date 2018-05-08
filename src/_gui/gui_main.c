@@ -566,7 +566,7 @@ TC_ITEM TabCtrlItem;
 	{
 		TabCtrlItem.mask = TCIF_PARAM   ;
 		TabCtrl_GetItem (hTabWnd, nCurOnglet, & TabCtrlItem);
-		TabMask = TabCtrlItem.lParam;
+		TabMask = (DWORD) TabCtrlItem.lParam;
 	}
 	else    TabMask = -1;
 
@@ -617,7 +617,7 @@ return 0;
 /* ------------------------------------------------- */
 /* Main CallBack                                     */
 /* ------------------------------------------------- */
-LRESULT CALLBACK WndProc (HWND hWnd, UINT message, WPARAM wParam, LONG lParam)
+LRESULT CALLBACK WndProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 static HICON    hIcon;
 static HMENU     hMenu;
@@ -722,7 +722,7 @@ int       Rc;
           break;
 
       case WM_TFTP_TRANFSER_TO_KILL :
-          Gui_AbortTftpTransfer (sService, lParam);
+          Gui_AbortTftpTransfer (sService, (DWORD) lParam);
           break; 
           
       case WM_TFTP_CHG_WORKING_DIR :
@@ -746,7 +746,7 @@ int       Rc;
           break;
           
       case WM_DELETE_ASSIGNATION :
-          Gui_SuppressDHCPAllocation (sService, lParam  );
+          Gui_SuppressDHCPAllocation (sService, (unsigned int) lParam  );
           break;
 
 	  case WM_DESTROY_SETTINGS :
