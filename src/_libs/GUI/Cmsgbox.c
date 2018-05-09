@@ -172,7 +172,7 @@ HDC 		hDC;
 
 		// we have reached an end of line (or the last char)
 		// take its length
-		Rc = GetTextExtentPoint32 (hDC, lpPrev, lpCur-lpPrev, & subRect);
+		Rc = (BOOL) GetTextExtentPoint32 (hDC, lpPrev, lpCur-lpPrev, & subRect);
 		// keep the max
 		lpRect->cx = max (lpRect->cx, subRect.cx);
 		// add a text line

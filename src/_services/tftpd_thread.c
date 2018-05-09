@@ -310,7 +310,7 @@ static int DecodConnectData (struct LL_TftpInfo *pTftp)
 struct tftphdr *tp, *tpack;
 char *p, *pValue, *pAck;
 int   opcode;
-int   Ark, Len;
+size_t   Ark, Len;
 int   Rc;
 BOOL  bOptionsAccepted = FALSE;
 char  szExtendedName [2 * _MAX_PATH];

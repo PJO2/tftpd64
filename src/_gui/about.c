@@ -55,7 +55,11 @@ const char LICENSE_TFTPD32 [] =
 "Official site: http://tftpd32.jounin.net\r\n\r\n"
 "Tftpd32 and Tftpd64 use the following copyrights or contributions\r\n"
 "  - MD5 part is from RSA Data Security\r\n"
+<<<<<<< HEAD
 "  - Icon designed by Marco\r\n"
+=======
+"  - Icon was created by Marco\r\n"
+>>>>>>> 01ff462df1574d7d32091044f95bd0788ccfa215
 "  - IP checksum computation is from Mike Muss\r\n"
 "  - DHCP lease persistance is from Nick Wagner\r\n" 
 "  - DHCP opts 82, 42 and 120 from Jesus Soto\r\n" 
