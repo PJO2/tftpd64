@@ -34,7 +34,7 @@ char szIniFile[_MAX_PATH], sz [_MAX_PATH];
 /* ------------------------------------------------- */
 /* Firewall CallBack                                     */
 /* ------------------------------------------------- */
-LRESULT CALLBACK FirewallProc (HWND hWnd, UINT message, WPARAM wParam, LONG lParam)
+LRESULT CALLBACK FirewallProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 int True=1;
 static const char *lpIniFile;

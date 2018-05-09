@@ -617,7 +617,7 @@ return 0;
 /* ------------------------------------------------- */
 /* Main CallBack                                     */
 /* ------------------------------------------------- */
-LRESULT CALLBACK WndProc (HWND hWnd, UINT message, WPARAM wParam, LONG lParam)
+LRESULT CALLBACK WndProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 static HICON    hIcon;
 static HMENU     hMenu;
