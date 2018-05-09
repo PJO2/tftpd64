@@ -23,7 +23,7 @@ static void Gui_FillGaugeWnd (HWND hNW, struct S_TftpGui *pTftpGui);
 //--------------------------------------------------------
 
 
-int CALLBACK Gui_TftpGaugeProc (HWND hWnd, UINT message, WPARAM wParam, LONG lParam)
+int CALLBACK Gui_TftpGaugeProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 HMENU hMenu;
 static int nGaugeWindow;

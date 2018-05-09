@@ -6,9 +6,12 @@
 //////////////////////////////////////////////////////
 
 // registry key :
-//       HKEY_LOCAL_MACHINE\SOFTWARE\TFTPD32
-
-
+//       REGISTRY_HKEY\SOFTWARE\TFTPD32
+#ifdef _M_X64
+#  define REGISTRY_HKEY HKEY_CURRENT_USER
+#else
+#  define REGISTRY_HKEY HKEY_LOCAL_MACHINE
+#endif
 
 // some shortcurts
 #define ISDLG_CHECKED(hWnd,Ctrl) \
@@ -710,7 +713,7 @@ char  sz[128];
     GetWindowRect (hMainWnd, &R);
     wsprintf (sz, "%d %d %d %d ", R.left, R.top, R.right, R.bottom);
 
-    Rc = RegCreateKeyEx (HKEY_LOCAL_MACHINE,
+    Rc = RegCreateKeyEx (REGISTRY_HKEY,
                          TFTPD32_MAIN_KEY,
                          0,
                          NULL,
@@ -735,7 +738,7 @@ INT   Rc, Ark=0;
 char  sz[128], *pCur, *pNext;
 
 
-   Rc = RegOpenKeyEx (HKEY_LOCAL_MACHINE,    // Key handle at root level.
+   Rc = RegOpenKeyEx (REGISTRY_HKEY,    // Key handle at root level.
                       TFTPD32_MAIN_KEY,      // Path name of child key.
                       0,                      // Reserved.
                       KEY_READ,                // Requesting read access.

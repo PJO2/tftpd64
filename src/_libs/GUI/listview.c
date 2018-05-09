@@ -24,7 +24,7 @@ static WNDPROC wpOrigLVProc ;
 
 // This proc just hide and show the listview control and display is OK
 // All others messages are parsed by the default ListView handler
-LRESULT CALLBACK LVProc (HWND hWnd, UINT message, WPARAM wParam, LONG lParam)
+LRESULT CALLBACK LVProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
    switch (message)
    {
@@ -82,7 +82,8 @@ LVCOLUMN lvc;
 		lvc.cx = tCol[Ark].cx;
 		lvc.pszText = tCol[Ark].pszText;
 		lvc.iSubItem = Ark;
-		SendMessage (hListV, LVM_INSERTCOLUMN, Ark, (LPARAM) &lvc);
+		ListView_InsertColumn (hListV, Ark, & lvc);
+		// SendMessage (hListV, LVM_INSERTCOLUMN, Ark, (LPARAM) &lvc);
 	}
 return Ark;
 } // InitTftpd32ListView
