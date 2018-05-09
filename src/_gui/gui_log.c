@@ -21,12 +21,13 @@
 /* ------------------------------------------------- */
 void LB_LOG (HWND hListBox, const char *szTxt)
 {
-int        Ark, Rc, NbMsg;
+int        Ark, NbMsg;
 int        dwMaxExtent, dwExtent;
 SIZE       sTextSize = {0, 0};
 HDC        hDC;
 DWORD      dwMaxMsg = 250;
 char       szBuf[LOGSIZE + 30];
+LRESULT    Rc;
 static bInit=FALSE;
 
 #define CROLLBAR
@@ -40,7 +41,7 @@ static bInit=FALSE;
 
    // delete oldest messages
    for ( Rc = SendMessage (hListBox, LB_GETCOUNT, 0, 0);
-		 Rc > (long) dwMaxMsg ;
+		 Rc > dwMaxMsg ;
          Rc = SendMessage (hListBox, LB_DELETESTRING, 0, 0) );
 
     Ark = (int) SendMessage (hListBox, LB_ADDSTRING, 0, (LPARAM) szTxt);
@@ -60,7 +61,7 @@ static bInit=FALSE;
 	NbMsg = (int)SendMessage(hListBox, LB_GETCOUNT, 0, 0);
     for (Ark= NbMsg; Ark>=0 ; Ark --)
     {
-        dwExtent = SendMessage (hListBox, LB_GETITEMDATA, Ark-1, (LPARAM) szBuf);
+        dwExtent = (DWORD) SendMessage (hListBox, LB_GETITEMDATA, Ark-1, (LPARAM) szBuf);
         if (dwExtent > dwMaxExtent)  dwMaxExtent = dwExtent ;
      }
 	// and extent horizontal scrollbar accordingly

@@ -12,7 +12,7 @@
 //////////////////////////
 
 #define  APPLICATION            "Tftpd32"
-#define  VERSION                0x0321
+#define  VERSION                0x043F
 #define  TFTPD_BCKG_CLASS       "Ttftpd32BackGround"
 #define  TFTP_CLIENT_CLASS      "Ttftpd32ClientBackGround"
 #define  TFTPD32_ADDIP_CLASS    "TftpAddIpBackGround"
@@ -131,7 +131,7 @@ enum {
      
 /////////////////////////////////////////////////////////
 // Windows and Dialogs
-// long CALLBACK TftpAddIPProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+// LRESULT CALLBACK TftpAddIPProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 LRESULT  CALLBACK AboutProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 LRESULT  CALLBACK TftpClientProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 LRESULT  CALLBACK SettingsProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
@@ -186,7 +186,7 @@ void AddSyslogItem (HWND hListV, const char *szIP, const char *szTxt);
 void AddDNSItem (HWND hListV, char *szName, char *szIPv4, char *szIPv6);
 
 // exported by gui_gauges.c
-int CALLBACK Gui_TftpGaugeProc (HWND hWnd, UINT message, WPARAM wParam, LONG lParam);
+int CALLBACK Gui_TftpGaugeProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 HWND Gui_CreateGaugeWindow (HWND hParentWnd, const struct S_TftpGui *pTftpGui);
 void Gui_UpdateGaugeWindow (const struct S_TftpGui *pTftpGui, time_t dNow);
 
@@ -200,7 +200,7 @@ int Gui_AbortTftpTransfer (SOCKET sService, DWORD dwTransferId);
 void LB_LOG (HWND hListBox, const char *szTxt);
 
 // from gui_tftpd.c
-long CALLBACK TftpProc (HWND hWnd, UINT message, WPARAM wParam, LONG lParam);
+LRESULT CALLBACK TftpProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 int Gui_TftpReporting (HWND hListV, const struct S_TftpGui *pTftpGuiFirst);
 BOOL GuiIsActiveTFTPTransfer (HWND hMainWnd);
 

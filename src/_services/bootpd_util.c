@@ -383,7 +383,7 @@ return TRUE;
 char *TranslateExp (const char *exp, char *to, struct in_addr ip, const char *tMac)
 {
 char *q;
-int  Ark;
+size_t  Ark;
 char sz [256];		// somewhat larger that DHCP_FILE_LEN (128 bytes)
 
 	// truncate input
@@ -397,21 +397,21 @@ char sz [256];		// somewhat larger that DHCP_FILE_LEN (128 bytes)
 
     if ( (q=strstr (exp, "$IP$")) != NULL )
     {
-       lstrcpyn (sz, exp, 1 + q - exp);
+       lstrcpyn (sz, exp, 1 + (int) (q - exp) );
        lstrcat (sz, inet_ntoa (ip) );
        lstrcat (sz, q + sizeof "$IP$" - 1);
        lstrcpyn (to, sz, DHCP_FILE_LEN - 1);
     }
     else if ( (q=strstr (exp, "$MAC$")) != NULL )
     {
-       lstrcpyn (sz, exp, 1 + q - exp);
+       lstrcpyn (sz, exp, 1 + (int) (q - exp) );
        lstrcat (sz, haddrtoa (tMac, 6, '.') );
        lstrcat (sz, q + sizeof "$MAC$" - 1);
        lstrcpyn (to, sz, DHCP_FILE_LEN - 1);
     }
     else if ( (q=strstr (exp, "$BootFileName$")) != NULL )
     {
-	   lstrcpyn (sz, exp, 1 + q - exp);
+	   lstrcpyn (sz, exp, 1 + (int) (q - exp) );
 	   lstrcat (sz, to);
        lstrcat (sz, q + sizeof "$BootFileName$" - 1);
 	   // replace to now

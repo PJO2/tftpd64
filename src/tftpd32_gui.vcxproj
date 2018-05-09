@@ -117,7 +117,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>shell32.lib;ws2_32.lib;comctl32.lib;iphlpapi.lib;libs.$(PlatformShortName).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>\tftpd32\BIN\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <Version>4.62</Version>
+      <Version>4.63</Version>
       <AdditionalOptions>/SUBSYSTEM:WINDOWS,"5.01" %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Manifest>
@@ -139,7 +139,7 @@
       <AdditionalDependencies>shell32.lib;ws2_32.lib;comctl32.lib;iphlpapi.lib;libs.$(PlatformShortName).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>\tftpd32\BIN\$(Configuration)\;C:\Program Files\Microsoft SDKs\Windows\v7.1\Lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <Version>4.62</Version>
+      <Version>4.63</Version>
       <AdditionalOptions>/SUBSYSTEM:WINDOWS,"5.02" %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Manifest>
@@ -164,7 +164,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>shell32.lib;ws2_32.lib;comctl32.lib;iphlpapi.lib;libs.$(PlatformShortName).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>\tftpd32\BIN\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <Version>4.62</Version>
+      <Version>4.63</Version>
       <AdditionalOptions>/SUBSYSTEM:WINDOWS,"5.01" %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Manifest>
@@ -189,7 +189,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>shell32.lib;ws2_32.lib;comctl32.lib;iphlpapi.lib;libs.$(PlatformShortName).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>\tftpd32\BIN\$(Configuration)\;C:\Program Files\Microsoft SDKs\Windows\v7.1\Lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <Version>4.62</Version>
+      <Version>4.63</Version>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>

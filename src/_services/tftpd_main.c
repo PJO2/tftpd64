@@ -278,7 +278,7 @@ struct LL_TftpInfo *pTftp, *pTmp;
 int             fromlen;
 int             bNewThread;
 int             Rc;
-int             nThread=0;
+DWORD             nThread=0;
 
     for (  pTmp = pTftpFirst ;  pTmp!=NULL ;  pTmp = pTmp->next)   
 		nThread++;
@@ -440,7 +440,7 @@ int                         Ark;
 	   //if (Ark>0)
 			SendMsgRequest (  C_TFTP_TRF_STAT, 
 							& sMsg , 
-							  sMsg.nbTrf * sizeof (sMsg.t[0]) + offsetof (struct S_TftpTrfStat, t[0]),
+							  sMsg.nbTrf * (int) sizeof (sMsg.t[0]) + offsetof (struct S_TftpTrfStat, t[0]),
 							  TRUE,		// block thread until msg sent
 							  FALSE );		// if no GUI return
    }

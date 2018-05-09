@@ -681,7 +681,7 @@ LogToMonitor ("GUI: Closing Tftp Client");
 
     case WM_TIMER :
          KillTimer(hWnd, wParam);
-         PostMessage (hWnd, wParam, 0, (LPARAM) -1);    // pour pas confondre
+         PostMessage (hWnd, (UINT) wParam, 0, (LPARAM) -1);    // pour pas confondre
          break;
 
       //////////////////////

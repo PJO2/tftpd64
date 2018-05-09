@@ -12,13 +12,13 @@
 #include "headers.h"
 
 #ifdef _M_X64
-#  define TFTPD_STRING   "TFTPD64 v4.62 Build " __DATE__ " " __TIME__
+#  define TFTPD_STRING   "TFTPD64 v4.63 Build " __DATE__ " " __TIME__
 #  define TFTPD_ABOUT_TITLE   "About TFTPD64"
 #else
 #ifndef TFTP_CLIENT_ONLY
-#     define TFTPD_STRING   "TFTPD32 v4.62 Build " __DATE__ " " __TIME__
+#     define TFTPD_STRING   "TFTPD32 v4.63 Build " __DATE__ " " __TIME__
 #else
-#     define TFTPD_STRING   "TFTPD32 Client v4.62 Build " __DATE__ " " __TIME__
+#     define TFTPD_STRING   "TFTPD32 Client v4.63 Build " __DATE__ " " __TIME__
 #endif
 #  define TFTPD_ABOUT_TITLE   "About TFTPD32"
 #endif
@@ -55,6 +55,11 @@ const char LICENSE_TFTPD32 [] =
 "Official site: http://tftpd32.jounin.net\r\n\r\n"
 "Tftpd32 and Tftpd64 use the following copyrights or contributions\r\n"
 "  - MD5 part is from RSA Data Security\r\n"
+<<<<<<< HEAD
+"  - Icon designed by Marco\r\n"
+=======
+"  - Icon was created by Marco\r\n"
+>>>>>>> 01ff462df1574d7d32091044f95bd0788ccfa215
 "  - IP checksum computation is from Mike Muss\r\n"
 "  - DHCP lease persistance is from Nick Wagner\r\n" 
 "  - DHCP opts 82, 42 and 120 from Jesus Soto\r\n" 
