@@ -11,7 +11,6 @@
 #include <Windowsx.h>
 #include <strsafe.h>
 #include "cmsgbox.h"
-
 #define SizeOfTab(x) (sizeof (x) / sizeof (x[0]))
 
 // 4 button max by dialog box

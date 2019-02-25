@@ -117,6 +117,7 @@
 #define    IDC_CHECK_SNTP_SERVER   1323
 #define    IDC_CHECK_DNS_SERVER    1324
 #define    IDC_CHECK_IPv6          1325
+#define    IDC_REDUCE_PATH		   1326
 
 #define    IDC_CHECK_PXE           1330
 #define    IDC_CHECK_MD5           1331

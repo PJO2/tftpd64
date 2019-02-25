@@ -62,8 +62,9 @@ tTftpd32Entry[] =
     { KEY_IGNORE_LASTBLOCK_ACK,  & sSettings.bIgnoreLastBlockAck,       REG_DWORD,   sizeof sSettings.bIgnoreLastBlockAck     },
 //	{ KEY_IPv4,                  & sSettings.bIPv4,                     REG_DWORD,   sizeof sSettings.bIPv4             },
 	{ KEY_IPv6,                  & sSettings.bIPv6,                     REG_DWORD,   sizeof sSettings.bIPv6             },
+	{ KEY_REDUCE_PATH,           & sSettings.bReduceTFTPPath,           REG_DWORD,   sizeof sSettings.bReduceTFTPPath   },
 
-	{ KEY_HTTP_DIR,              sSettings.szHttpDirectory,             REG_SZ,      sizeof sSettings.szHttpDirectory   },
+   { KEY_HTTP_DIR,              sSettings.szHttpDirectory,             REG_SZ,      sizeof sSettings.szHttpDirectory   },
 };
 
 #define READKEY(x,buf) \
@@ -117,6 +118,7 @@ struct S_Tftpd32Settings sSettings =
 	  FALSE,				 // wait for ack of last TFTP packet
 	  TRUE,					 // IPv4
 	  TRUE,					 // IPv6
+	  FALSE,				 // Reduce '//' in TFTP path
   
 	  ".",					// Http Directory
 

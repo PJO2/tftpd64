@@ -99,7 +99,7 @@ tResize [] =
 	{	IDC_PORT,                  174,  99, 50, 12,   TAB_SETTINGS_TFTP,  },
 	{	IDC_LOCAL_PORTS,           174, 110, 50, 12,   TAB_SETTINGS_TFTP,  },
 
-	{	IDC_GRP_TFTP_ADVANCED,       6, 132,228,147,   TAB_SETTINGS_TFTP,  },
+	{	IDC_GRP_TFTP_ADVANCED,       6, 144,228,147,   TAB_SETTINGS_TFTP,  },
 	{	IDC_CHECK_NEGOCIATE,        13, 143, 83,  8,   TAB_SETTINGS_TFTP,  },
 	{	IDC_CHECK_PXE,              13, 155, 83,  8,   TAB_SETTINGS_TFTP,  },
 	{	IDC_CHECK_PROGRESS,         13, 167, 99,  8,   TAB_SETTINGS_TFTP,  },
@@ -114,7 +114,8 @@ tResize [] =
   	{   IDC_CHECK_DIRTEXT,          13, 239, 90,  8,   TAB_SETTINGS_TFTP,  },
   	{   IDC_CHECK_MD5,              13, 251, 90,  8,   TAB_SETTINGS_TFTP,  },
   	{   IDC_CHECK_BEEP,             13, 263, 90,  8,   TAB_SETTINGS_TFTP,  },
-	
+	{   IDC_REDUCE_PATH,            13, 275, 90,  8,   TAB_SETTINGS_TFTP,  },
+
 	// DHCP tab
  	{   IDC_GRP_DHCP,                6, 213,228, 61,   TAB_SETTINGS_DHCP,  },
  	{   IDC_CHECK_PING,             12, 222,115, 10,   TAB_SETTINGS_DHCP,  },
@@ -162,10 +163,10 @@ tResize [] =
 
 
 	// ALL
- 	{   IDOK,                        6,289, 50, 14,   TAB_ALL,            },
- 	{   IDC_BUTTON_DEFAULT,         64,289, 50, 14,   TAB_ALL,            },
-  	{   IDC_TFTPD_HELP,            122,289, 50, 14,   TAB_ALL,            },
-  	{   IDCANCEL,                  180,289, 50, 14,   TAB_ALL,            },
+ 	{   IDOK,                        6,301, 50, 14,   TAB_ALL,            },
+ 	{   IDC_BUTTON_DEFAULT,         64,301, 50, 14,   TAB_ALL,            },
+  	{   IDC_TFTPD_HELP,            122,301, 50, 14,   TAB_ALL,            },
+  	{   IDCANCEL,                  180,301, 50, 14,   TAB_ALL,            },
 };
 
 
@@ -340,8 +341,10 @@ char        sz [32];
         sNewSettings.bMD5        = ISDLG_CHECKED (hWnd, IDC_CHECK_MD5);
         sNewSettings.bUnixStrings= ISDLG_CHECKED (hWnd, IDC_CHECK_UNIX);
         sNewSettings.bBeep       = ISDLG_CHECKED (hWnd, IDC_CHECK_BEEP);
-        sNewSettings.bVirtualRoot= ISDLG_CHECKED (hWnd, IDC_CHECK_VROOT);
+		sNewSettings.bReduceTFTPPath = ISDLG_CHECKED (hWnd, IDC_REDUCE_PATH);
+		sNewSettings.bVirtualRoot= ISDLG_CHECKED (hWnd, IDC_CHECK_VROOT);
         sNewSettings.bPXECompatibility = ISDLG_CHECKED (hWnd, IDC_CHECK_PXE);
+		
         // Sécurité sur l'accès
         if (ISDLG_CHECKED (hWnd, IDC_CHECK_TFTPLOCALIP))
              ComboBox_GetText (GetDlgItem(hWnd, IDC_CB_TFTPLOCALIP), sNewSettings.szTftpLocalIP, sizeof sNewSettings.szTftpLocalIP);
@@ -531,7 +534,8 @@ BOOL FormMain_OnInitDialog(HWND hWnd, HWND hwndFocus, LPARAM lParam)
      CHECK_DLG_IF (hWnd, IDC_CHECK_MD5,      sGuiSettings.bMD5);
      CHECK_DLG_IF (hWnd, IDC_CHECK_UNIX,     sGuiSettings.bUnixStrings);
      CHECK_DLG_IF (hWnd, IDC_CHECK_BEEP,     sGuiSettings.bBeep);
-     CHECK_DLG_IF (hWnd, IDC_CHECK_VROOT,    sGuiSettings.bVirtualRoot);
+	 CHECK_DLG_IF (hWnd, IDC_REDUCE_PATH,    sGuiSettings.bReduceTFTPPath);
+	 CHECK_DLG_IF (hWnd, IDC_CHECK_VROOT,    sGuiSettings.bVirtualRoot);
      SetDlgItemInt (hWnd, IDC_WINSIZE, sGuiSettings.WinSize, FALSE);
 
      // Limitations des acces
@@ -713,7 +717,12 @@ char  sz[128];
     GetWindowRect (hMainWnd, &R);
     wsprintf (sz, "%d %d %d %d ", R.left, R.top, R.right, R.bottom);
 
-    Rc = RegCreateKeyEx (REGISTRY_HKEY,
+    Rc = RegCreateKeyEx (
+#ifdef  _WIN64
+						 HKEY_CURRENT_USER,
+#else
+						 HKEY_LOCAL_MACHINE,
+#endif
                          TFTPD32_MAIN_KEY,
                          0,
                          NULL,
@@ -738,8 +747,13 @@ INT   Rc, Ark=0;
 char  sz[128], *pCur, *pNext;
 
 
-   Rc = RegOpenKeyEx (REGISTRY_HKEY,    // Key handle at root level.
-                      TFTPD32_MAIN_KEY,      // Path name of child key.
+   Rc = RegOpenKeyEx ( // Key handle at root level.
+#ifdef  _WIN64
+					  HKEY_CURRENT_USER,
+#else
+					  HKEY_LOCAL_MACHINE,
+#endif
+					  TFTPD32_MAIN_KEY,      // Path name of child key.
                       0,                      // Reserved.
                       KEY_READ,                // Requesting read access.
                     & hKey);                 // Address of key to be returned.

@@ -56,6 +56,7 @@ struct S_Tftpd32Settings
 	BOOL                  bIgnoreLastBlockAck;
 	BOOL                  bIPv4;
 	BOOL                  bIPv6;
+	BOOL                  bReduceTFTPPath;
 
 	char				  szHttpDirectory [_MAX_PATH];
 	
@@ -124,6 +125,7 @@ BOOL Tftpd32DestroySettings (void);
 #define KEY_IGNORE_LASTBLOCK_ACK   "Ignore ack for last TFTP packet"
 #define KEY_IPv4                   "Enable IPv4"
 #define KEY_IPv6                   "Enable IPv6"
+#define KEY_REDUCE_PATH			   "Reduce TFTP Path"
 #define KEY_DONOTCHECK_FIREWALL    "Donot verify firewall"
 
 #define KEY_HTTP_DIR                "HttpBaseDirectory"

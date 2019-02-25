@@ -156,6 +156,18 @@ char *p;
     // sera traité à partir du répertoire courant
   if (sSettings.bVirtualRoot  && szFile[0] == '\\')
       memmove (szFile, szFile+1, lstrlen (szFile));
+
+   // translate // in / : not efficient but simple
+  if (sSettings.bReduceTFTPPath)
+  {
+	  p = szFile;
+	  while ((p = strchr(p, '/')) != NULL)
+	  {
+		  if (*(p + 1) == '/')
+			  memmove(p, p + 1, lstrlen(p));
+		  else p++;
+	  }
+  }
 } // SecFileName
 
 

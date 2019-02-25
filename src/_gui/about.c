@@ -12,13 +12,13 @@
 #include "headers.h"
 
 #ifdef _M_X64
-#  define TFTPD_STRING   "TFTPD64 v4.63 Build " __DATE__ " " __TIME__
+#  define TFTPD_STRING   "TFTPD64 v4.64 Build " __DATE__ " " __TIME__
 #  define TFTPD_ABOUT_TITLE   "About TFTPD64"
 #else
 #ifndef TFTP_CLIENT_ONLY
-#     define TFTPD_STRING   "TFTPD32 v4.63 Build " __DATE__ " " __TIME__
+#     define TFTPD_STRING   "TFTPD32 v4.64 Build " __DATE__ " " __TIME__
 #else
-#     define TFTPD_STRING   "TFTPD32 Client v4.63 Build " __DATE__ " " __TIME__
+#     define TFTPD_STRING   "TFTPD32 Client v4.64 Build " __DATE__ " " __TIME__
 #endif
 #  define TFTPD_ABOUT_TITLE   "About TFTPD32"
 #endif
@@ -43,13 +43,13 @@ const char LICENSE_TFTPD32 [] =
 "     for the Australian Department of Defence\r\n\r\n";
 #elif defined TFTP_CLIENT_ONLY
 const char LICENSE_TFTPD32 [] =
-"TFTPD32_Client is copyrighted 2018 by Philippe Jounin (philippe@jounin.net) "
+"TFTPD32_Client is copyrighted 2019 by Philippe Jounin (philippe@jounin.net) "
 "and released under the European Union Public License 1.1 "
 "(see either the help file or the file EUPL-EN.pdf for the full text of the license)\r\n\r\n"
 "Official site: http://tftpd32.jounin.net\r\n\r\n";
 #elif defined STANDALONE_EDITION
 const char LICENSE_TFTPD32 [] =
-"TFTPD32 and TFTPD64 are copyrighted 1998-2018 by Philippe Jounin (philippe@jounin.net) "
+"TFTPD32 and TFTPD64 are copyrighted 1998-2019 by Philippe Jounin (philippe@jounin.net) "
 "and released under the European Union Public License 1.1 "
 "(see either the help file or the file EUPL-EN.pdf for the full text of the license)\r\n\r\n"
 "Official site: http://tftpd32.jounin.net\r\n\r\n"
