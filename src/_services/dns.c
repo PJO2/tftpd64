@@ -128,7 +128,9 @@ int anslen=0;
 		  if (AnswerDnsQuery ( (DNS_HEADER*)Buf, Rc, answer, & anslen ))
 		  {
 		    Rc = sendto (sDNSSocket, answer, anslen, 0, (struct sockaddr *) & sSock, sizeof sSock);
-			LogToMonitor ("send %d/%d bytes", anslen/Rc);
+			// Feb 2019: ISSUE #7
+			// replace anslen/Rc by anslen, Rc (much better !)
+			LogToMonitor ("send %d/%d bytes", anslen, Rc);
 		  }
 	  }
 	  if (Rc<0)

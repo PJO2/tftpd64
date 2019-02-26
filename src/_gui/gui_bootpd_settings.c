@@ -148,7 +148,7 @@ char sz [256], *p=NULL;	// DNS Server
      GetDlgItemText (hMainWnd, IDC_DHCP_DEFAULT_ROUTER,  sNewParamDHCP.szGateway, sizeof sNewParamDHCP.szGateway - 1);
 		 if (sNewParamDHCP.szGateway[0]!=0  &&  CheckInetAddress (hMainWnd, sNewParamDHCP.szGateway, "DHCP Default Router", TRUE)) iErr=1;
      GetDlgItemText (hMainWnd, IDC_DHCP_MASK,  sNewParamDHCP.szMask, sizeof sNewParamDHCP.szMask - 1);
-		 if (CheckInetAddress (hMainWnd, sNewParamDHCP.szMask, "DHCP Mask", TRUE)) iErr=1;
+		 if (CheckInetAddress (hMainWnd, sNewParamDHCP.szMask, "DHCP Mask", sNewParamDHCP.nPoolSize != 0)) iErr=1;
 //   GetDlgItemText (hWnd, IDC_DHCP_MASK,  szBuf, sizeof szBuf - 1);
 //		 if (CheckInetAddress (hMainWnd, szBuf, "DHCP Mask", TRUE)) iErr=1;
 //		 sNewParamDHCP.dwMask.s_addr= inet_addr (szBuf);

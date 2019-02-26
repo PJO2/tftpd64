@@ -157,7 +157,7 @@ int   len;
 
     SetWindowText (hNW, szTitle);
     if (pTftpGui->stat.dwTransferSize != 0)
-           wsprintf (szTitle, "File size : %d", pTftpGui->stat.dwTransferSize);
+           wsprintf (szTitle, "File size : %u", pTftpGui->stat.dwTransferSize);
     else
     {
           wsprintf (szTitle, "File size : Unknown");
@@ -193,7 +193,7 @@ char            szTitle [_MAX_PATH+sizeof " from 255.255.255.255 "];
                      0);
 
    // Update stat text
-   wsprintf (szTitle, "%d Bytes %s \t %d Bytes/sec",
+   wsprintf (szTitle, "%u Bytes %s \t %u Bytes/sec",
              pTftpGui->stat.dwTotalBytes,
              (pTftpGui->opcode == TFTP_RRQ) ? "sent" : "rcvd",
              pTftpGui->stat.dwTotalBytes / (dNow-pTftpGui->stat.StartTime) );

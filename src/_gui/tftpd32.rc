@@ -167,6 +167,9 @@ BEGIN
     EDITTEXT        IDC_SYSLOG_FILE,174,73,50,12,ES_AUTOHSCROLL | WS_DISABLED
     LTEXT           "To file",IDC_TXT_SYSLOGTOFILE,147,75,20,10
 	
+   GROUPBOX        "DNS relay",IDC_GRP_DNS,6, 33,228,70
+    LTEXT          "External DNS server should be configured in the Network and Sharing Center",IDC_TXT_DNS,14,44,200,50
+
     
    GROUPBOX        "TFTP Security",IDC_GRP_TFTP_SEC,6,126,81,56
     CONTROL         "None",IDC_RADIO_SECNONE,"Button",BS_AUTORADIOBUTTON,14,135,65,8

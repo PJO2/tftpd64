@@ -44,13 +44,15 @@
 enum { ONGLET_SETTINGS_GLOBAL = 0,
 	   ONGLET_SETTINGS_TFTP,
        ONGLET_SETTINGS_DHCP,
-       ONGLET_SETTINGS_SYSLOG,
+	   ONGLET_SETTINGS_SYSLOG,
+	   ONGLET_SETTINGS_DNS,
        NB_ONGLETS };
 // tab masks : 1>>Onglet
 #define TAB_SETTINGS_GLOBAL   MakeMask(ONGLET_SETTINGS_GLOBAL)
 #define TAB_SETTINGS_TFTP     MakeMask(ONGLET_SETTINGS_TFTP)
 #define TAB_SETTINGS_SYSLOG   MakeMask(ONGLET_SETTINGS_SYSLOG)
 #define TAB_SETTINGS_DHCP     MakeMask(ONGLET_SETTINGS_DHCP)
+#define TAB_SETTINGS_DNS      MakeMask(ONGLET_SETTINGS_DNS)
 #define TAB_NONE              MakeMask(NB_ONGLETS)
 #define TAB_ALL               (DWORD) -1
 
@@ -83,13 +85,13 @@ tResize [] =
 	{	IDC_BASEDIR,                14,  41,164, 12,   TAB_SETTINGS_TFTP,  },
 	{	IDC_BUTTON_BROWSE,         185,  41, 39, 13,   TAB_SETTINGS_TFTP,  },
 
-	{	IDC_GRP_TFTP_SEC,            6,  68, 78, 57,   TAB_SETTINGS_TFTP,  },
+	{	IDC_GRP_TFTP_SEC,            6,  65, 78, 60,   TAB_SETTINGS_TFTP,  },
 	{	IDC_RADIO_SECNONE,          14,  77, 65,  8,   TAB_SETTINGS_TFTP,  },
 	{	IDC_RADIO_SECSTD,           14,  89, 65,  8,   TAB_SETTINGS_TFTP,  },
 	{	IDC_RADIO_SECHIGH,          14, 101, 65,  8,   TAB_SETTINGS_TFTP,  },
 	{	IDC_RADIO_SECRO,            14, 113, 65,  8,   TAB_SETTINGS_TFTP,  },
 
-	{	IDC_GRP_TFTP_CFG,           91,  68,142, 57,   TAB_SETTINGS_TFTP,  },
+	{	IDC_GRP_TFTP_CFG,           91,  65,142, 60,   TAB_SETTINGS_TFTP,  },
 	{	IDC_TXT_TFTP_TIMEOUT,       98,  77, 71, 10,   TAB_SETTINGS_TFTP,  },
 	{	IDC_TXT_TFTP_RETRANSMIT,    98,  89, 71, 10,   TAB_SETTINGS_TFTP,  },
 	{	IDC_TXT_TFTP_PORT,          98, 101, 68, 10,   TAB_SETTINGS_TFTP,  },
@@ -99,7 +101,7 @@ tResize [] =
 	{	IDC_PORT,                  174,  99, 50, 12,   TAB_SETTINGS_TFTP,  },
 	{	IDC_LOCAL_PORTS,           174, 110, 50, 12,   TAB_SETTINGS_TFTP,  },
 
-	{	IDC_GRP_TFTP_ADVANCED,       6, 144,228,147,   TAB_SETTINGS_TFTP,  },
+	{	IDC_GRP_TFTP_ADVANCED,       6, 129,228,162,   TAB_SETTINGS_TFTP,  },
 	{	IDC_CHECK_NEGOCIATE,        13, 143, 83,  8,   TAB_SETTINGS_TFTP,  },
 	{	IDC_CHECK_PXE,              13, 155, 83,  8,   TAB_SETTINGS_TFTP,  },
 	{	IDC_CHECK_PROGRESS,         13, 167, 99,  8,   TAB_SETTINGS_TFTP,  },
@@ -161,6 +163,9 @@ tResize [] =
 	{	IDC_TXT_SYSLOGTOFILE,      34, 80, 25, 10,   TAB_SETTINGS_SYSLOG,  },
 	{	IDC_SYSLOG_FILE,           59, 80,170, 12,   TAB_SETTINGS_SYSLOG,  },
 
+	// DNS
+	{	IDC_GRP_DNS,             6, 33,228, 70,   TAB_SETTINGS_DNS,        },
+	{   IDC_TXT_DNS,            14, 44, 200, 50,  TAB_SETTINGS_DNS,        },
 
 	// ALL
  	{   IDOK,                        6,301, 50, 14,   TAB_ALL,            },
@@ -209,6 +214,7 @@ tTabSettingsCtrlData [] =
 	ONGLET_SETTINGS_TFTP,    "TFTP",     "tftp server",
 	ONGLET_SETTINGS_DHCP,    "DHCP",     "dhcp server",
 	ONGLET_SETTINGS_SYSLOG,  "SYSLOG",   "syslog server",
+	ONGLET_SETTINGS_DNS,     "DNS",      "dns relay",
 };  // tTabCtrlData
 static int bInit=FALSE;
 

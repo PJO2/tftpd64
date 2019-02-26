@@ -258,7 +258,7 @@ static SOCKADDR_STORAGE LastFrom;
 				            NI_NUMERICHOST | NI_NUMERICSERV );
 		 
 		LOG (1, "Warning : received duplicated request from %s:%s", szAddr, szServ);
-		Sleep (250);	// time for the first TFTP thread to start
+		Sleep (50);	// time for the first TFTP thread to start
 		return FALSE;	// accept message nevertheless
 	}
 	// save last frame
@@ -491,7 +491,7 @@ struct LL_TftpInfo *pTftp, *pTmp;
 
     if (WSAIsBlocking ())  WSACancelBlockingCall ();   // the thread is probably blocked into a select
 
-    // then frees resources
+	// then frees resources
     for (pTftp=pTftpFirst ; pTftp!=NULL ; pTftp=pTmp )
     {
         pTmp=pTftp->next ;

@@ -144,7 +144,19 @@ struct errmsg *pe;
 static void SecFileName (char *szFile)
 {
 char *p;
-  // Translation de '/' en '\'
+	// translate // in / : not efficient but simple
+	if (sSettings.bReduceTFTPPath)
+	{
+		p = szFile;
+		while ((p = strchr(p, '/')) != NULL)
+		{
+			if (*(p + 1) == '/')
+				memmove(p, p + 1, lstrlen(p));
+			else p++;
+		}
+	}
+
+// Translate '/' in '\'
     if (sSettings.bUnixStrings)
     {
         for (p=szFile ; *p!=0 ; p++ )
@@ -157,17 +169,6 @@ char *p;
   if (sSettings.bVirtualRoot  && szFile[0] == '\\')
       memmove (szFile, szFile+1, lstrlen (szFile));
 
-   // translate // in / : not efficient but simple
-  if (sSettings.bReduceTFTPPath)
-  {
-	  p = szFile;
-	  while ((p = strchr(p, '/')) != NULL)
-	  {
-		  if (*(p + 1) == '/')
-			  memmove(p, p + 1, lstrlen(p));
-		  else p++;
-	  }
-  }
 } // SecFileName
 
 
@@ -217,7 +218,7 @@ int             Ark;
                          FILE_SHARE_READ,
                          NULL,
                          CREATE_ALWAYS,
-                         FILE_ATTRIBUTE_ARCHIVE | FILE_FLAG_SEQUENTIAL_SCAN ,
+                         FILE_ATTRIBUTE_ARCHIVE,
                         NULL);
      // if (hFile == INVALID_HANDLE_VALUE)  return -1;
 
@@ -436,7 +437,11 @@ char  szExtendedName [2 * _MAX_PATH];
                                  FILE_SHARE_READ,
                                  NULL,
                                  opcode==TFTP_RRQ ? OPEN_EXISTING : CREATE_ALWAYS,
-                                 FILE_ATTRIBUTE_ARCHIVE | FILE_FLAG_SEQUENTIAL_SCAN ,
+		// Feb 2019 : ISSUE #11 
+		// FILE_FLAG_SEQUENTIAL_SCAN suppressed from flags to optimize caching behaviour
+        // it seems that read is sequential 
+		// however due to retransmissions, it is not
+                                 FILE_ATTRIBUTE_ARCHIVE,
                                  NULL);
     if (pTftp->r.hFile == INVALID_HANDLE_VALUE)
     {
@@ -705,6 +710,7 @@ static int TftpSendFile (struct LL_TftpInfo *pTftp)
 {
 int Rc;
 struct tftphdr *tp;
+DWORD dwPos; // pos of file pointer
 
     assert (pTftp!=NULL);
     pTftp->c.nLastToSend = 1;
@@ -736,8 +742,16 @@ struct tftphdr *tp;
                 pTftp->c.nLastToSend ++  )
          {
               tp = (struct tftphdr *)pTftp->b.buf;
-              Rc = (     SetFilePointer (pTftp->r.hFile, pTftp->s.dwPacketSize * (pTftp->c.nLastToSend-1), NULL, FILE_BEGIN) != (unsigned) -1
-                     &&  ReadFile (pTftp->r.hFile, tp->th_data, pTftp->s.dwPacketSize,  & pTftp->c.dwBytes, NULL) );
+			  // need to go back due to retransmission ?
+			  // optimize cache beahviour
+			  dwPos = SetFilePointer(pTftp->r.hFile, 0, NULL, FILE_CURRENT);
+			  if (dwPos != pTftp->s.dwPacketSize * (pTftp->c.nLastToSend - 1))
+			  {
+				  Rc = (SetFilePointer(pTftp->r.hFile, pTftp->s.dwPacketSize * (pTftp->c.nLastToSend - 1), NULL, FILE_BEGIN) != (unsigned)-1);
+				  if (!Rc)
+					  return TftpSysError(pTftp, EUNDEF, "fseek");
+			  }
+			  Rc = ReadFile (pTftp->r.hFile, tp->th_data, pTftp->s.dwPacketSize,  & pTftp->c.dwBytes, NULL) ;
               if (! Rc)
                   return TftpSysError (pTftp, EUNDEF, "ReadFile");
 

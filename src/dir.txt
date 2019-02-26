@@ -1,0 +1,14 @@
+.DS_Store	2/3/2019	6148
+desktop.ini	2/3/2019	46
+dir.txt	2/26/2019	0
+libs.vcxproj	2/3/2019	10895
+libs.vcxproj.user	2/3/2019	143
+readme.txt	2/3/2019	829
+tftpd32.sln	2/3/2019	4687
+tftpd32.suo	2/3/2019	22016
+tftpd32.vcxproj	2/3/2019	15502
+tftpd32.vcxproj.user	2/3/2019	143
+tftpd32_gui.vcxproj	2/3/2019	13449
+tftpd32_gui.vcxproj.user	2/3/2019	143
+tftpd32_svc.vcxproj	2/3/2019	14038
+tftpd32_svc.vcxproj.user	2/3/2019	143

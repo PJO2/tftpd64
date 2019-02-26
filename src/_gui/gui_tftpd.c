@@ -101,7 +101,7 @@ char szTxt [512];
   {
 	case TFTP_TRF_RUNNING :
 	  if (pTftpGui->stat.dwTransferSize > 100)
-          wsprintf (szTxt, "%d%%", pTftpGui->stat.dwTotalBytes/(pTftpGui->stat.dwTransferSize/100));
+          wsprintf (szTxt, "%u%%", pTftpGui->stat.dwTotalBytes/(pTftpGui->stat.dwTransferSize/100));
 	  break;
 	case TFTP_TRF_SUCCESS : 
 		lstrcpy (szTxt, "100%");
@@ -115,14 +115,14 @@ char szTxt [512];
   }
   ListView_SetItemText (hListV, itemPos, FD_PROGRESS, szTxt);
 
-  wsprintf (szTxt, "%d", pTftpGui->stat.dwTotalBytes);
+  wsprintf (szTxt, "%u", pTftpGui->stat.dwTotalBytes);
   ListView_SetItemText (hListV, itemPos, FD_BYTES, szTxt);
 
-  wsprintf (szTxt, "%d", pTftpGui->stat.dwTransferSize);
+  wsprintf (szTxt, "%u", pTftpGui->stat.dwTransferSize);
   ListView_SetItemText (hListV, itemPos, FD_TOTAL, 
                          pTftpGui->stat.dwTransferSize==0 ? "unknown" : szTxt);
 
-  wsprintf (szTxt, "%d", pTftpGui->stat.dwTotalTimeOut);
+  wsprintf (szTxt, "%u", pTftpGui->stat.dwTotalTimeOut);
   ListView_SetItemText (hListV, itemPos, FD_TIMEOUT, szTxt);
   return TRUE;
 } // UpdateTftpItem
