@@ -62,11 +62,13 @@ static int nGaugeWindow;
                       pTftpGui!=NULL && pTftpGui->hGaugeWnd!=hWnd ; 
                       pTftpGui=pTftpGui->next );
                 // kill associated transfer
-                if (pTftpGui!=NULL) 
-                    PostMessage ( GetParent (GetParent (hWnd)), 
-					              WM_TFTP_TRANFSER_TO_KILL, 
-								  0, 
-								  pTftpGui->dwTransferId );
+				if (pTftpGui != NULL)
+				{
+					PostMessage (GetParent (hWnd),
+								 WM_TFTP_TRANFSER_TO_KILL,
+								 0,
+								 pTftpGui->dwTransferId);
+				}
             }
            break;
 
