@@ -2,7 +2,7 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/src/.vs/tftpd32/v15
-/src/.vs/tftpd32/v16/Preview
-/src/obj/Win32/Release
-/src/.vs/tftpd32/v16
+/.vs/tftpd32/v15
+/.vs/tftpd32/v16/Preview
+/obj/Win32/Release
+/.vs/tftpd32/v16
