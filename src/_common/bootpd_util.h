@@ -8,6 +8,13 @@
 //////////////////////////////////////////////////////
 
 
+// RFC 4578 Architecture name
+struct S_PXE_Option93_Architecture
+{
+        unsigned short val;
+        char* name;
+};
+
 
 #define DHCP_DEFAULT_LEASE_TIME (2*24*60)    // two days (in minutes)
 
@@ -90,7 +97,7 @@ void LoadLeases(void);
 void FreeLeases(BOOL freepool);
 struct LL_IP *DHCPSearchByIP (const struct in_addr *pAddr, BOOL* wasexpired);
 struct LL_IP *DHCPSearchByMacAddress (const unsigned char *pMac, int nMacLen);
-char *TranslateExp (const char *exp, char *to, struct in_addr ip, const char *tMac);
+char *TranslateExp (const char *exp, char *to, struct in_addr ip, const char *tMac, int my_iLastArch);
 
 //////////////
 // From ip_util.h

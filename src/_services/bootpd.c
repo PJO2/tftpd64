@@ -8,6 +8,9 @@
 //
 //////////////////////////////////////////////////////
 
+#define _WINSOCK_DEPRECATED
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
+
 #ifndef TFTPD32
 #  pragma message ("                  Dhcpd32 compilation")
 #  include <windows.h>
@@ -230,6 +233,8 @@ struct LL_IP *pCurIP /*, *pOldestIP*/;
 //If true, the client has requested an IP address that we should try to honor
 int useprev = (pPreviousAddr->s_addr != INADDR_ANY) && (AddrFitsPool(pPreviousAddr));
 
+
+
    // search for the previously allocated mac address
    if (nMacLen>=6) // Ethernet Mac address
    {
@@ -402,7 +407,7 @@ return pCurIP;
 //////////////////////////////////////////////////////////////////////////////////////////////
 // fill DHCP fields
 //////////////////////////////////////////////////////////////////////////////////////////////
-int DHCPOptionsReply (struct dhcp_packet  *pDhcpPkt, int nDhcpType, struct sockaddr_in* receivingAddress)
+int DHCPOptionsReply(struct dhcp_packet* pDhcpPkt, int nDhcpType, struct sockaddr_in* receivingAddress)
 {
 unsigned char  *pOpt = (unsigned char *) (pDhcpPkt->options + (sizeof DHCP_OPTIONS_COOKIE - 1));
 HANDLE            hFile;
@@ -416,6 +421,7 @@ int				nDhcpAgentOpt=0;
 unsigned char  *pSub82;
 unsigned char szDhcpAgentOptSub1[128],szDhcpAgentOptSub2[128];
 int           msgSize;
+unsigned short iLastArch;
 
 static struct S_DhcpOptions sDhcpOpt [] =       // 0 for unspecified
 {
@@ -430,17 +436,19 @@ static struct S_DhcpOptions sDhcpOpt [] =       // 0 for unspecified
     DHO_DHCP_RENEWAL_TIME,      4,	  ~TFTPD32_NONE,
     DHO_DHCP_REBINDING_TIME,    4,	  ~TFTPD32_NONE,
     DHO_LOG_SERVERS,            4,	   TFTPD32_SYSLOG_SERVER,
-	DHO_NTP_SERVERS,			0,	  ~TFTPD32_NONE,
-	DHO_SIP_SERVERS,			0,	  ~TFTPD32_NONE,
+    DHO_NTP_SERVERS,			0,	  ~TFTPD32_NONE,
+    DHO_SIP_SERVERS,			0,	  ~TFTPD32_NONE,
     DHO_BOOT_SIZE,              0,	   TFTPD32_TFTP_SERVER,
-	DHO_TFTP_SERVER,			0,     TFTPD32_TFTP_SERVER,
+    DHO_TFTP_SERVER,			0,     TFTPD32_TFTP_SERVER,
     DHO_DOMAIN_NAME,            0,	  ~TFTPD32_NONE,
     DHO_DHCP_AGENT_OPTIONS,     0,	  ~TFTPD32_NONE,
     DHO_CUSTOM,                 0,	  ~TFTPD32_NONE,
     DHO_END,                    0,	  ~TFTPD32_NONE,
 };
 
-// Save Agent Options
+
+
+	// Save Agent Options
        p = DHCPSearchOptionsField (pDhcpPkt->options, DHO_DHCP_AGENT_OPTIONS, NULL);
        if (p!=NULL)   
 	   {
@@ -477,19 +485,19 @@ static struct S_DhcpOptions sDhcpOpt [] =       // 0 for unspecified
      }
      switch (sDhcpOpt[Ark].nDHCPOpt)
      {
-     case DHO_DHCP_MESSAGE_TYPE       :  * pOpt = (unsigned char) nDhcpType ; break ; 
-     case DHO_LOG_SERVERS             :  // fallthrough
-     case DHO_DHCP_SERVER_IDENTIFIER  :  * (DWORD *) pOpt = pNearest->s_addr; break ;
-	 case DHO_TFTP_SERVER             :  
+	case DHO_DHCP_MESSAGE_TYPE       :  * pOpt = (unsigned char) nDhcpType ; break ; 
+	case DHO_LOG_SERVERS             :  // fallthrough
+	case DHO_DHCP_SERVER_IDENTIFIER  :  * (DWORD *) pOpt = pNearest->s_addr; break ;
+	case DHO_TFTP_SERVER             :  
                   *pOpt++ = DHO_TFTP_SERVER;
 				  *pOpt   = lstrlen (sSettings.szTftpLocalIP[0]!=0 ? sSettings.szTftpLocalIP : inet_ntoa (* pNearest) );
                    memcpy (pOpt+1, sSettings.szTftpLocalIP[0]!=0 ? sSettings.szTftpLocalIP : inet_ntoa (* pNearest), *pOpt);
                    pOpt += 1+*pOpt; 
 				   break;
 
-     case DHO_SUBNET_MASK             :  * (DWORD *) pOpt = inet_addr(sParamDHCP.szMask); break ;
+	case DHO_SUBNET_MASK             :  * (DWORD *) pOpt = inet_addr(sParamDHCP.szMask); break ;
 //       case DHO_ROUTERS                 :  * (DWORD *) pOpt = (sParamDHCP.dwGateway.s_addr == 0xffffffff ? pDhcpPkt->yiaddr.s_addr : sParamDHCP.dwGateway.s_addr); break ;
-     case DHO_ROUTERS                 : 
+	case DHO_ROUTERS                 : 
 			// if gateway is not valid, forget this option
 		   if ( inet_addr(sParamDHCP.szGateway)!=INADDR_NONE )
 		   {
@@ -526,7 +534,7 @@ static struct S_DhcpOptions sDhcpOpt [] =       // 0 for unspecified
      case DHO_DHCP_REBINDING_TIME     :  * (DWORD *) pOpt = htonl ((sParamDHCP.nLease*80)/100 * 60);  break ;
      case DHO_BOOT_SIZE               :
               // translate $IP$ and $MAC$ from boot file name
-              TranslateExp (sParamDHCP.szBootFile, sz, pDhcpPkt->yiaddr, pDhcpPkt->chaddr);
+              TranslateExp (sParamDHCP.szBootFile, sz, pDhcpPkt->yiaddr, pDhcpPkt->chaddr, iLastArch);
               hFile = CreateFile(sz,        // open the file
                                  GENERIC_READ,                 // open for reading
                                  FILE_SHARE_READ,              // share for reading
@@ -605,7 +613,8 @@ static struct S_DhcpOptions sDhcpOpt [] =       // 0 for unspecified
                 if (sParamDHCP.t[Evan].nAddOption != 0)
                 {
                    *pOpt++ = (unsigned char) sParamDHCP.t[Evan].nAddOption;
-				   *pOpt = TranslateParam2Value (pOpt+1, 64, sParamDHCP.t[Evan].szAddOption, pDhcpPkt->yiaddr, pDhcpPkt->chaddr);
+				   *pOpt = TranslateParam2Value (pOpt+1, 64, sParamDHCP.t[Evan].szAddOption, 
+								 pDhcpPkt->yiaddr, pDhcpPkt->chaddr, iLastArch);
                    pOpt += 1+*pOpt;
                }
               break;
@@ -640,6 +649,7 @@ struct LL_IP  *pCurIP=NULL, *pProposedIP=NULL;	// Thanks Sam Leitch !
 int            Ark, nDhcpType = 0;
 struct in_addr in_RequestedAddr;
 DWORD sStaticIP;
+unsigned short iLastArch;	// architecture required by client
 
     if (IsDHCP (*pDhcpPkt))
     {
@@ -649,6 +659,14 @@ DWORD sStaticIP;
      }
     if (pDhcpPkt->yiaddr.s_addr!=INADDR_ANY  &&  pDhcpPkt->yiaddr.s_addr!=INADDR_NONE )
             return FALSE ; // address already assigned
+
+	// Get Architecture requested by client
+	p = DHCPSearchOptionsField(pDhcpPkt->options, DHO_PXE_CLIENT_ARCH_ID, NULL);
+	if (p != NULL)
+	{
+		iLastArch = ntohs(* (unsigned short *) p);
+		LOG(3, "iLastArch %d", iLastArch);
+	}
 
      // the tab has one undef raw
      for (Ark=0 ; Ark<SizeOfTab(tDHCPType)-1 && nDhcpType!=tDHCPType[Ark].nType ; Ark++) ;
@@ -706,8 +724,8 @@ DWORD sStaticIP;
             // populate the packet to be returned
             pDhcpPkt->op = BOOTREPLY;
             // translate $IP$ and $MAC$ from boot file name
-            TranslateExp (sParamDHCP.szBootFile, pDhcpPkt->file, pDhcpPkt->yiaddr, pDhcpPkt->chaddr);
-           *pSize = DHCPOptionsReply (pDhcpPkt, DHCPOFFER, receivingAddress);
+            TranslateExp (sParamDHCP.szBootFile, pDhcpPkt->file, pDhcpPkt->yiaddr, pDhcpPkt->chaddr, iLastArch);
+           *pSize = DHCPOptionsReply (pDhcpPkt, DHCPOFFER, receivingAddress, iLastArch);
             break ;
 
 		//NJW Changed how requests are handled to mimic linux -- requests are responded to even if we didn't originally allocate, but only if the requested address is in our pool range
@@ -723,8 +741,8 @@ DWORD sStaticIP;
                    pDhcpPkt->op = BOOTREPLY;
                    pDhcpPkt->yiaddr.s_addr = sStaticIP;
                  // translate $IP$ and $MAC$ from boot file name
-                 TranslateExp (sParamDHCP.szBootFile, pDhcpPkt->file, pDhcpPkt->yiaddr, pDhcpPkt->chaddr);
-                   *pSize = DHCPOptionsReply (pDhcpPkt, DHCPACK, receivingAddress);
+                 TranslateExp (sParamDHCP.szBootFile, pDhcpPkt->file, pDhcpPkt->yiaddr, pDhcpPkt->chaddr, iLastArch);
+                   *pSize = DHCPOptionsReply (pDhcpPkt, DHCPACK, receivingAddress, iLastArch);
 				   break;
 			}
 
@@ -773,8 +791,8 @@ DWORD sStaticIP;
 				// populate the packet to be returned
 				pDhcpPkt->op = BOOTREPLY;
 				pDhcpPkt->yiaddr.s_addr = pProposedIP->dwIP.s_addr;
-				TranslateExp (sParamDHCP.szBootFile, pDhcpPkt->file, pDhcpPkt->yiaddr, pDhcpPkt->chaddr);
-				*pSize = DHCPOptionsReply (pDhcpPkt, DHCPACK, receivingAddress);
+				TranslateExp (sParamDHCP.szBootFile, pDhcpPkt->file, pDhcpPkt->yiaddr, pDhcpPkt->chaddr, iLastArch);
+				*pSize = DHCPOptionsReply (pDhcpPkt, DHCPACK, receivingAddress, iLastArch);
 			}
 			else
 			{

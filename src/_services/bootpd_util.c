@@ -18,6 +18,25 @@
 #include "bootpd_functions.h"
 
 
+// IANA PXE Architceture Name (conflictiong with RFC 4578)
+const struct S_PXE_Option93_Architecture sPXE_Architecture [] =
+{
+        //Type   Architecture Name
+        //----   ---------------- -
+        0,    "x86",
+        1,    "NEC/PC98",       // deprecated
+        2,    "Itanium",
+        3,    "DEC Alpha",      // deprecated
+        4,    "x86",            // deprecated
+        5,    "Intel Lean Client", // deprecated
+        6,    "x86",
+        7,    "x64",
+        8,    "Xscale",         // deprecated
+        9,    "x64",            // may be either x86 ot x64
+       10,    "arm32",
+       11,    "arm64",
+};
+
 
 /*
  *
@@ -170,7 +189,7 @@ int FindAdapterIP(char *szIP, DWORD *pdwAdapter, DWORD *pdwFirstAdapter)
 // Translates the option values into a value
 // Use the SnmpCmd syntax ("a ip @" "s string", "i integer", "x string", "u unsigned")
 //////////////////////////////////////////////////////////////////////////////////////////////
-int TranslateParam2Value (char *buffer, int len, const char *opt_val, struct in_addr ip, const char *tMac)
+int TranslateParam2Value (char *buffer, int len, const char *opt_val, struct in_addr ip, const char *tMac, unsigned short iLastArch)
 {
 char sz[256];
 const char *p, *q;
@@ -192,7 +211,7 @@ static const char cvt[] = { 0, 1, 1, 2, 2, 4, 4, 4, 4, 8, 8, 8, 8, 8, 8, 8, 8 };
 				return nIPAddr * sizeof (unsigned long);
 			case 's' : // string
 					lstrcpyn (sz, p, len);
-					TranslateExp (sz, buffer, ip, tMac);
+					TranslateExp (sz, buffer, ip, tMac, iLastArch);
 					buffer [len-1] = 0;
 					return lstrlen (buffer);
 			case 'I' :	// integer 
@@ -235,7 +254,7 @@ static const char cvt[] = { 0, 1, 1, 2, 2, 4, 4, 4, 4, 8, 8, 8, 8, 8, 8, 8, 8 };
    }
    // non trouve --> conserver la chaine
 	lstrcpyn (sz, opt_val, len);
-	TranslateExp (sz, buffer, ip, tMac);
+	TranslateExp (sz, buffer, ip, tMac, iLastArch);
 	( (char *) buffer) [len-1] = 0;
 	return lstrlen (buffer);
 } // TranslateParam2Value
@@ -379,8 +398,8 @@ return TRUE;
 ///////////////////////////////////////////
 //  translation
 ///////////////////////////////////////////
-// translate $IP$ and $MAC$ keywords
-char *TranslateExp (const char *exp, char *to, struct in_addr ip, const char *tMac)
+// translate $IP$, $ARCH$ and $MAC$ keywords
+char *TranslateExp (const char *exp, char *to, struct in_addr ip, const char *tMac, unsigned short my_iLastArch)
 {
 char *q;
 size_t  Ark;
@@ -395,7 +414,20 @@ char sz [256];		// somewhat larger that DHCP_FILE_LEN (128 bytes)
 // LOG (1, "MAC is <%s>\n", haddrtoa (tMac, 6, '.'));
 
 
-    if ( (q=strstr (exp, "$IP$")) != NULL )
+    if ((q = strstr(exp, "$ARCH$")) != NULL)
+    {
+            lstrcpyn(sz, exp, 1 + (int)(q - exp));  // get the beginning of the string
+            // search if architceture is known
+            for (Ark = 0; Ark < SizeOfTab(sPXE_Architecture) && sPXE_Architecture[Ark].val != my_iLastArch; Ark++);
+            if (sPXE_Architecture[Ark].val == my_iLastArch)
+            {
+                lstrcat(sz, sPXE_Architecture[Ark].name);
+                LOG(1, "ARCH is %s, my_iLastArch = %d \n", sPXE_Architecture[Ark].name, my_iLastArch);
+            }
+            lstrcat(sz, q + sizeof "$ARCH$" - 1);   // skip $ARCH$, but get the rest of the string
+            lstrcpyn(to, sz, DHCP_FILE_LEN - 1);
+    }
+    else if ( (q=strstr (exp, "$IP$")) != NULL )
     {
        lstrcpyn (sz, exp, 1 + (int) (q - exp) );
        lstrcat (sz, inet_ntoa (ip) );
