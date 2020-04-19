@@ -33,5 +33,5 @@ struct LL_IP *DHCPSearchByMacAddress (const unsigned char *pMac, int nMacLen);
 void Dhcp_Send_Leases (const struct LL_IP *tIP[], int nbLeases);
 void DHCPDestroyItem (struct LL_IP *pCur);
 
-int TranslateParam2Value (void *buffer, int len, const char *opt_val, struct in_addr ip, const char *tMac);
+int TranslateParam2Value (void *buffer, int len, const char *opt_val, struct in_addr ip, const char *tMac, unsigned short architecture);
 int ArpDeleteHost(struct in_addr addr);

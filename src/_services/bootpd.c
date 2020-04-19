@@ -407,7 +407,7 @@ return pCurIP;
 //////////////////////////////////////////////////////////////////////////////////////////////
 // fill DHCP fields
 //////////////////////////////////////////////////////////////////////////////////////////////
-int DHCPOptionsReply(struct dhcp_packet* pDhcpPkt, int nDhcpType, struct sockaddr_in* receivingAddress)
+int DHCPOptionsReply(struct dhcp_packet* pDhcpPkt, int nDhcpType, struct sockaddr_in* receivingAddress, unsigned short iLastArch)
 {
 unsigned char  *pOpt = (unsigned char *) (pDhcpPkt->options + (sizeof DHCP_OPTIONS_COOKIE - 1));
 HANDLE            hFile;
@@ -421,7 +421,6 @@ int				nDhcpAgentOpt=0;
 unsigned char  *pSub82;
 unsigned char szDhcpAgentOptSub1[128],szDhcpAgentOptSub2[128];
 int           msgSize;
-unsigned short iLastArch;
 
 static struct S_DhcpOptions sDhcpOpt [] =       // 0 for unspecified
 {
