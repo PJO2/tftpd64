@@ -13,4 +13,4 @@ Initializations are in the _main directory
 
 tftpd32.sln and .vcxproj files are the project files necessary for building the executables with Visual Studio.
 
-All code is released under the European Public License, which is compatible with the GPLv2.
+All code is released under the European Union Public License, which is compatible with the GPLv2.

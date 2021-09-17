@@ -156,7 +156,7 @@ int			Rc=TRUE;
 HDC 		hDC;
 
 
-	// retrive Display Context
+	// retrieve Display Context
 	hDC = GetDC (hWnd);
 
 	// iterate for each line,
@@ -283,7 +283,7 @@ HICON    hParentIcon;
 			res->hIcon = LoadIcon (NULL, tIcon[nIconIdx]);
 
 		// inherit parent icon
-		// try different methos
+		// try different methods
 		if ( 
 			    (hParentIcon = (HICON) SendMessage (GetParent(hwndDlg), WM_GETICON, ICON_SMALL, 0)) != NULL
 		     || (hParentIcon = (HICON) SendMessage (GetParent(hwndDlg), WM_GETICON, ICON_BIG, 0)) != NULL
@@ -301,7 +301,7 @@ static int ReleaseResources (HWND hwndDlg, HWND hButtonWnd, const struct S_myMsg
 {
 int Ark;
 int Rc=-1;
-		// relase our icon
+		// release our icon
 		if (res->hIcon!=NULL)  DestroyIcon (res->hIcon);
 		// destroy edittext control
 		if (res->hwndText)     DestroyWindow (res->hwndText);

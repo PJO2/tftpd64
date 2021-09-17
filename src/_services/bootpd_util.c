@@ -18,7 +18,7 @@
 #include "bootpd_functions.h"
 
 
-// IANA PXE Architceture Name (conflictiong with RFC 4578)
+// IANA PXE Architecture Name (conflicting with RFC 4578)
 const struct S_PXE_Option93_Architecture sPXE_Architecture [] =
 {
         //Type   Architecture Name
@@ -32,7 +32,7 @@ const struct S_PXE_Option93_Architecture sPXE_Architecture [] =
         6,    "x86",
         7,    "x64",
         8,    "Xscale",         // deprecated
-        9,    "x64",            // may be either x86 ot x64
+        9,    "x64",            // may be either x86 or x64
        10,    "arm32",
        11,    "arm64",
 };
@@ -384,7 +384,7 @@ char szBuf[128];
       sParamDHCP.nLease=DHCP_DEFAULT_LEASE_TIME;
       LOG (12, "%d, Lease time not specified, set to 2 days", GetCurrentThreadId ());
    }
-   // compatability 3 -> 4
+   // compatibility 3 -> 4
    if (sParamDHCP.szWins[0]==0  && sParamDHCP.szDns1[0]!=0)
    {
       lstrcpy (sParamDHCP.szWins, sParamDHCP.szDns1);
@@ -417,7 +417,7 @@ char sz [256];		// somewhat larger that DHCP_FILE_LEN (128 bytes)
     if ((q = strstr(exp, "$ARCH$")) != NULL)
     {
             lstrcpyn(sz, exp, 1 + (int)(q - exp));  // get the beginning of the string
-            // search if architceture is known
+            // search if architecture is known
             for (Ark = 0; Ark < SizeOfTab(sPXE_Architecture) && sPXE_Architecture[Ark].val != my_iLastArch; Ark++);
             if (sPXE_Architecture[Ark].val == my_iLastArch)
             {
@@ -619,7 +619,7 @@ void ZeroRenewTime(struct LL_IP* pCur)
       AsyncSaveKey(TFTPD32_DHCP_KEY, key, t, strlen(t) + 1, REG_SZ, szTftpd32IniFile);
 }
 
-//Completely renumbers and rewrites the lease list from current membory.  
+//Completely renumbers and rewrites the lease list from current memory.  
 void ReorderLeases()
 {
    int i;
@@ -662,7 +662,7 @@ void LoadLeases(void)
  
    // From Nick : I realized that there was a race condition in that code, 
    // particularly with the reading and saving of KEY_LEASE_NUMLEASES
-   // I’ve added a function, which LoadLeases calls immediately on entry:
+   // I've added a function, which LoadLeases calls immediately on entry:
    WaitForMsgQueueToFinish (LL_ID_SETTINGS);
 
    nAllocatedIP = 0;
@@ -850,7 +850,7 @@ return NULL;
 
 // ---------------------------------------------------------------------
 // Sample code PJO Nov 2013  
-// send a broadcaast on all interfaces except the loopback
+// send a broadcast on all interfaces except the loopback
 // that was used as POC to show how badly Windows 7 manage broadcasts  
 // ---------------------------------------------------------------------
 int DHCPSendFrom (struct sockaddr_in *pFrom, struct sockaddr_in *pTo, struct dhcp_packet *pDhcpPkt, int nSize);

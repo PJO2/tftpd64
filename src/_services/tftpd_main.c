@@ -140,7 +140,7 @@ char               szIPv4 [MAXLEN_IPv6];
 				       szServ, sizeof szServ,
 				       NI_NUMERICHOST | AI_NUMERICSERV );
 		SetLastError (KeepLastError); // getnameinfo has reset LastError !
-	   // 3 causes : access violation, socket already bound, bind on an adress 
+	   // 3 causes : access violation, socket already bound, bind on an address 
 	   switch (GetLastError ())
 	   {
 			case WSAEADDRNOTAVAIL :   // 10049

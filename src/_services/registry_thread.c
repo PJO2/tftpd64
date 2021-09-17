@@ -73,7 +73,7 @@ static void DeleteMsg (struct S_ini *pdel)
 } // DeleteMsg
 
 // ---------------------------------------------------------------
-//a therad which asynchronously save th registry entries
+//a thread which asynchronously save the registry entries
 // ---------------------------------------------------------------
 void AsyncSaveKeyBckgProc (void *param)
 {

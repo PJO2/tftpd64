@@ -139,7 +139,7 @@ int NbMsg, Ark, NbChar;
    for (NbChar=0, Ark=0 ;  Ark < NbMsg ;  Ark++)
       NbChar += (int) SendMessage (hListBox, LB_GETTEXTLEN, Ark, 0);
 
-   // allocat enough space for char + end of lines + NULL
+   // allocate enough space for char + end of lines + NULL
    NbChar += 2 * NbMsg + 1;
    p = malloc (NbChar);
    if (p==NULL) { MessageBeep (-1); return; }

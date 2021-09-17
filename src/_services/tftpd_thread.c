@@ -60,7 +60,7 @@ BOOL          bForward = (    strstr (szFile, "..")==NULL
         case SECURITY_STD  :
             if (! bForward) SetLastError (ERROR_DIRECTORY);
             return bForward;
-        // SECURITY_HIGH : if write request file shoul exist and be empty
+        // SECURITY_HIGH : if write request file should exist and be empty
         case SECURITY_HIGH :
             if (bForward)
             {
@@ -245,7 +245,7 @@ SOCKADDR_STORAGE in ;
 int       Rc;
 
 
-   // if settings unset or unconsistent, use defaults
+   // if settings unset or inconsistent, use defaults
    nPort =  ( nLow==69 ||  (nLow>=1024  &&  nLow<=nHigh) )  ?   nLow : 0;
 
    memset (&in, 0, sizeof in);
@@ -271,7 +271,7 @@ return Rc;
 
 
 /////////////////////
-// TftpSysError : report errror in a system call
+// TftpSysError : report error in a system call
 /////////////////////
 static int TftpSysError (struct LL_TftpInfo *pTftp, int nTftpErr, char *szText)
 {
@@ -605,7 +605,7 @@ int Rc;
         pTftp->c.dwBytes += sizeof (short);
 
         LOG (10, "send OACK %d bytes", pTftp->c.dwBytes);
-		// should OACk be sent on a specifi port (option udpport) ?
+		// should OACk be sent on a specific port (option udpport) ?
 		if (pTftp->c.nOAckPort != 0)
  		     Rc = UdpSend (  pTftp->c.nOAckPort, 
 							(struct sockaddr *) & pTftp->b.from, sizeof pTftp->b.from, 
@@ -743,7 +743,7 @@ DWORD dwPos; // pos of file pointer
          {
               tp = (struct tftphdr *)pTftp->b.buf;
 			  // need to go back due to retransmission ?
-			  // optimize cache beahviour
+			  // optimize cache behaviour
 			  dwPos = SetFilePointer(pTftp->r.hFile, 0, NULL, FILE_CURRENT);
 			  if (dwPos != pTftp->s.dwPacketSize * (pTftp->c.nLastToSend - 1))
 			  {
@@ -1039,7 +1039,7 @@ BOOL             bSuccess;
      // pTftp->b.from.sin_family = AF_INET;
 	 if (  pTftp->b.from.ss_family == AF_INET6  &&  IN6_IS_ADDR_V4MAPPED ( & (* (struct sockaddr_in6 *) & pTftp->b.from ).sin6_addr )  )
 	 {
-		 // If ingress conection is IPv4 mapped use IPv4 sockets for answer
+		 // If ingress connection is IPv4 mapped use IPv4 sockets for answer
 		 // Hack copied from Apache
 		 struct sockaddr_in in ;
 		 memset (& in, 0, sizeof in);

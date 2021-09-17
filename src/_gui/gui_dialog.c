@@ -149,7 +149,7 @@ return Rc;
 int Gui_SuspendServices (SOCKET sService)
 {
 int Rc;
-    LogToMonitor ("GUI Supsending services\n");
+    LogToMonitor ("GUI Suspending services\n");
     Rc = SendMsg (sService, C_SUSPEND, "", 1);
 return Rc;
 } // Gui_SuspendServices
@@ -298,7 +298,7 @@ struct S_TftpGui *pTftpGui, *pTftpPrev;
 		return 0;
 	}
 #elif defined (SERVICE_EDITION)
-	// in the service, the GUI may have missed the begining of the transfer
+	// in the service, the GUI may have missed the beginning of the transfer
 	if (pTftpGui==NULL)  return 0;
 #endif
 

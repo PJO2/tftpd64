@@ -8,5 +8,3 @@
   * tftpd64 installer: all 64 bits releases with installer
   * tftpd64 portable: all 64 bits releases without installer
   * tftpd64 service edition : 64 bits releases running as a service
-  
-  

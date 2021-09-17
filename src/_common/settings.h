@@ -80,7 +80,7 @@ BOOL Tftpd32DestroySettings (void);
 
 #define TFTPD32_BEFORE_MAIN_KEY "SOFTWARE"
 #define TFTPD32_MAIN_KEY        "SOFTWARE\\TFTPD32"
-// whish to create a executable which has a other registry key
+// wish to create a executable which has a different registry key
 #ifdef  TFTPD33
 #  define TFTPD32_MAIN_KEY      "SOFTWARE\\TFTPD33"
 #endif

@@ -144,7 +144,7 @@ struct hostent  *pHostEntry;
                           & nFromLen);
 		 if (Rc < 0)
 		 {
-   		     LogToMonitor ("erreur %d during socket operation", GetLastError () );
+   		     LogToMonitor ("error %d during socket operation", GetLastError () );
 			 Sleep (100);
 		 }
          pSntpData = (struct sSntpPkt *) sSntpBuf;

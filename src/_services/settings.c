@@ -89,7 +89,7 @@ struct S_Tftpd32Settings sSettings =
 	  SECURITY_STD,          // Security
 	  TFTP_DEFPORT,          // Tftp Port
 	  FALSE,                 // Do not Hide
-	  TRUE,                  // RFC 1782-1785 Negociation
+	  TRUE,                  // RFC 1782-1785 Negotiation
 	  FALSE,                 // PXE Compatibility
 	  TRUE,                  // show progress bar ?
 	  FALSE,                 // do not create dir.txt file
@@ -98,7 +98,7 @@ struct S_Tftpd32Settings sSettings =
 	  TRUE,                  // Unix like files "/tftpboot/.."
 	  FALSE,                 // Do not beep for long transfert
 	  FALSE,                 // Virtual Root is not enabled
-	  "",                    // do not filter TFTP'slistening interface
+	  "",                    // do not filter TFTP's listening interface
 	  TFTPD32_ALL_SERVICES,  // all services are enabled
 	  0,  0,                 // use ports assigned by Windows
 	  "",                    // No log file
@@ -106,11 +106,11 @@ struct S_Tftpd32Settings sSettings =
 	  FALSE,                 // do not forward syslog msg to pipe
 	  "",                    // Default mcast address
 	  0,                     // Default mcast port
-	  1,                     // persistant leases
+	  1,                     // persistent leases
 	  0,                     // Unicast offer (BOOTP Compatibility)
 	  1,                     // ping address before assignation
 	  0,                     // Do not double answer
-	  "",                    // do not filter DHCP'slistening interface
+	  "",                    // do not filter DHCP's listening interface
 	  FALSE,				 // report errors into event log
 	  DFLT_CONSOLE_PWD,      // console password
 	  FALSE,                 // do not support port option

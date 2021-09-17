@@ -8,7 +8,7 @@
  *
  *===========================================================================
  *
- *  TcpExchangeChallenge is called after a successfull connect or accept.
+ *  TcpExchangeChallenge is called after a successful connect or accept.
  *  it exchanges a protocol version and a key to ensures that both client
  *  and server will work together
  *
@@ -35,8 +35,7 @@ struct S_Challenge
 };
 
 
-// a basic but symetric crypto function
-// a basic but symetric crypto function
+// a basic but symmetric crypto function
 static char *sym_crypt (char *sz, int nLen, const char *key)
 {
 int Ark;

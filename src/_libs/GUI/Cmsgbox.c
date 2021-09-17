@@ -156,7 +156,7 @@ BOOL		Rc=TRUE;
 HDC 		hDC;
 
 
-	// retrive Display Context
+	// retrieve Display Context
 	hDC = GetDC (hWnd);
 
 	// iterate for each line,
@@ -213,7 +213,7 @@ HWND     hParentWnd;
 		// we can safely initialize the resources shared memory
 		memset (res, 0, sizeof *res);
 
-		// retrieve the size cx and cy of the texte to be displayed
+		// retrieve the size cx and cy of the text to be displayed
 		MLGetTextExtentPoint (hwndDlg, lpData->text, lstrlen (lpData->text), & Size);
 		// PJO : 5/5/2018 : GetWindowRect(NULL,..) does not return anymore size of desktop 
 		hParentWnd = GetParent(hwndDlg);
@@ -229,7 +229,7 @@ HWND     hParentWnd;
 								TEXT_Y_POSITION,
 								Size.cx, 
 								Size.cy,
-								hwndDlg,     // Parent windo
+								hwndDlg,     // Parent window
 								NULL,       // No menu.
 								GetWindowInstance (hwndDlg), 
 								NULL);      // Pointer not needed.
@@ -288,7 +288,7 @@ HWND     hParentWnd;
 			res->hIcon = LoadIcon (NULL, tIcon[nIconIdx]);
 
 		// inherit parent icon
-		// try different methodes
+		// try different methods
 		if ( 
 			    (hParentIcon = (HICON) SendMessage (GetParent(hwndDlg), WM_GETICON, ICON_SMALL, 0)) != NULL
 		     || (hParentIcon = (HICON) SendMessage (GetParent(hwndDlg), WM_GETICON, ICON_BIG, 0)) != NULL
@@ -306,11 +306,11 @@ static int ReleaseResources (HWND hwndDlg, HWND hButtonWnd, const struct S_myMsg
 {
 int Ark;
 int Rc=-1;
-		// relase our icon
+		// release our icon
 		if (res->hIcon!=NULL)  DestroyIcon (res->hIcon);
 		// destroy edittext control
 		if (res->hwndText)     DestroyWindow (res->hwndText);
-		// wihle we destroy the buttons
+		// while we destroy the buttons
 		//    match the buttons windows handler with lParam to determine the one which was pressed
 		//    using tMapping array set the return value
 		for (Ark=0 ;   Ark < tMapping[myMsgBoxResources.style].nButtons  ;  Ark++)

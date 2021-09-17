@@ -13,7 +13,7 @@
 // Env variables
 //////////////////////////
 #define TFTP_LOG  "TFTP_LOG"        // Log Level
-#define TFTP_INI  "TFTP_INI"        // location of alternative inni file
+#define TFTP_INI  "TFTP_INI"        // location of alternative ini file
 #define TFTP_DIR  "TFTP_DIR"        // base directory
 #define TFTP_HOST "TFTP_HOST"       // The host which runs the server
 #define TFTP_PWD  "TFTP_PWD"        // The pwd to connect
