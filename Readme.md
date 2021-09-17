@@ -1,4 +1,4 @@
-**Project Description** 
+**Project Description**
 
 Tftpd64 is a lightweight multi-threaded set of servers : TFTP, DNS, SNTP, SYSLOG and DHCP.  
 
