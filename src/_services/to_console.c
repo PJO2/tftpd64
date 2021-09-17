@@ -347,7 +347,7 @@ int               Rc;
 				// Create Socket Event to process either wake up or accept 
 				tEvents [0] = WSACreateEvent();
 				WSAEventSelect (sListen, tEvents[0], FD_ACCEPT); 
-				// waits either internal sollicitation or msg recpetion
+				// waits either internal solicitation or msg reception
 				tEvents[1] = tThreads[TH_CONSOLE].hEv;
 				nTriggeredEvent = WaitForMultipleObjects (2, tEvents, FALSE, INFINITE);
 
@@ -434,7 +434,7 @@ HANDLE tEvents [EV_NUMBER];
 
         do
         {
-            // waits either internal sollicitation or msg reception
+            // waits either internal solicitation or msg reception
             tEvents[EV_TOGUI] = tThreads[TH_CONSOLE].hEv;
             nTriggeredEvent = WaitForMultipleObjects (EV_NUMBER, tEvents, FALSE, INFINITE);
             switch (nTriggeredEvent)
@@ -471,7 +471,7 @@ HANDLE tEvents [EV_NUMBER];
     }
     while ( tThreads[TH_CONSOLE].gRunning );
 
-	// terminate therad : don't listen anymore
+	// terminate thread : don't listen anymore
 	// closesocket (sListen);
 
 	// unblock some threads

@@ -2,7 +2,7 @@
 //
 // Projet TFTPD32.  April 2007 Ph.jounin
 //                  A free TFTP server for Windows
-// File ip_thread.c: periodically checks server interfaces staus
+// File ip_thread.c: periodically checks server interfaces status
 //
 //
 // source released under European Union Public License
@@ -82,11 +82,11 @@ struct S_IPAddressList        new_if;
 						 	      pUnicast->Length, 
 							      new_if.addr[new_if.nb_addr].sz, MAXLEN_IPv6, 
 							      NULL, 0,  NI_NUMERICHOST);
-				if (Rc==0) // success : link address with name od interface & increment addr number
+				if (Rc==0) // success : link address with name of interface & increment addr number
 					new_if.addr[new_if.nb_addr++].idx = new_if.nb_itf;
 			} // for each address
 		}  // for each interface
-	} // GetAdaptersAddresses successfull
+	} // GetAdaptersAddresses successful
 	else 
 	{
 	   free (pAddresses);

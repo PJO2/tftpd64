@@ -12,7 +12,7 @@
 #include <commdlg.h>
 
 
-// some shortcurts
+// some shortcuts
 #define ISDLG_CHECKED(hWnd,Ctrl) \
   (SendDlgItemMessage (hWnd, Ctrl, BM_GETCHECK, 0, 0) == BST_CHECKED)
 
@@ -568,7 +568,7 @@ static int    nAmount, Ark;
                             SendMessage (hTftpClientWnd, WM_COMMAND, IDC_CLIENT_SEND_BUTTON, 0);
                         else   ReleaseSemaphore (hTftpClientSemaphore, 1, NULL);
                    }
-                  else    // mutiple transfer either stopped or finished
+                  else    // multiple transfer either stopped or finished
                  {
                       DragFinish (hDrop);
                         KillTimer (hWnd, wParam);

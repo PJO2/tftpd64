@@ -198,7 +198,7 @@ int            Rc;
   // get number of byte to be expected
   Rc = TcpRecv (s, (LPSTR) & usToBeReceived, sizeof usToBeReceived, uTimeOut, hLogFile);
   if (Rc!=sizeof usToBeReceived)  return Rc;
-  // put in machine ordrer
+  // put in machine order
   usToBeReceived = ntohs (usToBeReceived);
   
   if (usToBeReceived > 0x7FFF)  return TCP4U_OVERFLOW;

@@ -21,7 +21,7 @@ static char buf[MAXGETHOSTSTRUCT];
   {
 
     /////////////////////////
-    // This backround window and this quirk AsyncGetHostByName call
+    // This background window and this quirk AsyncGetHostByName call
     // is here as workaround for a Windows98 bug :
     // If the address has been returned by DHCP and the DNS server is down/unreachable
     // the gethostbyname returns  "Host not found, or SERVERFAIL"
@@ -42,7 +42,7 @@ static char buf[MAXGETHOSTSTRUCT];
         PostMessage (GetParent (hWnd), WM_ADD_IP_CB, 0,
                     WSAGETASYNCERROR(lParam)==0 ?  (LPARAM) buf : 0);
         // PostMessage (hWnd, WM_CLOSE, 0, 0);
-        // refresh list evry 20 seconds
+        // refresh list every 20 seconds
         SetTimer (hWnd, WM_TFTP_GETIP, 20000, 0);
         break;
 

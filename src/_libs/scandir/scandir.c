@@ -25,7 +25,7 @@ int Rc ;
 ////////////////////////
 // Creates a line of the dir.txt file
 // use a callback function as argument since ScanDir is used either to
-// create dir.txt or to dispaly the dir window
+// create dir.txt or to display the dir window
 
 void ScanDir ( int (*f)(char *s, DWORD dw), DWORD dwParam, const char *szDirectory)
 {

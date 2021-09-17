@@ -282,7 +282,7 @@ int         Rc;
            { 
 		     HWND    hListV   = GetDlgItem (hWnd, IDC_LV_DHCP);
 			 int  Ark;
-			 // bug fixed by Colin : do nothing unless GetNextItem is successfull
+			 // bug fixed by Colin : do nothing unless GetNextItem is successful
              if ( (Ark = ListView_GetNextItem (hListV, -1, LVNI_FOCUSED)) != -1) 
 			 {LVITEM LvItem;
 			 	 LvItem.iItem = Ark;
@@ -290,7 +290,7 @@ int         Rc;
                  LvItem.mask = LVIF_PARAM;
                  if ( ListView_GetItem (hListV, & LvItem) )
                      PostMessage ( hWnd, WM_DELETE_ASSIGNATION, 0, LvItem.lParam );
-			 } // ListView_GetNextItem succesfull
+			 } // ListView_GetNextItem successful
            } //ID_DELETE_ASSIGNATION
            break;
 
@@ -934,7 +934,7 @@ void ReturnToPreviousInstance (HANDLE myMutEx, LPCSTR lpszCmdLine)
 {
 HWND hPrevWnd;
     if (myMutEx!=NULL)  CloseHandle (myMutEx);
-    // Get runnning session
+    // Get running session
     hPrevWnd = FindWindow (NULL, APP_TITLE);
     // option -kill -> close previous instance
     if (strstr (lpszCmdLine, "-kill") != NULL)
@@ -963,7 +963,7 @@ int Rc;
 int Ark=0, peerVer=0;
 	do
 	{
-	    // conect to console, service may have passed port
+	    // connect to console, service may have passed port
 		// through sSguiSettings structure
 		sService = TcpConnect (szHost, 
 							   "tftpd32",
@@ -1042,7 +1042,7 @@ LogToMonitor ( "GUI Version check OK\n" );             // permament listening so
 
 
 #ifdef STANDALONE_EDITION
-	 // Standalone edition shoud wait for services to be started
+	 // Standalone edition should wait for services to be started
 	 Gui_GetMessage (NULL, sService, TRUE, C_SERVICES_STARTED);
 #endif
 
@@ -1086,7 +1086,7 @@ DWORD no=0;
     // Locate help file
     SetIniFileName (HELPFILE, szTftpd32Help);
 
-     // Inits extended controls (ListView). MSDN says it is required, but seems really optionnal !
+     // Inits extended controls (ListView). MSDN says it is required, but seems really optional !
      InitCtrls.dwICC = ICC_LISTVIEW_CLASSES;
      InitCtrls.dwSize = sizeof(INITCOMMONCONTROLSEX);
      InitCommonControlsEx(&InitCtrls);
