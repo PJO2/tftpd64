@@ -48,6 +48,8 @@ enum {
 	   WM_ESC_EDITBOX,
 	   WM_TAB_EDITBOX,
 	   WM_ENTER_EDITBOX,
+
+	   WM_ADD_IP_CB,
 	   
        WM_ANYBODY_HERE =(WM_APP + 591),
     };  // main window

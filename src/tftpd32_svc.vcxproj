@@ -137,7 +137,7 @@
       <AdditionalDependencies>shell32.lib;ws2_32.lib;comctl32.lib;iphlpapi.lib;libs.$(PlatformShortName).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>\tftpd32\BIN\$(Configuration)\;C:\Program Files\Microsoft SDKs\Windows\v7.1\Lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <Version>4.63</Version>
+      <Version>4.70</Version>
       <AdditionalOptions>/SUBSYSTEM:CONSOLE,"5.02" %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Manifest>

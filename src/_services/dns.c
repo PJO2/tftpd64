@@ -9,6 +9,7 @@
 
 #include "headers.h"
 #include "threading.h"
+#include <string.h>
 
 #define IPv6
 
@@ -55,7 +56,7 @@ typedef struct
    unsigned short id;       // identification number
    unsigned char rd :1;     // recursion desired
    unsigned char tc :1;     // truncated message
-   unsigned char aa :1;     // authoritive answer
+   unsigned char aa :1;     // authoritative answer
    unsigned char opcode :4; // purpose of message
    unsigned char qr :1;     // query/response flag
    unsigned char rcode :4;  // response code
@@ -135,7 +136,7 @@ int anslen=0;
 	  }
 	  if (Rc<0)
 	  {
-		  LogToMonitor ("erreur %d during socket operation", GetLastError () );
+		  LogToMonitor ("error %d during socket operation", GetLastError () );
 		  Sleep (100);
 	  }
 
@@ -187,7 +188,7 @@ int host_len, n ;
 char *p;
 const char *q;
 
-  host_len = strnlen (qname, len)+1;
+  host_len = strnlen_s (qname, len)+1;
 
   // drop misformed requests
   if (     len > sizeof *req  

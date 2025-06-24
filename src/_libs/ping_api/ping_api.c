@@ -94,7 +94,7 @@ ICMPHDR                *pIcmpReply = & echoReply.echoRequest.icmpHdr;
    // Send the echo request
    nRet = sendto (rawSocket, (LPSTR) &echoReq,  sizeof echoReq, 0,
                  (LPSOCKADDR) & saDest, sizeof saDest);
-    if ( nRet < sizeof(ECHOREQUEST) )
+    if ( nRet < (int) sizeof(ECHOREQUEST) )
     {
         nRet = WSAGetLastError();
         closesocket (rawSocket) ;
@@ -138,7 +138,7 @@ ICMPHDR                *pIcmpReply = & echoReply.echoRequest.icmpHdr;
             { nRet = WSAGetLastError () ; closesocket (rawSocket);
               WSASetLastError (nRet) ;
               return PINGAPI_SOCKERROR; }
-        if (nRet < sizeof (IPHDR) + sizeof (ICMPHDR))    continue ;     // ignore packet
+        if ( nRet < (int) (sizeof (IPHDR) + sizeof (ICMPHDR)) )    continue ;     // ignore packet
 
         if (pIcmpReply->Type == ICMP_DEST_UNREACH)   { closesocket (rawSocket) ; return PINGAPI_UNREACHABLE; }
         if (pIcmpReply->Type == ICMP_TTL_EXPIRE)     { closesocket (rawSocket) ; return PINGAPI_TTLEXPIRE;   }

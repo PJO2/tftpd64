@@ -8,7 +8,7 @@
  *
  *===========================================================================
  *
- *  TcpExchangeChallenge is called after a successfull connect or accept.
+ *  TcpExchangeChallenge is called after a successful connect or accept.
  *  it exchanges a protocol version and a key to ensures that both client
  *  and server will work together
  *
@@ -35,8 +35,7 @@ struct S_Challenge
 };
 
 
-// a basic but symetric crypto function
-// a basic but symetric crypto function
+// a basic but symmetric crypto function
 static char *sym_crypt (char *sz, int nLen, const char *key)
 {
 int Ark;
@@ -54,12 +53,11 @@ int TcpExchangeChallenge (SOCKET s, int seed, int nVersion, int *peerVersion, co
 FILETIME ft;
 struct S_Challenge Out1, In1, Out2, In2;
 int Rc;
-int Ark;
 
 	GetSystemTimeAsFileTime (&ft);
     srand (ft.dwLowDateTime + seed + (unsigned) s);
 	
-    for (Ark=0 ; Ark< sizeof Out1.challenge ; Ark++)
+    for (unsigned Ark=0 ; Ark< sizeof Out1.challenge ; Ark++)
         Out1.challenge[Ark] = (unsigned char) (rand () & 0xFF);
 	Out1.pad = 0;
 

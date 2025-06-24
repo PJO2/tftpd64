@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////
 //
-// Projet TFTPD32.  Mai 98 Ph.jounin
+// Projet TFTPD32.  Started, May 98 Ph.jounin
 // File about.c:    Display license
 //
 // source released under European Union Public License
@@ -12,13 +12,13 @@
 #include "headers.h"
 
 #ifdef _M_X64
-#  define TFTPD_STRING   "TFTPD64 v4.64 Build " __DATE__ " " __TIME__
+#  define TFTPD_STRING   "TFTPD64 v4.70 Build " __DATE__ " " __TIME__
 #  define TFTPD_ABOUT_TITLE   "About TFTPD64"
 #else
 #ifndef TFTP_CLIENT_ONLY
-#     define TFTPD_STRING   "TFTPD32 v4.64 Build " __DATE__ " " __TIME__
+#     define TFTPD_STRING   "TFTPD32 v4.70 Build " __DATE__ " " __TIME__
 #else
-#     define TFTPD_STRING   "TFTPD32 Client v4.64 Build " __DATE__ " " __TIME__
+#     define TFTPD_STRING   "TFTPD32 Client v4.70 Build " __DATE__ " " __TIME__
 #endif
 #  define TFTPD_ABOUT_TITLE   "About TFTPD32"
 #endif
@@ -33,7 +33,7 @@
             "Please do not distribute\r\n"
             "NO WARRANTY\r\n\r\n"
             "Full credits will be given into release version\r\n"
-            "Offical site: http://tftpd32.jounin.net";
+            "Official site: http://tftpd32.jounin.net";
 #elif defined BAE_SYSTEMS_LEN_WHITE
 const char LICENSE_TFTPD32 [] =
 "\r\n\r\n"
@@ -57,7 +57,7 @@ const char LICENSE_TFTPD32 [] =
 "  - MD5 part is from RSA Data Security\r\n"
 "  - Icon designed by Marco\r\n"
 "  - IP checksum computation is from Mike Muss\r\n"
-"  - DHCP lease persistance is from Nick Wagner\r\n" 
+"  - DHCP lease persistence is from Nick Wagner\r\n" 
 "  - DHCP opts 82, 42 and 120 from Jesus Soto\r\n" 
 "  - DHCP header file from The Internet Software\r\n    Consortium\r\n";
 #elif defined SERVICE_EDITION

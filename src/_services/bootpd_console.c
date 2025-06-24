@@ -33,7 +33,7 @@
 
 
 
-void Dhcp_Send_Leases (const struct LL_IP *tIP[], int nbLeases)
+void Dhcp_Send_Leases (struct LL_IP *tIP[], int nbLeases)
 {
 struct S_DhcpLeases dhcp;
 int Ark;

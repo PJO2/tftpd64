@@ -105,7 +105,7 @@ int                      Ark;
     pSntpData->reftime_frac= 
     tLastId [nLoopDetector++ % SizeOfTab(tLastId)]  = 
     pSntpData->xmt_frac    = htonl ( sSystemTime.wMilliseconds * MILLISECONDS_TO_NTP_TIMESTAMP 
-									 + rand() & 0xFFFF ) ;
+									 + ( rand() & 0xFFFF ) ) ;
 
 return pSntpData;
 }   // SntpFillMessage 
@@ -144,7 +144,7 @@ struct hostent  *pHostEntry;
                           & nFromLen);
 		 if (Rc < 0)
 		 {
-   		     LogToMonitor ("erreur %d during socket operation", GetLastError () );
+   		     LogToMonitor ("error %d during socket operation", GetLastError () );
 			 Sleep (100);
 		 }
          pSntpData = (struct sSntpPkt *) sSntpBuf;

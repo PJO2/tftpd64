@@ -133,7 +133,7 @@ return FALSE;
 // Dir window callback
 LRESULT CALLBACK ShDirProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-static const int tTabs[] = { 90, 125 };
+static const int tTabs[] = { 100, 150 };
 struct S_DirectoryContent *pDir = (struct S_DirectoryContent *) lParam;
 HWND hLBWnd = GetDlgItem (hWnd, IDC_LB_SHDIR);
 int Ark;

@@ -134,7 +134,7 @@ struct S_DHCP_Param  sNewParamDHCP;      // New param
 HWND hMainWnd = hWnd;
 INT   Ark;
 int	  iErr=0;
-char sz [256], *p=NULL;	// DNS Server
+char sz [256];	// DNS Server
 
      memset (& sNewParamDHCP, 0, sizeof sNewParamDHCP);
      // save parameters not assigned by GUI

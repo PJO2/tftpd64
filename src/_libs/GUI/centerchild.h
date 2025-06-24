@@ -9,6 +9,6 @@
 #define CCW_INSIDE  0x0020  // fails if child window larger than its parent
 
 BOOL CenterChildWindow (
-    HWND hChildWnd,         // Wnd which have to be centerd
+    HWND hChildWnd,         // Wnd which have to be centered
     int uType               // options
     );

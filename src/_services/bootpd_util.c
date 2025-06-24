@@ -18,7 +18,7 @@
 #include "bootpd_functions.h"
 
 
-// IANA PXE Architceture Name (conflictiong with RFC 4578)
+// IANA PXE Architceture Name (conflicting with RFC 4578)
 const struct S_PXE_Option93_Architecture sPXE_Architecture [] =
 {
         //Type   Architecture Name
@@ -32,7 +32,7 @@ const struct S_PXE_Option93_Architecture sPXE_Architecture [] =
         6,    "x86",
         7,    "x64",
         8,    "Xscale",         // deprecated
-        9,    "x64",            // may be either x86 ot x64
+        9,    "x64",            // may be either x86 or x64
        10,    "arm32",
        11,    "arm64",
 };
@@ -317,7 +317,7 @@ char szBuf[64];
 
      sParamDHCP = *pNewParamDHCP;
 
-     for (Ark=0 ; Ark<SizeOfTab (tDHCPd32Entry) ; Ark++)
+     for (Ark=0 ; Ark<<SizeOfTab (tDHCPd32Entry) ; Ark++)
         AsyncSaveKey (  TFTPD32_DHCP_KEY,
                         tDHCPd32Entry [Ark].szEntry,
                         tDHCPd32Entry [Ark].pValue,
@@ -340,7 +340,7 @@ return TRUE;
 } // DHCPSaveConfig
 
 // read configuration either from INI file (if it exists) or from the registry
-int DHCPReadConfig ( )
+int DHCPReadConfig (void)
 {
 int   Ark;
 char szBuf[128];
@@ -384,7 +384,7 @@ char szBuf[128];
       sParamDHCP.nLease=DHCP_DEFAULT_LEASE_TIME;
       LOG (12, "%d, Lease time not specified, set to 2 days", GetCurrentThreadId ());
    }
-   // compatability 3 -> 4
+   // compatibility 3 -> 4
    if (sParamDHCP.szWins[0]==0  && sParamDHCP.szDns1[0]!=0)
    {
       lstrcpy (sParamDHCP.szWins, sParamDHCP.szDns1);
@@ -406,7 +406,7 @@ size_t  Ark;
 char sz [256];		// somewhat larger that DHCP_FILE_LEN (128 bytes)
 
 	// truncate input
-	Ark = strnlen ( to, DHCP_FILE_LEN -1 );  	to [Ark] = 0;
+	Ark = strnlen_s ( to, DHCP_FILE_LEN -1 );  	to [Ark] = 0;
 
 // LOG (1, "bootp file fmt is <%s>\n", exp);
 // LOG (1, "rqst file is <%s>\n", to);
@@ -417,7 +417,7 @@ char sz [256];		// somewhat larger that DHCP_FILE_LEN (128 bytes)
     if ((q = strstr(exp, "$ARCH$")) != NULL)
     {
             lstrcpyn(sz, exp, 1 + (int)(q - exp));  // get the beginning of the string
-            // search if architceture is known
+            // search if architecture is known
             for (Ark = 0; Ark < SizeOfTab(sPXE_Architecture) && sPXE_Architecture[Ark].val != my_iLastArch; Ark++);
             if (sPXE_Architecture[Ark].val == my_iLastArch)
             {
@@ -490,7 +490,7 @@ return memcmp(ip1->sMacAddr, ip2->sMacAddr, 6);
 }
 
 //Increment the number of allocated entries
-void IncNumAllocated()
+void IncNumAllocated(void)
 {
    ++nAllocatedIP;
    if (sSettings.bPersLeases)
@@ -498,7 +498,7 @@ void IncNumAllocated()
 }
 
 //Decrement the number of allocated entries
-void DecNumAllocated()
+void DecNumAllocated(void)
 {
    --nAllocatedIP;
    if (sSettings.bPersLeases)
@@ -619,8 +619,8 @@ void ZeroRenewTime(struct LL_IP* pCur)
       AsyncSaveKey(TFTPD32_DHCP_KEY, key, t, strlen(t) + 1, REG_SZ, szTftpd32IniFile);
 }
 
-//Completely renumbers and rewrites the lease list from current membory.  
-void ReorderLeases()
+//Completely renumbers and rewrites the lease list from current memory.  
+void ReorderLeases(void)
 {
    int i;
    AsyncSaveKey (TFTPD32_DHCP_KEY, 
@@ -850,7 +850,7 @@ return NULL;
 
 // ---------------------------------------------------------------------
 // Sample code PJO Nov 2013  
-// send a broadcaast on all interfaces except the loopback
+// send a broadcast on all interfaces except the loopback
 // that was used as POC to show how badly Windows 7 manage broadcasts  
 // ---------------------------------------------------------------------
 int DHCPSendFrom (struct sockaddr_in *pFrom, struct sockaddr_in *pTo, struct dhcp_packet *pDhcpPkt, int nSize);

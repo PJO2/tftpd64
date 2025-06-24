@@ -161,7 +161,7 @@ char               szServ[NI_MAXSERV];
 				       szServ, sizeof szServ,
 				       NI_NUMERICHOST | AI_NUMERICSERV );
 		SetLastError (KeepLastError); // getnameinfo has reset LastError !
-	   // 3 causes : access violation, socket already bound, bind on an adress 
+	   // 3 causes : access violation, socket already bound, bind on an address non available
 	   switch (GetLastError ())
 	   {
 			case WSAEADDRNOTAVAIL :   // 10049
@@ -350,7 +350,7 @@ int Rc;
 
   for ( Ark=0 ;  Ark<TH_NUMBER ; Ark++ )
   {
-		// process mangement threads and 
+		// process management threads and 
 		if (    ( !bSoft   &&   TFTPD32_MNGT_THREADS & tThreadsConfig[Ark].serv_mask )
 			 ||   sSettings.uServices  & tThreadsConfig[Ark].serv_mask )
 		{

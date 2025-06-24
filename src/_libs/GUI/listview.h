@@ -2,7 +2,7 @@
 //
 
 
-const struct S_LVHeader
+struct S_LVHeader
 {
     int			fmt;		// format (cf LVCOLUMN)
     int			cx;			// width

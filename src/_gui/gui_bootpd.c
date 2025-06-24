@@ -110,7 +110,7 @@ HWND hWnd = hDbgMainWnd;
 					  ltime.tm_mon+1, ltime.tm_mday,ltime.tm_hour, ltime.tm_min, ltime.tm_sec);	
 	     ListView_SetItemText (hListV, itemPos, 3, szDate);
 	 }	// renew ! =0	   
-   } // parse all alocations
+   } // parse all allocations
 } // DhcpRefresh_ListView 
 
 

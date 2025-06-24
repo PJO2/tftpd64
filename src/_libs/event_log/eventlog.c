@@ -15,7 +15,7 @@
 int WriteIntoEventLog (const char *txt, WORD evId)
 {
 HANDLE hEvLog;
-int    Rc;
+int    Rc = (int)INVALID_HANDLE_VALUE;
 const char *t[] = { "\n", txt }; 
 	hEvLog = RegisterEventSource (NULL, "Tftpd32");
 	if ( hEvLog != INVALID_HANDLE_VALUE )

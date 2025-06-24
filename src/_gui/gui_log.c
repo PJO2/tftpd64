@@ -28,7 +28,7 @@ HDC        hDC;
 DWORD      dwMaxMsg = 250;
 char       szBuf[LOGSIZE + 30];
 LRESULT    Rc;
-static bInit=FALSE;
+static int bInit=FALSE;
 
 #define CROLLBAR
 #ifdef CROLLBAR

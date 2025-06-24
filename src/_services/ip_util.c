@@ -2,7 +2,7 @@
 //
 // Projet TFTPD32.  December 2006 Ph.jounin
 // Projet DHCPD32. December 2006 Ph.jounin
-// File bootp.c:    Bootp/Dchp utilities
+// File bootp.c:    Bootp/DHCP utilities
 //
 // source released under European Union Public License
 //
@@ -66,12 +66,12 @@ return FALSE ;
 
 /////
 // scan the addresses of the server, returns the first which has the same subnet than the host
-// if bExact is FALSE and the search was not successfull, the first address is returned
+// if bExact is FALSE and the search was not successful, the first address is returned
 struct in_addr *FindNearestServerAddress (struct in_addr *pHost, struct in_addr *pMask, BOOL bExact)
 {
-int             Ark;
+int             Ark=0;
 char            szName [256];
-struct hostent *pHostEntry;
+struct hostent *pHostEntry=NULL;
 static DWORD    dwLoopback = 0x7F000001;  // loopback
 char           *pLoopback = (char *) &dwLoopback;
 

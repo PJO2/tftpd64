@@ -13,7 +13,7 @@
 #  define REGISTRY_HKEY HKEY_LOCAL_MACHINE
 #endif
 
-// some shortcurts
+// some shortcuts
 #define ISDLG_CHECKED(hWnd,Ctrl) \
  (SendDlgItemMessage (hWnd, Ctrl, BM_GETCHECK, 0, 0) == BST_CHECKED)
 #define CHECK_DLG_IF(hWnd, Ctrl, Flag) \
@@ -36,7 +36,7 @@
 #define  RESET_DEFAULT_TEXT  "Reset current configuration\nand destroy registry entries ?"
 
 
-// The tabs are managed as in gui_move_win.c : The widget are hidden or shown according to the active tab
+// The tabs are managed as in gui_move_win.c : The widgets are hidden or shown according to the active tab
 // Note that the widget are not resizeable !
 
 
@@ -506,7 +506,7 @@ BOOL FormMain_OnInitDialog(HWND hWnd, HWND hwndFocus, LPARAM lParam)
      Edit_Enable (GetDlgItem (hWnd, IDC_SYSLOG_FILE), sGuiSettings.szSyslogFile[0]!=0);
      CHECK_DLG_IF (hWnd, IDC_CHECK_PIPE_SYSLOG, sGuiSettings.bSyslogPipe);
 
-	 // DHCP Persistant leases + Address + ping
+	 // DHCP Persistent leases + Address + ping
      CHECK_DLG_IF (hWnd, IDC_CHECK_PERS_LEASES, sGuiSettings.bPersLeases);
      CHECK_DLG_IF (hWnd, IDC_CHECK_PING, sGuiSettings.bPing);
      CHECK_DLG_IF (hWnd, IDC_CHECK_DOUBLE_ANSWER, sGuiSettings.bDoubleAnswer);
@@ -634,7 +634,7 @@ char        szBrowsePath [MAX_PATH];
         case IDC_CHECK_WINSIZE :
            if ( ISDLG_CHECKED (hWnd, wParam) )
             {
-               MY_WARNING ("Use an anticipation window acclerates transfers\nOn the other hand, it may not work with your TFTP client.");
+               MY_WARNING ("Use an anticipation window accelerates transfers\nOn the other hand, it may not work with your TFTP client.");
                Edit_Enable ( GetDlgItem (hWnd, IDC_WINSIZE), TRUE );
             }
           else

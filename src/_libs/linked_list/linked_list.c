@@ -22,7 +22,7 @@
 // ---------------------------------------------------------------
 
 
-#define SizeOfTab(x)  (sizeof x / sizeof *x)
+#define SizeOfTab(x)  ( (int) (sizeof x / sizeof *x) )
     
 static struct S_LL
 {
@@ -42,7 +42,7 @@ static int nbLL=0;
 // linked list management
 // ---------------------------------------------------------------
 
-// CReate a new LL structure  (should be also protected by a semaphore...)
+// Create a new LL structure  (should be also protected by a semaphore...)
 int LL_Create (int id, int max_msg)
 {
    if (id >= SizeOfTab (tLL)-1)  return -1;

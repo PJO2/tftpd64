@@ -11,7 +11,6 @@
 #include "threading.h"
 
 
-
 static HANDLE hSysLogFile = INVALID_HANDLE_VALUE;
 
 const char *sPipeName = "\\\\.\\pipe\\Tftpd32Syslog";
@@ -58,7 +57,7 @@ int Ark;
 
    SyslogTxt[nSize] = 0;
    for (Ark=0 ;  Ark<nSize ;  Ark++)
-     if (! isascii (SyslogTxt[Ark]))  SyslogTxt[Ark]='.';
+     if (! __isascii (SyslogTxt[Ark]))  SyslogTxt[Ark]='.';
 
 return TRUE;
 } // CheckSyslogMsg

@@ -16,6 +16,7 @@
 #pragma pack()
 
 #include <windows.h>
+#include <windef.h>
 #include <windowsx.h>
 #include <winsock2.h>
 #include <ws2tcpip.h>
@@ -31,6 +32,11 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <process.h>
+
+// for PellesC compatibility
+#ifndef _MAX_PATH
+#define    _MAX_PATH MAX_PATH
+#endif 
 
 #include "_libs/GUI/cmsgbox.h"
 #include "_libs/GUI/centerchild.h"

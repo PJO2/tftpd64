@@ -140,7 +140,7 @@ char               szIPv4 [MAXLEN_IPv6];
 				       szServ, sizeof szServ,
 				       NI_NUMERICHOST | AI_NUMERICSERV );
 		SetLastError (KeepLastError); // getnameinfo has reset LastError !
-	   // 3 causes : access violation, socket already bound, bind on an adress 
+	   // 3 causes : access violation, socket already bound, bind on an address non available
 	   switch (GetLastError ())
 	   {
 			case WSAEADDRNOTAVAIL :   // 10049
@@ -535,6 +535,7 @@ struct LL_TftpInfo *pTftp;
 // events : either socket event or wake up by another thread
 enum { E_TFTP_SOCK=0, E_TFTP_WAKE, E_TFTP_EV_NB };
 HANDLE tObjects [E_TFTP_EV_NB];
+int dwRefreshInterval = sSettings.dwRefreshInterval;
 
     // creates socket and starts permanent threads
         if (pTftpFirst==NULL)  CreatePermanentThreads ();
@@ -570,7 +571,7 @@ HANDLE tObjects [E_TFTP_EV_NB];
 		Rc = WaitForMultipleObjects ( E_TFTP_EV_NB,
 										tObjects,
 										FALSE,
-										sSettings.dwRefreshInterval );
+										dwRefreshInterval);
 #ifdef RT                                      
 if (Rc!=WAIT_TIMEOUT) LogToMonitor ( "exit wait, object %d\n", Rc);
 #endif
@@ -605,12 +606,16 @@ if (pTftp==NULL) { LogToMonitor ("NULL POINTER pTftpFirst:%p\n", pTftpFirst); Sl
 				ResetEvent( hSocketEvent );
 				WSAEventSelect (tThreads[TH_TFTP].skt, hSocketEvent, FD_READ);
 				// ResetSockEvent (sListenerSocket, hSocketEvent);
+				dwRefreshInterval = sSettings.dwRefreshInterval / 4 + 100; // update frequenlty
 				break;
 
 			case  WAIT_TIMEOUT :
 				SendStatsToGui(gSendFullStat); // full stat flag may be set by console
 				gSendFullStat = FALSE;         // reset full stat flag
 				// ResetSockEvent (sListenerSocket, hSocketEvent);
+				if (dwRefreshInterval * 2 < sSettings.dwRefreshInterval)
+					  dwRefreshInterval *= 2;
+				else  dwRefreshInterval = sSettings.dwRefreshInterval;
 				break;
 			case -1 :
 	LogToMonitor ( "WaitForMultipleObjects error %d\n", GetLastError() );

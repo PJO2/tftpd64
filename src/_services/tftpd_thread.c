@@ -46,36 +46,42 @@ struct LL_TftpInfo *DoDebugSendAck (struct LL_TftpInfo *pTftp);
 /////////////////////////////////////////////////////////
 // Security checks
 /////////////////////////////////////////////////////////
+
+
 BOOL SecAllowSecurity (const char *szFile, int op_code)
 {
-struct stat  sStat;
 BOOL          bForward = (    strstr (szFile, "..")==NULL
                           &&  strstr (szFile, "\\\\")==NULL);
+WIN32_FILE_ATTRIBUTE_DATA fad;
+	int Rc;
 
     switch (sSettings.SecurityLvl)
     {
         // SECURITY_NONE : do not verify
         case SECURITY_NONE :  return TRUE;
-        // SECURITY_STD  : check that file path doe snot contain ..
+        // SECURITY_STD  : check that file path does not contain ..
         case SECURITY_STD  :
             if (! bForward) SetLastError (ERROR_DIRECTORY);
             return bForward;
-        // SECURITY_HIGH : if write request file shoul exist and be empty
+        // SECURITY_HIGH : if write request file should exist and be empty
         case SECURITY_HIGH :
-            if (bForward)
+            if (bForward)	
             {
-                sStat.st_size = 0;
-                if (op_code == TFTP_WRQ   &&  stat (szFile, & sStat) == -1)
-                    return FALSE;
-                // pour les logs -> positionner l'erreur
-                if (sStat.st_size != 0)  SetLastError (ERROR_BAD_LENGTH);
-                return (sStat.st_size == 0);
+				if (op_code == TFTP_WRQ)
+				{
+    				Rc = GetFileAttributesEx(szFile, GetFileExInfoStandard, &fad);
+					if (Rc && fad.nFileSizeLow==0)  
+						return TRUE;
+                   // pour les logs -> positionner l'erreur
+					SetLastError (ERROR_BAD_LENGTH);
+				}  // Write request
             }
             else
             {
                 SetLastError (ERROR_DIRECTORY);
                 return FALSE;
             }
+			break;
         case SECURITY_READONLY :
             if (bForward  && op_code==TFTP_RRQ) return TRUE;
            SetLastError (ERROR_DIRECTORY);
@@ -245,7 +251,7 @@ SOCKADDR_STORAGE in ;
 int       Rc;
 
 
-   // if settings unset or unconsistent, use defaults
+   // if settings unset or inconsistent, use defaults
    nPort =  ( nLow==69 ||  (nLow>=1024  &&  nLow<=nHigh) )  ?   nLow : 0;
 
    memset (&in, 0, sizeof in);
@@ -271,7 +277,7 @@ return Rc;
 
 
 /////////////////////
-// TftpSysError : report errror in a system call
+// TftpSysError : report error in a system call
 /////////////////////
 static int TftpSysError (struct LL_TftpInfo *pTftp, int nTftpErr, char *szText)
 {
@@ -353,8 +359,8 @@ char  szExtendedName [2 * _MAX_PATH];
         return CNX_FAILED;
     }
 
-    // ensure file name is strictly under _MAX_PATH (strnlen will terminates)
-    if ( (Ark=strnlen (tp->th_stuff, _MAX_PATH)) >= _MAX_PATH)
+    // ensure file name is strictly under _MAX_PATH (strnlen_s will terminates)
+    if ( (Ark=strnlen_s (tp->th_stuff, _MAX_PATH)) >= _MAX_PATH)
     {
         LOG (0, "File name too long, return EBADOP to peer");
         nak (pTftp, EBADOP);
@@ -380,7 +386,7 @@ char  szExtendedName [2 * _MAX_PATH];
 	// next word : Mode
     p = & tp->th_stuff[++Ark];		// ++Ark to point after the null char
 	// ensure file name is strictly under the longest mode (0 included)
-	Len = strnlen (p, sizeof("netascii"));
+	Len = strnlen_s (p, sizeof("netascii"));
     if ( Len >= sizeof("netascii"))
     {
         LOG (0, "mode is too long, return EBADOP to peer");
@@ -423,7 +429,7 @@ char  szExtendedName [2 * _MAX_PATH];
     LOG (10, "final name : <%s>", szExtendedName);
     // ensure again extended file name is under _MAX_PATH (strlen will terminates)
     // NB: we also may call CreateFileW instaed of CreateFileA, but Windows95/Me will not support
-    if (strnlen (szExtendedName, _MAX_PATH) >= _MAX_PATH)
+    if (strnlen_s (szExtendedName, _MAX_PATH) >= _MAX_PATH)
     {
         LOG (0, "File name too long, return EBADOP to peer");
         nak (pTftp, EBADOP);
@@ -605,7 +611,7 @@ int Rc;
         pTftp->c.dwBytes += sizeof (short);
 
         LOG (10, "send OACK %d bytes", pTftp->c.dwBytes);
-		// should OACk be sent on a specifi port (option udpport) ?
+		// should OACk be sent on a specific port (option udpport) ?
 		if (pTftp->c.nOAckPort != 0)
  		     Rc = UdpSend (  pTftp->c.nOAckPort, 
 							(struct sockaddr *) & pTftp->b.from, sizeof pTftp->b.from, 
@@ -710,7 +716,10 @@ static int TftpSendFile (struct LL_TftpInfo *pTftp)
 {
 int Rc;
 struct tftphdr *tp;
-DWORD dwPos; // pos of file pointer
+LARGE_INTEGER liPos;     // current pos of file pointer
+LARGE_INTEGER liTftpPos = { 0 }; // pos of file pointer according to protocol
+LARGE_INTEGER liNul = { 0 }; 
+
 
     assert (pTftp!=NULL);
     pTftp->c.nLastToSend = 1;
@@ -742,12 +751,15 @@ DWORD dwPos; // pos of file pointer
                 pTftp->c.nLastToSend ++  )
          {
               tp = (struct tftphdr *)pTftp->b.buf;
-			  // need to go back due to retransmission ?
-			  // optimize cache beahviour
-			  dwPos = SetFilePointer(pTftp->r.hFile, 0, NULL, FILE_CURRENT);
-			  if (dwPos != pTftp->s.dwPacketSize * (pTftp->c.nLastToSend - 1))
+			  // need to go back due to retransmission ?  optimize cache behaviour
+			  // note: use only unsigned 32 low bits
+			  SetFilePointerEx(pTftp->r.hFile, liNul, &liPos, FILE_CURRENT);	// read posi
+			  liTftpPos.LowPart = pTftp->s.dwPacketSize * (pTftp->c.nLastToSend - 1); // compute expected pos
+
+			  if (liPos.LowPart != liTftpPos.LowPart)
 			  {
-				  Rc = (SetFilePointer(pTftp->r.hFile, pTftp->s.dwPacketSize * (pTftp->c.nLastToSend - 1), NULL, FILE_BEGIN) != (unsigned)-1);
+				  liTftpPos.HighPart = 0;
+				  Rc = SetFilePointerEx (pTftp->r.hFile, liTftpPos, NULL, FILE_BEGIN);
 				  if (!Rc)
 					  return TftpSysError(pTftp, EUNDEF, "fseek");
 			  }
@@ -1039,7 +1051,7 @@ BOOL             bSuccess;
      // pTftp->b.from.sin_family = AF_INET;
 	 if (  pTftp->b.from.ss_family == AF_INET6  &&  IN6_IS_ADDR_V4MAPPED ( & (* (struct sockaddr_in6 *) & pTftp->b.from ).sin6_addr )  )
 	 {
-		 // If ingress conection is IPv4 mapped use IPv4 sockets for answer
+		 // If ingress connection is IPv4 mapped use IPv4 sockets for answer
 		 // Hack copied from Apache
 		 struct sockaddr_in in ;
 		 memset (& in, 0, sizeof in);

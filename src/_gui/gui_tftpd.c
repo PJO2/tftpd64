@@ -24,7 +24,6 @@ BOOL GuiIsActiveTFTPTransfer ( HWND hMainWnd )
 {
 long lLen = 128;
 LVITEM lvItem;
-LRESULT lResult = 0;
 int     Ark;
 HWND    hLV = GetDlgItem (hMainWnd, IDC_LV_TFTP);
 char    szName [512];

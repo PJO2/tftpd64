@@ -2,6 +2,7 @@
 //
 // Projet TFTPD32.       Mai 98 Ph.jounin - June 2006
 // File custom.h:   general definitions
+// Spelling fixed by a1346054
 //
 // released under European Union Public License
 // 
@@ -13,7 +14,7 @@
 // Env variables
 //////////////////////////
 #define TFTP_LOG  "TFTP_LOG"        // Log Level
-#define TFTP_INI  "TFTP_INI"        // location of alternative inni file
+#define TFTP_INI  "TFTP_INI"        // location of alternative ini file
 #define TFTP_DIR  "TFTP_DIR"        // base directory
 #define TFTP_HOST "TFTP_HOST"       // The host which runs the server
 #define TFTP_PWD  "TFTP_PWD"        // The pwd to connect
@@ -42,7 +43,7 @@ extern const int g_VERSION;
 ( CMsgBox (hWnd, a, APPLICATION, MB_OK | MB_ICONSTOP), PostMessage (hWnd, WM_CLOSE, 0, 0) )
 #define  PLURAL(a)  ((a)>1 ? "s" : "")
 
-#define  SizeOfTab(x)   (sizeof (x) / sizeof (x[0]))
+#define  SizeOfTab(x)   ( (int) (sizeof (x) / sizeof (x[0])) )
 #define  MakeMask(x)    ( 1 << (x) )
 #define  X_LOG2PHYS(x)  ( ((x) * LOWORD(GetDialogBaseUnits()) ) / 4 )
 #define  Y_LOG2PHYS(y)  ( ((y) * HIWORD(GetDialogBaseUnits()) ) / 8 )

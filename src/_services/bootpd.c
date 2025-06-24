@@ -75,7 +75,7 @@ static struct S_DHCP_type tDHCPType[] =
     };
 
 //The bound address
-static struct in_addr g_boundaddr;
+// static struct in_addr g_boundaddr;
 
 // global variable : the DHCP settings
 struct S_DHCP_Param  sParamDHCP;
@@ -136,7 +136,7 @@ return NULL;
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 // DHCP Scan
-// for debugging puropses only
+// for debugging purposes only
 void DHCPScan (void)
 {
 int  Ark;
@@ -173,7 +173,7 @@ struct LL_IP *DHCPReallocItem (struct LL_IP *pCur, DWORD dwNewIP, const unsigned
 return pCur;
 } // DHCPReallocItem
 
-// frees an item (may crash if allocation in progess)
+// frees an item (may crash if allocation in progress)
 void DHCPDestroyItem (struct LL_IP *pCur)
 {
 	if (pCur!=NULL)
@@ -648,7 +648,7 @@ struct LL_IP  *pCurIP=NULL, *pProposedIP=NULL;	// Thanks Sam Leitch !
 int            Ark, nDhcpType = 0;
 struct in_addr in_RequestedAddr;
 DWORD sStaticIP;
-unsigned short iLastArch;	// architecture required by client
+unsigned short iLastArch = 0;	// architecture required by client, defaut is x86
 
     if (IsDHCP (*pDhcpPkt))
     {
@@ -745,7 +745,7 @@ unsigned short iLastArch;	// architecture required by client
 				   break;
 			}
 
-           // has tftpd32 dinamically assigned this address
+           // has tftpd32 dynamically assigned this address
 			pCurIP = DHCPSearchByMacAddress (pDhcpPkt->chaddr, pDhcpPkt->hlen);
 			if (pCurIP==NULL)  return FALSE; // not attributed by Tftpd32 --> do not answer
 
@@ -1089,7 +1089,7 @@ int save_port = pTo->sin_port;
 		LOG (1, "sendto error %d: %s", GetLastError(), LastErrorText ());
 
 	// Added : DHCP relay detection --> send replies to port 67 and 68
-	// Colin and others point ourt that this is wrong. I guess they are right.
+	// Colin and others point out that this is wrong. I guess they are right.
 	// However it should not be an issue and i am sure that the host receive an address !
 	// Added a setting for this hack
 	if (sSettings.bDoubleAnswer && 
@@ -1120,7 +1120,7 @@ GUID WSARecvMsg_GUID = WSAID_WSARECVMSG;
 static LPFN_WSARECVMSG WSARecvMsg;
 WSABUF wsaBuf;
 WSAMSG wsaMsg;
-DWORD BytesRecv=-1, NumberOfBytes = 0;
+DWORD BytesRecv=(DWORD) -1, NumberOfBytes = 0;
 DWORD Flags = 0;
 char ControlBuffer[1024];
 WSACMSGHDR *pMsgHdr;
@@ -1208,7 +1208,7 @@ void ListenDhcpMessage (void *lpVoid)
 struct dhcp_packet      sDhcpPkt;
 char szHostname [128], *p;
 int                     Rc, nSize;
-struct S_WorkerParam   *pParam = (struct S_WorkerParam *) lpVoid;
+// struct S_WorkerParam   *pParam = (struct S_WorkerParam *) lpVoid;
 struct sockaddr_in      SockFrom, SockTo;
 int                     True=TRUE, nFromLen = sizeof SockFrom;
 BOOL                    bUniCast;
@@ -1240,14 +1240,14 @@ BOOL                    bUniCast;
 		&&  setsockopt (tThreads[TH_DHCP].skt, IPPROTO_IP, IP_RECEIVE_BROADCAST, (char *) & True, sizeof True)==0 ;
     if (! Rc)
 	{
-		SVC_WARNING ("Can add broadcast capabilty to DHCP socket ! \nError %d", WSAGetLastError());
+		SVC_WARNING ("Can add broadcast capability to DHCP socket ! \nError %d", WSAGetLastError());
     }
     // add receive broadcast capacity to DHCP listening socket 
 	// if (  LOBYTE(LOWORD(  GetVersion ()  ))  >= 6)
 	Rc = setsockopt (tThreads[TH_DHCP].skt, IPPROTO_IP, IP_PKTINFO, (char *) & True, sizeof True) ;		
 	if (Rc==-1)
 	{
-		SVC_WARNING ("Can add PKTINFO capabilty to DHCP socket ! \nError %d", WSAGetLastError());
+		SVC_WARNING ("Can add PKTINFO capability to DHCP socket ! \nError %d", WSAGetLastError());
 		Rc = WSAGetLastError ();
     }
 
@@ -1289,7 +1289,7 @@ BOOL                    bUniCast;
 
         // if msg is too short
         // If all bootP fields have been read
-        if (Rc < offsetof ( struct dhcp_packet, options ))
+        if (Rc < (int) offsetof ( struct dhcp_packet, options ))
         {
            LOG (5, "Message truncated (length was %d)", Rc);
            if ( tThreads[TH_DHCP].gRunning ) Sleep (500);

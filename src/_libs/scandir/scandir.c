@@ -25,19 +25,19 @@ int Rc ;
 ////////////////////////
 // Creates a line of the dir.txt file
 // use a callback function as argument since ScanDir is used either to
-// create dir.txt or to dispaly the dir window
+// create dir.txt or to display the dir window
 
 void ScanDir ( int (*f)(char *s, DWORD dw), DWORD dwParam, const char *szDirectory)
 {
 WIN32_FIND_DATA  FindData;
 FILETIME    FtLocal;
 SYSTEMTIME  SysTime;
-char        szLine [256], szFileSpec [_MAX_PATH + 5];
+char        szLine [256], szFileSpec [MAX_PATH + 5];
 char        szDate [sizeof "jj/mm/aaaa"];
 HANDLE      hFind;
 
-    szFileSpec [_MAX_PATH - 1] = 0;
-    lstrcpyn (szFileSpec, szDirectory, _MAX_PATH);
+    szFileSpec [MAX_PATH - 1] = 0;
+    lstrcpyn (szFileSpec, szDirectory, MAX_PATH);
     lstrcat (szFileSpec, "\\*.*");
     hFind = FindFirstFile (szFileSpec, &FindData);
     if (hFind !=  INVALID_HANDLE_VALUE)
@@ -55,7 +55,7 @@ HANDLE      hFind;
        szDate [sizeof "jj/mm/aaaa" - 1]=0;    // truncate date
        FindData.cFileName[62] = 0;      // truncate file name if needed
 	   // dialog structure allow up to 64 char
-       wsprintf (szLine, "%s\t%s\t%d",
+       wsprintf (szLine, "%s\t%s\t%u",
                  FindData.cFileName, szDate, FindData.nFileSizeLow);
 
        (*f) (szLine, dwParam);

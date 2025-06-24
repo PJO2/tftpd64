@@ -6,10 +6,10 @@
 
 #define  TCP4U_SUCCESS           1  /* >=1 function OK            */
 #define  TCP4U_ERROR            -1  /* error                      */
-#define  TCP4U_TIMEOUT          -2  /* timeout has occured        */
+#define  TCP4U_TIMEOUT          -2  /* timeout has occurred       */
 #define  TCP4U_BUFFERFREED      -3  /* the buffer has been freed  */
 #define  TCP4U_HOSTUNKNOWN      -4  /* connect to unknown host    */
-#define  TCP4U_NOMORESOCKET     -5  /* all socket has been used   */
+#define  TCP4U_NOMORESOCKET     -5  /* all sockets have been used */
 #define  TCP4U_NOMORERESOURCE   -5  /* or no more free resource   */
 #define  TCP4U_CONNECTFAILED    -6  /* connect function has failed*/
 #define  TCP4U_UNMATCHEDLENGTH  -7  /* TcpPPRecv : Error in length*/
