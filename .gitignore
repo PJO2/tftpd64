@@ -2,7 +2,23 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
+<<<<<<< HEAD
 /.vs/tftpd32/v15
 /.vs/tftpd32/v16/Preview
 /obj/Win32/Release
 /.vs/tftpd32/v16
+=======
+/src/.vs/tftpd32/v15
+/src/.vs/tftpd32/v16/Preview
+/src/obj/Win32/Release
+/src/.vs/tftpd32/v16
+.DS_Store
+/src/.vs
+/src/libs/.vs/libs
+/src/libs/libs/x64/Debug/libs.tlog
+/src/libs/libs/x64/Debug
+>>>>>>> V4.70
+/.vs/tftpd32/CopilotIndices/17.14.734.62261
+/.vs/tftpd32/v17
+/.vs/tftpd64/v17
+/.vs/tftpd32/FileContentIndex
