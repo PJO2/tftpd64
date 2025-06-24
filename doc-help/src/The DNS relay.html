@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+  <title>The DNS relay</title>
+  <link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<TABLE id="title">
+	<tr><td   class="st_title">	Using the DNS relay	</td></tr>
+</TABLE>
+<br>
+<br>
+<H1>Manage the host table</H1>
+Tftpd32 uses the API getaddrinfo to resolve the domain name. 
+<br>
+This API tries to find the host name in the file <br>
+%SystemRoot%\System32\drivers\etc\hosts<br> (or the file pointed by the registry key <br>
+\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\DataBasePath).
+<br><br>
+Populate this file with your hosts and Tftpd32 will propagate the info.
+<br>
+If getaddrinfo founds no suitable host, it relays the request to the DNS server.  
+</body>
+</html>

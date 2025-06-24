@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+  <title>Settings Entries</title>
+  <link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<TABLE id="title">
+	<tr><td   class="st_title">Settings Entries	</td></tr>
+</TABLE>
+<br>
+This page lists all entries saved into the tftpd32.ini. 
+<br>
+<br>
+<TABLE border="1" cellpadding="5">
+	<Tr>
+		<Th>TFTPD32 Section</Th>
+		<Th>DHCP Section </Th>
+	</Tr>
+	<TR>
+		<TD valign="top">
+			<dl>
+				<dt>BaseDirectory
+					<dd>The directory chosen at startup
+				<dt>TftpPort
+					<dd>The port used by the TFTP server
+				<dt>Hide
+					<dd>0 to display the main window, 1 to hide it
+				<dt>WinSize
+					<dd>The anticipation window in bytes, you may try values like 512 or 1024 bytes
+				<dt>Negociate
+					<dd>1 to enable negotiattion between client and server
+				<dt>PXECompatibility
+					<dd>1 to allow transfer size negotiation
+				<dt>DirText
+					<dd>1 to create dir.txt files
+				<dt>ShowProgressBar
+					<dd>1 to create gauge windows
+				<dt>Timeout
+					<dd>The max timeout for one packet
+				<dt>MaxRetransmit
+					<dd>The max number of retransmission for one packet
+				<dt>SecurityLevel
+					<dd>The security level. 0=NONE, 1=Standard, 2=High, 3=Read Only
+				<dt>UnixStrings
+					<dd>1 to accept file names with '/'
+				<dt>Beep
+					<dd>1 to beep when a "long transfer" terminates
+				<dt>VirtualRoot
+					<dd>1 to enable Virtual Root (the heading \ is translated to the working directory)
+				<dt>MD5
+					<dd>1 to create MD5 files for read requests
+				<dt>LocalIP
+					<dd>The address of the interface which will be bound by Tthe TFTP server, empty to accept requests from every interface
+				<dt>Services
+					<dd>An integer which gives the services to be enabled at startup
+				<dt>TftpLogFile
+					<dd>The name of the log file for TFTP server events
+				<dt>SaveSyslogFile
+					<dd>The name of the log file for syslog events
+				<dt>LowestUDPPort
+					<dd>The lowest local port to be used by the TFTP server
+				<dt>HighestUDPPort
+					<dd>The highest local port to be used by the TFTP server
+				<dt>MulticastPort
+					<dd>Unused
+				<dt>MulticastAddress
+					<dd>Unused
+				<dt>PersistantLeases
+					<dd>1 to save DHCP leases into the tftpd32.ini file
+				<dt>DHCP LocalIP
+					<dd>The IP address to be bound to the DHCP Port, empty to accept incoming requests from any interfaces
+				<dt>DHCP Ping
+					<dd>1 to ping host before address assignation
+				<dt>PipeSyslogMsg
+					<dd>1 to forward syslog messages into the named pipe Tftpd32Syslog
+				<dt>Max Simultaneous Transfers
+					<dd>Unused (limitation is actually in the code)
+				<dt>UseEventLog
+					<dd>1 to send errors into NT event log
+				<dt>Console Password
+					<dd>The password exchanged between the services and the GUI.
+			</dl>
+		</td>
+		<td valign="top">
+			<DL>
+				<dt>IP_Pool
+					<dd>The 4 bytes of the first address which will be assigned. 
+				<dt>PoolSize
+					<dd>The number of addresses which may be distributed
+				<dt>BootFile
+					<dd>The name of the file which will be retrieved at boot for diskless or PXE clients
+				<dt>DNS
+					<dd>The 4 bytes of the IP address of the DNS
+				<dt>Mask
+					<dd>The 4 bytes of the mask to be distributed
+				<dt>Gateway
+					<dd>The 4 bytes of the gateway/router to be distributed
+				<dt>DomainName
+					<dd>The name of the window or internet domain
+				<dt>AddOptionNumber<number>
+					<dd>The number of a specific option
+				<dt>AddOptionValue<number>
+					<dd>The option value. the default type is text. The hexadecimal format prefixed by '0x' is also supported either for numerical values or for IP addresses.
+				<dt>Lease (minutes)
+					<dd>The DHCP lease in minutes
+				<dt>Static DHCP entries
+					<dd>The key is the MAC address (separator :), the value is the IP address
+			</DL>
+		</td>
+	</tr>
+</table>
+
+
+</body>
+</html>

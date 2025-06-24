@@ -1,0 +1,33 @@
+FONT	{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 12px; }
+TD		{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 12px; line-height: 18px; }
+TH		{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 12px; }
+BODY	{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 12px; background-color: #ffffe0; }
+P		{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 12px; line-height: 18px; }
+DIV		{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 12px; }
+INPUT	{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 12px; }
+TEXTAREA	{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 12px; }
+FORM 		{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 12px; }
+UL            { margin-top: 4 px;  }
+LI		{ FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 12px; line-height: 16px; }
+H1		{ FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 14px; line-height: 24px; FONT-WEIGHT: bold; COLOR:#008080; }
+H2		{ FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 12px; line-height: 16px; TEXT-DECORATION: underline; }
+H3		{ FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 12px; line-height: 16px; COLOR:#00A0A0; }
+DL            { margin-top: 0px; }
+DT            { font-size: 11 px; color: #006060;  }
+DD           { font-size: 11 px; color: #000000; }
+
+
+A:link          {BACKGROUND: none; COLOR: #008020; FONT-SIZE: 11px; FONT-FAMILY: Verdana, Helvetica; TEXT-DECORATION: underline;}
+A:active        {BACKGROUND: none; COLOR: #000000; FONT-SIZE: 11px; FONT-FAMILY: Verdana, Helvetica; TEXT-DECORATION: underline;}
+A:visited       {BACKGROUND: none; COLOR: #20A040; FONT-SIZE: 11px; FONT-FAMILY: Verdana, Helvetica; TEXT-DECORATION: underline; }
+A:hover         {BACKGROUND: none; COLOR: #000000; FONT-SIZE: 11px; FONT-FAMILY: Verdana, Helvetica; FONT-WEIGHT: bold; TEXT-DECORATION: underline;}
+
+
+
+table#title     {  background-color: #003366;  width: 100%;  vertical-align: bottom; }
+table#title td {  padding: 5px;   border: solid #000 1px; }
+.st_title     {  color: #d0ffd0; text-align: left; font-size: 20px; font-family: Verdana, Helvetica; font-weight: bold;  }
+.question     {  color: #008080; font-style: italic ;  text-decoration: none; }
+.answer         {  content: "A:"; color: #000000; line-height: 18 px; text-decoration: none; }
+.settings     {  color: #000000; text-decoration: underline;  }
+.expl_settings { color: #303030; text-decoration: none; }

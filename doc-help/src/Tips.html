@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+  <title>Tips</title>
+  <link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<TABLE id="title">
+	<tr><td   class="st_title">	Tips 	</td></tr>
+</TABLE>
+
+<H1>use Tftpd32 clipboard features ?</H1>
+Select an address from the combobox. Tftpd32 copies it into the clipboard.<br>
+<img src="address%20clipboard.jpg" width="150"><br>
+Select a file from the directory dialog box. Tftpd32 copies the file name into the clipboard.<br>
+<img src="file%20clipboard.jpg" width="177"><br>
+<br><br>
+	
+<H1>Transfer files using drag and drop ?</H1>
+Just pick up your files from an explorer window and send them into the field <i>Local File.</i><br>
+<br>
+<img style="width: 331px; height: 243px;" alt="" src="drag%20and%20drop.GIF"><br>
+<br><br>
+
+<h1>Use an ini file for settings ?</H1>
+By default, Tftpd32 uses the registry to save its settings.However
+if you create an empty file names tftpd32.ini in the same directory
+than tftpd32.exe, it will write its settings there. <br>
+Note that restoring default settings deletes all registry entries and the tftpd32.ini file.<br>
+<br><br>
+
+<h1>Make a portable application, which writes no settings at all ?</H1>
+Just create a empty read only tftpd32.ini file.&nbsp; <br>
+<br><br>
+
+<h1>Use Tftpd32 to assign static DHCP address</H1>
+Open tftpd32.ini file with your favorite editor.
+In the DHCP section, create an entry where the key is the mac address and its value is the IP address.
+For instance,
+&nbsp;&nbsp;&nbsp;0A:0B:0C:0D:0E:0F=192.168.1.75
+Note: if the pool size is 0, Tftpd32 assigns no dynamic address, but distributes static ones.
+
+</body>
+</html>

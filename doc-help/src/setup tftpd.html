@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+  <title>Tftpd32 settings</title>
+  <link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<TABLE id="title">
+	<tr><td   class="st_title">	The Settings Window</td></tr>
+</TABLE>
+<br>
+<br>
+The settings window allows you to modify the most current parameters. 
+<br><br><br>
+<table width="100%">
+    <tr>
+        <td>
+            <div class="settings">Base directory</div>
+                <div class="expl_settings">The default directory used by the TFTP client and server. It may be changed from the main window.</div>
+            <br>
+            <div class="settings">Global Settings</div>
+                <div class="expl_settings">Enable or disable tftpd32 servers and clients.</div>
+            <br>
+            <div class="settings">TFTP security</div>
+            <dl>
+                <dt>NONE &nbsp; (Not recommended !)
+                    <dd>read and write requests are allowed on all disks/directories.
+                <dt>Standard
+                    <dd>read and write requests are allowed but limited to the current directory.
+                <dt>High
+                    <dd>idem standard + write requests are allowed only if the input file exists and is empty.
+                <dt>Read only
+                    <dd>idem standard + write requests are rejected.
+            </dl>
+            <div class="settings">TFTP Configuration</div>
+            <dl>
+                <dt>Timeout
+                    <dd>The maximum timeout between two retransmissions
+                <dt>Max Retransmit
+                    <dd>The maximum retransmission for the same packet
+                <dt>Tftp Port
+                    <dd>The port used to listen incoming requests
+                <dt>local ports pool
+                    <dd>A range of ports (for example 3000:3030). These ports are used for the file transfers.
+            </dl>
+            <div class="settings">TFTP Configuration</div>
+            <dl>
+            
+				<dt>Option Negotiation
+					<dd>Enables the negotiation between client and server (RFC 2347)
+				<dt>PXE compatibility
+					<dd>Enables only the file size negotiation
+				<dt>Show progress Bar
+					<dd>Creates a gauge window for each transfer
+				<dt>Translate Unix file names
+					<dd>Translates any slash characters to a backslash
+				<dt>Bind Tftpd32 to this address
+					<dd>Enables TFTP only on one interface
+				<dt>Allow '\' As virtual root				
+					<dd>A file name beginning with '\' points to the TFTP directory and not to the root of the disk
+				<dt>Use anticipation window of ??? bytes
+					<dd>Tftpd32 is able to send packets before receiving acknowledgements. This feature may dramatically speed up the transfer.
+				<dt>Hide window at startup
+					<dd>Tftpd32 main window remains hidden, but the icon in the tasktray is still present
+				<dt>Create dir.txt files
+					<dd>For each incoming read request, Tftpd32 lists the content of the directory and put the result in a file named "dir.txt".
+				<dt>Create md5 file
+					<dd>For each successfull read request, Tftpd32 creates a file which is the MD5 signature of the previous file
+				<dt>Beep for long transfer
+					<dd>Tftpd32 sends a beep once a transfer has ended.
+				<dt>Reduce '//' in file path
+					<dd>If a double slash is found, Tftpd32 will convert it into a single slash.
+			</dl>
+
+        </td><td style="align: right; vertical-align: top;">
+                <img align="right" alt="" src="setup%20tftpd.jpg">
+        </td>
+    </tr>
+</table>
+ 
+<br>
+</span>
+</body>
+</html>

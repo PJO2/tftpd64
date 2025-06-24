@@ -1,0 +1,499 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+  <title>History</title>
+   <link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<TABLE id="title">
+	<tr><td   class="st_title">	History</td></tr>
+</TABLE>
+<b><u>Release  4.64  </b></u><br>
+	<ul>
+       <li>New icon (thanks to Marco !)</li>
+       <li>Add option to convert '//' into '/'</li>
+       <li>Add DNS relay advertisement in Settings windows</li>
+       <li>fix : crash on empty DNS request</li>
+       <li>Suppress warning "DHCP mask empty" if DHCP is disabled</li>
+       <li>Improved: disk caching behavior</li>
+       <li>Fix: use of unsigned 32 bits int for file size reporting (impact only file >2Gb)</li>
+       <li>Change: behavior on duplicate requests</li>
+       <li>New: compiled under Visual studio 2019</li>
+       <li>Improved: increased size of dir window and better alignment</li>
+       <li>Add: exponential delay for statistics reports</li>
+	</ul>
+	<b><u>Release  4.63  </b></u><br>
+	<ul>
+		<li>improved: compilation with Visual Studio 2017 
+		<li>fixed:    window's position saved
+	</ul>
+<b><u>Release  4.62  </b></u><br>
+	<ul>
+		<li>fixed: previous release did not start under Windows 10 
+	</ul>
+<b><u>Release  4.61  </b></u><br>
+	<ul>
+		<li>fixed: multiple options support (thanks Stefan)
+		<li>new 256x256 icon (thanks Marcu)
+		<li>fixed: DHCP gateway may be empty 
+		<li>improved DHCP interface resolution (Thanks Philip)
+	</ul>
+<b><u>Release  4.60  </b></u><br>
+	<ul>
+		<li>Some changes for avoiding false positive antivirus detection
+		<li>nak messages are padded with null characters to be greater than 4 bytes (thanks to Clement)
+		<li>improved DDoS/fuzzing resilience: better handling of malformed packet
+		<li>improved DDoS resilience: pacing new threads 
+		<li>fixed: stats are correctly displayed when a tranfer ends
+	</ul>
+<b><u>Release  4.52  </b></u><br>
+	<ul>
+		<li>Recompilation for Windows 8 support
+	</ul>
+	
+<b><u>Release  4.51  </b></u><br>
+	<ul>
+		<li>Fixed : If no bound interface specified "Bad Interface" was displayed
+		<li>Fixed : Handle leaking
+		<li>Fixed : Crash due to a simple deny of service attack (see exploit.pl from j0s3h4x0r)
+		<li>Fixed : maximum uploads was statically fixed to 100 
+		<li>Fixed : changing the syslog settings does not need a Tftpd32 restart
+		<li>Fixed : Sorcerer's apprentice syndrome check displayed a wrong block number
+		<li>Added : Tftpd32 now adds client IP address in syslog output file
+		<li>Added : Resizing of TFTP client windows
+		<li>Added : settings tab matches main tab 
+		
+	</ul>
+<b><u>Release  4.50  </b></u><br>
+	<ul>
+		<li>Included : many improvements and bugfixes form Jesus Soto (Thanks Jesus !)
+		<li>Fixed : Tftpd32 receives and sends DHCP broadcast correctly (both for XP and Vista/win 7) (Thanks Bruce for the testing)
+		<li>Added : New DHCP guy
+		<li>Added : New DHCP types for Additional options value (i long integer, I short integer, n long integer network order, N short integer network order, s string)
+		<li>DHCP options value : 'a' for list of IPv4 Address
+		<li>DHCP options value : 'x' for list of hex digits (size depends on number of digits)
+		<li>DHCP options value : 'b' for list of decimal single-byte digits
+		<li>DHCP Option 66 is preferred over ciaddr for requested address into msg DHCP request (PXE improvement)
+		<li>Modified : startup sequence and synchronisation between threads
+		<li>Improved : many settings changes does not need restart anymore
+		<li>Fixed : vulnerability in the TFTP client window : sign % now forbidden
+	</ul>
+<u>Release  4.01  </b><BR>
+	<ul>
+		<li>Added : unicast DHCP replies
+	</ul><b><u>Release  4.00  </b></u><br>
+	<ul>
+		<li>New : already active transfers are correctly displayed in the management console (service edition)
+		<li>Fixed : Message correctly displayed when the standalone version is run and the service is already running
+	</ul>
+<b><u>Version  3.52 </b></u><br>
+	<ul>
+		<li>Re-Fixed : GUI worked only once (service edition).
+		<li>Fixed : TFTP client crashes (64 bits) when selecting a file
+	</ul>
+<b><u>Version  3.51 </b></u><br>
+	<ul>
+		<li>New : 64 bits version available.
+		<li>Changed : DHCP does not add SYSLOG Server option unless syslog service is activated
+		<li>Fixed : DHCP delete lease has been patched
+	</ul>
+<b><u>Version  3.50 </b></u><br>
+	<ul>
+		<li>New : Tftpd32 is now tested under Windows 7.
+		<li>New : Tftpd32 modified to be compiled under 64 bits (will be tftpd64 of course !!).
+		<li>New : Settings are now gathered in a tab window.
+		<li>New : TFTP working directory control is editable
+		<li>Added : Change Browse popup window's style (BIF_USENEWUI flags). Fix proposed by Nathan Alderson.
+		<li>Added : In directory window OK/Cancel buttons have been replaced by a single Close button.
+		<li>Fixed : DHCP does not perform ICMP request in DHCPREQUEST stage (fix proposed by Colin)
+		<li>Fixed : DHCP may crash while using BOOTP in static mode (fix proposed by Rolf Offerman)
+		<li>Fixed : tabs are inconsistent if inits are unsuccessful
+		<li>Changed : About button is no more the default push button
+		<li>Suppressed : action field into LOG tab
+	</ul>
+	<br>
+	<br>
+	<br>
+<b><u>Version  3.35 </b></u><br>
+	<ul>
+		<li>Fixed : Tftpd32 may hang if not correctly installed
+		<li>Added : Transfer may be kept in GUI
+		<li>Added : Result of transfer is displayed
+		<li>Added : A transfer cancelled is reported as "STPD"
+		<li>Added : Unattended installation with "/S" option
+	</ul>
+	<br>
+<b><u>Version  3.34 </b></u><br>
+	<ul>
+		<li>Fixed : Service edition hangs during long tranfers
+	</ul>
+<b><u>Version  3.33 </b></u><br>
+<br>
+<br>
+	<ul>
+		<li>Fixed : DNS server improvements
+		<li>Added : An installer for the Service Edition (Thanks to Srdjan Grubor who provided the base of the NSIS script)
+		<li><b><u>Version  3.34 </b></u><br>
+	<ul>
+		<li>Fixed : Service edition hangs during long tranfers
+	</ul>
+Changed : DHCP custom value should be prefixed by its type (a for IP address, s for string and i for integer)
+		<li>Fallback : DHCP custom value beginning with 0x works again
+	</ul>
+<b><u>Version  3.32 </b></u><br>
+<br>
+<br>
+	<ul>
+		<li>Fallback : IPv6 functions suppressed 
+	</ul>
+	<br>
+<b><u>Version  3.31 </b></u><br>
+<br>
+<br>
+	<ul>
+		<li>Fixed : irregular DHCP assignation under Vista (Thanks Anders !) 
+		<li>Fixed : the mispelled word "Tranfer"
+		<li>Added : a simple DNS server 
+		<li><b>Major change :</b>Tftpd32 chooses the European Union Public License
+	</ul>
+	<br>
+<b><u>Version&nbsp; 3.29 </u></b><br>
+<br>
+	<UL>		  
+		  <LI>Rename service name to tftpd32_svc instead of tftpd32 svc
+		  <LI>Tftpd32 v3.20 to 3.28 may hang under heavy duty
+	</UL>
+<br>
+<b><u>Version&nbsp; 3.28 </u></b><br>
+<br>
+<br>
+	<UL>		  
+		  <LI>Better management of duplicated requests. 
+	</UL>
+<br>
+<br>
+<br>
+<b><u>Version&nbsp; 3.27 </u></b><br>
+<br>
+<br>
+	<UL>		  
+		  <LI>Duplicated requests are accepted again. 
+	</UL>
+<br>
+
+<b><u>Version&nbsp; 3.26 </u></b><br>
+<br>
+<br>
+	<UL>		  
+		  <LI>Fix the DHCP server crash. Tftpd32 may crash if you deactivate the DHCP server setting the pool size to 0, then activate it again.
+	</UL>
+<br>
+
+<b><u>Version&nbsp; 3.25 </u></b><br>
+<br>
+<br>
+	<UL>
+		  <LI>modified : file names are truncated to 64 char in dir window in order to handle longest cisco names (thanks Bastien for reporting it)
+		  <LI>changed : Tftpd32 is now compilated under Visual C++ v9
+		  <LI>added: duplicated requests are now ignored (it used to cause "file not found" errors)
+	</UL>
+<br>
+<br>	
+<br>
+<br>
+<b><u>Version&nbsp; 3.23 </u></b><br>
+<br>
+<br>
+	<UL>
+		  <LI>fixed: TFTPLogFile option was broken
+		  <LI>added: new udpport option which makes TFTP work with a stateless firewall or NAT.<br>
+		  A proposal from Klaus Hartnegg: the client set the udpport=0 option, and the server put the transfer port in the udpport value and sends the OACK frame from TFTP's port.
+	</UL>
+<br>
+<br>	
+<b><u>Version&nbsp; 3.22 </u></b><br>
+<br>
+<br>
+	<UL>
+		  <LI>DHCP configuration wasn't properly saved
+	</UL>
+<br>
+<br>	
+<b><u>Version&nbsp; 3.21 </u></b><br>
+<br>
+<br>
+	<UL>
+		  <LI>IP interfaces display (move from Windows Timer to a thread)
+		  <LI>Some background windows have been removed
+		  <LI>The synchronisation in the startup process has been simlified
+		  <LI>Fixed : open socket bug on windows 2003
+		  <LI>Dir window is now limited to 200 files
+	</UL>
+<br>
+<br>	
+<b><u>Version&nbsp; 3.20 </u></b><br>
+    <UL>
+          <LI>The GUI and the server part have been separated<br>
+          <LI>Internals structure alignment&nbsp; is now standard (4 bytes)<br>
+          <LI>Drag &amp; drop works again (use local file field)<br>
+          <LI>-uninstall option<br>
+          <LI>The help file has moved to HTML format (created with HelpMaker)<br>
+          <LI>Working Directory may be an remote directory (\\server\dir)<br>
+          <LI>Besides the out of the box distribution, you have an installer (thanks to CreateInstall)<br>
+          <LI>Bind error messages are now more explicit<br>
+    </ul>
+<br>
+<br>
+<b><u>Version&nbsp; 3.10 </u></b><br>
+<b>
+    <UL>
+          <LI></b>DHCP permanent leases (code written mostly by <font color="#808080" face="Arial">Nick Wagner</font>)<br>
+          <LI>DHCP ping before assignation option<br>
+          <LI>TFTP client browse button<br>
+          <LI>TFTP client Local and Remote File fields<br>
+          <LI>-kill option : terminates Tftpd32's pervious instance<br>
+          <LI>second icon for the kill option<br>
+          <LI>"Open TFTP directory" into System Menu<br>
+          <LI>log received on syslog port are tranferred into named pipe <font color="#800000" face="Arial">Tftpd32Syslog</font><br>
+          <LI>Call Explorer Windows now closes Dir Window<br>
+    </ul>
+<br>
+<br>
+<b><u>Version&nbsp; 3.03</u></b><b>&nbsp;October 2006</b><br>
+<b>
+    <UL>
+          <LI></b>Fixed : bad retransmit statistic in TFTP client<br>
+          <LI>Fixed : bad tsize management in TFTP client<br>
+          <LI>Restored : newer logs are below older ones<br>
+    </ul>
+<br>
+<br>
+<b><u>Version&nbsp; 3.02</u></b><b>&nbsp;October 2006</b><br>
+     <UL>
+         <LI>Add command line options -s : specify starting directory<br>
+          <LI>Add command line options -l : specify log level<br>
+          <LI>Add command line options -i : specify alternate ini file<br>
+          <LI>Interoperability with DHCP relay agents improved<br>
+          <LI>A minor vulnerability has been fixed <br>
+    </ul>
+<br>
+<br>
+<b><u>Version&nbsp; 3.01</u></b><b>&nbsp;August 2006</b><br>
+     <UL>
+         <LI>DHCP server accepts requests with yiaddr field set to 255.255.255.255<br>
+          <LI>DHCP static assignation can be made into Tftpd32.Ini file<br>
+          <LI>DHCP server will do sattic assignation even if the pool is empty<br>
+          <LI>DHCP lease time may be changed in INI file (use for instance: Lease (minutes)=120)<br>
+          <LI>ListView controls is now properly refreshed <br>
+          <LI>Two new buttons in "Show Dir" window : Copy and Explorer<br>
+    </ul>
+<br>
+<br>
+<b><u>Version&nbsp; 3.00</u></b><b>&nbsp;June 2006</b><br>
+     <UL>
+         <LI>Display has been changed<br>
+          <LI>Code has been reorganized<br>
+     </UL>
+<br>
+<br>
+<b><u>Version&nbsp; 2.84</u></b><b>&nbsp;Feb 2006</b><br>
+     <UL>
+         <LI>Fixed : Bug correction for large files (present in release 2.81 to 2.83)<br>
+    </ul>
+<br>
+<br>
+<b><u>Version&nbsp; 2.83</u></b><b>&nbsp;Feb 2006</b><br>
+     <UL>
+         <LI>Fixed : Tftp may access to files in root directory<br>
+          <LI>Added : Local ports may be chosen (for firewall/NAT)<br>
+          <LI>If an interface has been selected, all servers are bound to it<br>
+    </ul>
+<br>
+<br>
+<b><u>Version&nbsp; 2.82</u></b><b>&nbsp;Feb 2006</b><br>
+     <UL>
+         <LI>Fixed : "Show dir" window use chosen directory<br>
+          <LI>Fixed : Tftpd32 may receive requests with a percent sign (fix security bug)<br>
+    </ul>
+<br>
+<br>
+<b><u>Version&nbsp; 2.81</u></b><b>&nbsp;Jan 2006</b><br>
+      <UL>
+        <LI>Replaced : A combo box instead of a static text for directory management<br>
+          <LI>Changed : Unix Translation active by default<br>
+          <LI>Changed : IP Combo Box is refreshed<br>
+          <LI>Changed : PXE compatibility checks Virtual Root and Unix name translation.<br>
+          <LI>Added : on-fly MD5 file computation<br>
+          <LI>Fixed : the default button is visible again<br>
+          <LI>New : The DHCP server part is now released under GPL license<br>
+    </ul>
+<br>
+<br>
+<b><u>Version&nbsp; 2.80</u></b><b>&nbsp;Jan 2005</b><br>
+      <UL>
+        <LI>Added : Ten user-defined options for DHCP<br>
+          <LI>Added : configuration read either from registry or ini file<br>
+          <LI>Added : Syslog daemon shows the IP address of sender<br>
+          <LI>Fixed : BOOTP protocol OK again<br>
+          <LI>Fixed : A race condition may crash Tftpd32 when sending illegal connect frames.<br>
+    </ul>
+<br>
+<br>
+<b><u>Version&nbsp; 2.74</u></b><b>&nbsp;May/July 2004</b><br>
+    <UL>
+         <LI>Added : Copy to Clipboard button in Tftp server and syslog<br>
+          <LI>Added : DHCP server reads port definition in file <i>services</i><br>
+          <LI>Fixed : characters in field file in TFTP client window were converted in lowercase (affects versions 2.71 to 2.73)<br>
+          <LI>Memory footprint has been reduced.<br>
+          <LI>Binary is now compiled for Pentium.<br>
+    </ul>
+<br>
+<br>
+<b><u>Version&nbsp; 2.73</u></b><b>&nbsp;Mar 2004</b><br>
+    <UL>
+        <LI>Added : Name of file which failed to be transferred<br>
+          <LI>Fixed : no answer to BootP requests (affects versions 2.70 to 2.72)<br>
+    </ul>
+<br>
+<br>
+<b><u>Version&nbsp; 2.72</u></b><b>&nbsp;Feb 2004</b><br>
+    <UL>
+        <LI>Fixed : DHCP lease time may be set to zero (affects only version 2.71)<br>
+    </ul>
+<br>
+<br>
+<b><u>Version&nbsp; 2.71</u></b><b>&nbsp;Feb 2004</b><br>
+    <UL>
+       <LI>Added : "Send full path to server" button<br>
+          <LI>Added : drag and drop fonctionality on the File field (TFTP client). Upload a full directory by droppping files into the control.<br>
+    </ul>
+<br>
+<br>
+<b><u>Version&nbsp; 2.70</u></b><b>&nbsp;Feb 2004</b><br>
+    <UL>
+          <LI>Fixed : Trouble with server when uploading with options<br>
+          <LI>Added : block negotiation in client<br>
+    </ul>
+<br>
+<br>
+<b><u>Version&nbsp; 2.62</u></b><b>&nbsp;Oct 2003</b><br>
+     <UL>
+         <LI>Added user defined DHCP parameter <br>
+          <LI>Fixed: Selection of LAN address into settings window <br>
+          <LI>Tftpd32 now retains windows position<br>
+          <LI>If Hide option has been enabled, Tftpd32's main window will stay 2 seconds. This should discourage Virus developpers to use Tftpd32.<br>
+    </ul>
+<br>
+<br>
+<b><u>Version&nbsp; 2.60</u></b><b>&nbsp;Aug 2003</b><br>
+     <UL>
+         <LI>SNTP server added<br>
+          <LI>Bug fixed in DHCP server : The server may deliver twice the same address.<br>
+    </ul>
+<br>
+<br>
+<b><u>Version&nbsp; 2.54</u></b><b>&nbsp;March 2003</b><br>
+     <UL>
+         <LI>Add port field in the client thread<br>
+          <LI><i>About</i> is the default button<br>
+    </ul>
+<br>
+<br>
+<b><u>Version&nbsp; 2.53</u></b><b>&nbsp; February 2003</b><br>
+    <UL>
+          <LI>Fix two bugs in the DHCP thread<br>
+    </ul>
+<br>
+<br>
+<b><u>Version&nbsp; 2.52&nbsp;</u></b><b> February 2003</b><br>
+     <UL>
+         <LI>Fix: Tsize option did not work with PXE .<br>
+          <LI>Fix: Virtual root did not work in v2.50 and 2.51<br>
+          <LI>if Pool Size is 0, DHCP server is desactivated<br>
+    </ul>
+<br>
+<br>
+<b><u>Version&nbsp; 2.51</u></b><b> &nbsp;November 2002</b><br>
+     <UL>
+         <LI>Fix a vulnerability in Tftpd32.<br>
+    </ul>
+<br>
+<br>
+<b><u>Version&nbsp; 2.50</u></b><b>&nbsp; November 2002</b><br>
+     <UL>
+         <LI>TFTP Code has been complely rewritten to support multithreading<br>
+          <LI>BOOTP/DHCP server included<br>
+          <LI>Read only mode for TFTP server<br>
+          <LI>Virtual Root option for TFTP server<br>
+          <LI>Selecting a line in 'Server interfaces' drop-down box copy IP address into the Clipboard<br>
+          <LI>Selecting a line in 'Show Dir' windows copy filename into the Clipboard<br>
+          <LI>Syslog port can be changed by editing services file<br>
+    </ul>
+<br>
+<br>
+<u>Version&nbsp; 2.20</u>&nbsp;&nbsp;April 5th 2002<br>
+    <UL>
+          <LI>Settings windows was changed<br>
+          <LI>Option 'Save Syslog messages' is saved into the registry<br>
+    </ul>
+<br>
+<br>
+<u>Version&nbsp; 2.12</u>&nbsp;&nbsp;March 20th 2002<br>
+    <UL>
+          <LI>Bug fixed: Hide window at Startup did not work<br>
+          <LI>Change task tray management<br>
+    </ul>
+<br>
+<br>
+<u>Version&nbsp; 2.11</u><br>
+    <UL>
+          <LI>Bug fixed: The OACK packet has 4 NUL bytes in excess<br>
+          <LI>Change Window size for XP<br>
+          <LI>Use EclipseHelp as Help maker.<br>
+    </ul>
+<br>
+<br>
+<u>Version&nbsp; 2.1</u><br>
+     <UL>
+         <LI>Bug fixed: The statistics may give one block in excess<br>
+          <LI>Add syslog server<br>
+          <LI>Add tftp client<br>
+          <LI>Logging into a file available via registry<br>
+          <LI>Mail address changed into about window<br>
+    </ul>
+<br>
+<br>
+<b><u>Version 2.0</u></b><b> &nbsp;April 4 2000  </b><br>
+     <UL>
+         <LI>Anticipation window available<br>
+          <LI>Add current directory button<br>
+          <LI>Main window is resizeable<br>
+    </ul>
+<br>
+<br>
+<u>Version 1.3</u>&nbsp;&nbsp;Mars 28 1999<br>
+     <UL>
+         <LI>Add progress bars<br>
+          <LI>Add <i>Show Dir</i> button<br>
+          <LI>Add <i>Create dir.txt files</i> setting<br>
+    </ul>
+<br>
+<br>
+<u>Version 1.2</u>&nbsp;&nbsp;July 30 1998<br>
+    <UL>
+          <LI>Bug fixed: Transfer can not exceed 65.535 blocks<br>
+          <LI>Add TFTPv2 support.<br>
+    </ul>
+<br>
+<br>
+<u>Version 1.1</u>&nbsp;&nbsp;June 19 1998<br>
+    <UL>
+          <LI>Add <i>Hide window at startup</i> setting.<br>
+    </ul>
+<br>
+<br>
+<u>Version 1.0</u>&nbsp;&nbsp;June 3 1998</b></p>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+  <title>DHCP setup</title>
+  <link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<TABLE id="title">
+	<tr><td   class="st_title">	DHCP Setup</td></tr>
+</TABLE>
+
+<br>
+DHCP setup is available through the DHCP tab.<br>
+<br>
+<TABLE>
+	<tr>
+	<td>
+		<DL>
+		    <dt>IP Pool starting Address
+		        <dd>This is the first address which will be distributed.
+		    <dt>Size of pool
+		        <dd>This is the number of hosts which may be configured by Tftpd32. 
+			<dt>Lease
+				<dd>This is the amount of time in minutes the address is leased for.
+		    <dt>Boot File
+		        <dd>Used by diskless stations. It is the file which will be retrieved by TFTP to start up the boot process.<br>
+					The strings $MAC$ and $IP$ are pseudo variables which are translated into the MAC address of the client and its assignated IP address.
+		    <dt>Default router
+		        <dd>The IP address of the LAN gateway.
+		    <dt>Mask
+		        <dd>The network mask which will be assigned to the DHCP clients.
+		    <dt>DNS servers
+		        <dd>The IP address of the DNS. Two DNS can be configured.
+		    <dt>WINS Server
+		        <dd>The IP address of the WINS server.
+		    <dt>NTP Server
+		        <dd>The IP address of the NTP server used for synchronisation.
+		    <dt>SIP Server
+		        <dd>The IP address of the SIP server. It concerns mostly IP phones.
+		    <dt>Domain Name
+		        <dd>Either the NT domain or the internet domain.
+		    <dt>Additional Option
+		        <dd>The first field is the number of the option to be handled
+		        <dd>The second filed is the value of the field. The value is prefixed 	with its type (a for list of IPv4 address, x for list of hex digits, b for list of decimal bytes, s for an ASCII string) [legacy prefixes: i for integer, n for network order integers]
+		    <dt>More Additional Options ?
+				<dd>Tftpd32 supports up to 10 additionnal options. They have to be configured by editing the tftpd32.ini settings file. Their syntax is similar to the previous one.
+				
+		</DL>
+	</td>
+	<td>
+		<img alt="" src="setup%20dhcp.jpg"><br>
+	</td>
+	</tr>
+</table>
+<br>
+
+        
+</body>
+</html>
