@@ -35,5 +35,3 @@ void DHCPDestroyItem (struct LL_IP *pCur);
 int ArpDeleteHost(struct in_addr addr);
 int TranslateParam2Value (void *buffer, int len, const char *opt_val, struct in_addr ip, const char *tMac, unsigned short architecture);
 
-int TranslateParam2Value (void *buffer, int len, const char *opt_val, struct in_addr ip, const char *tMac);
-int ArpDeleteHost(struct in_addr addr);
