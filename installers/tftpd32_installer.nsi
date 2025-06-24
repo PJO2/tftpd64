@@ -4,7 +4,12 @@
 ; ------------------------------------------------------------------
 ; Metadata
 ; ------------------------------------------------------------------
-Outfile "Tftpd32_Installer.exe"
+!define PRODUCT_VERSION "4.70"
+!define PRODUCT_NAME "Tftpd32"
+!define PRODUCT_PUBLISHER "Ph. Jounin"
+!define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
+
+Outfile "..\Releases\Tftpd32_Installer_v${PRODUCT_VERSION}.exe"
 InstallDir "$PROGRAMFILES32\Tftpd32"
 RequestExecutionLevel admin
 
@@ -17,10 +22,6 @@ Var hChkFirewall
 Var AddDesktopIcon
 Var hChkDesktop
 
-!define PRODUCT_NAME "Tftpd32"
-!define PRODUCT_VERSION "4.70"
-!define PRODUCT_PUBLISHER "Ph. Jounin"
-!define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 
 ; ------------------------------------------------------------------
 ; Page order

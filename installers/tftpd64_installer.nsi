@@ -5,7 +5,12 @@
 ; ------------------------------------------------------------------
 ; Product Info
 ; ------------------------------------------------------------------
-Outfile "Tftpd64_Installer.exe"
+!define PRODUCT_NAME "Tftpd64"
+!define PRODUCT_VERSION "4.70"
+!define PRODUCT_PUBLISHER "Ph. Jounin"
+!define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
+
+Outfile "..\Releases\Tftpd64_Installer_v${PRODUCT_VERSION}.exe"
 InstallDir "$PROGRAMFILES64\Tftpd64"
 RequestExecutionLevel admin
 
@@ -13,10 +18,6 @@ Name "Tftpd64"
 BrandingText "Tftpd64 Installer"
 InstallDirRegKey HKLM "Software\Tftpd64" "InstallPath"
 
-!define PRODUCT_NAME "Tftpd64"
-!define PRODUCT_VERSION "4.70"
-!define PRODUCT_PUBLISHER "Ph. Jounin"
-!define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 
 Var AllowFirewall
 Var AddDesktopIcon
