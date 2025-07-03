@@ -4,10 +4,12 @@
 ; ------------------------------------------------------------------
 ; Metadata
 ; ------------------------------------------------------------------
-!define PRODUCT_VERSION "4.70"
 !define PRODUCT_NAME "Tftpd32"
 !define PRODUCT_PUBLISHER "Ph. Jounin"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
+!ifndef PRODUCT_VERSION
+  !define PRODUCT_VERSION "undefined"
+!endif
 
 Outfile "..\Releases\Tftpd32_Installer_v${PRODUCT_VERSION}.exe"
 InstallDir "$PROGRAMFILES32\Tftpd32"
@@ -40,7 +42,7 @@ Section "Install"
 
   SetOutPath "$INSTDIR"
 
-  File /oname=tftpd32.exe "..\bin\tftpd32.x86.exe"
+  File "..\ARTS\bin\signed\tftpd32.exe"
   File "..\doc-help\tftpd32.chm"
   File "tftpd32.ini"
   File "EUPL-EN.pdf"

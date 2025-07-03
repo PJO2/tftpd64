@@ -1,3 +1,5 @@
+
+
 !include "MUI2.nsh"
 !include "x64.nsh"
 !include "nsDialogs.nsh"
@@ -6,9 +8,13 @@
 ; Product Info
 ; ------------------------------------------------------------------
 !define PRODUCT_NAME "Tftpd64"
-!define PRODUCT_VERSION "4.70"
 !define PRODUCT_PUBLISHER "Ph. Jounin"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
+!ifndef PRODUCT_VERSION
+  !define PRODUCT_VERSION "undefined"
+!endif
+
+
 
 Outfile "..\Releases\Tftpd64_Installer_v${PRODUCT_VERSION}.exe"
 InstallDir "$PROGRAMFILES64\Tftpd64"
@@ -23,6 +29,8 @@ Var AllowFirewall
 Var AddDesktopIcon
 Var hChkFirewall
 Var hChkDesktop
+
+
 
 ; ------------------------------------------------------------------
 ; Pages
@@ -42,7 +50,7 @@ Section "Install"
   SetOutPath "$INSTDIR"
 
   ; Install files
-  File /oname=tftpd64.exe "..\bin\tftpd32.x64.exe"
+  File "..\ARTS\bin\signed\tftpd64.exe"
   File "..\doc-help\tftpd32.chm"
   File "tftpd32.ini"
   File "EUPL-EN.pdf"

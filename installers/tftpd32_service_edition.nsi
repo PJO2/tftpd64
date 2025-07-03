@@ -6,9 +6,11 @@
 ; Product Info
 ; ------------------------------------------------------------------
 !define PRODUCT_NAME "Tftpd32 Service Edition"
-!define PRODUCT_VERSION "4.70"
 !define PRODUCT_PUBLISHER "Ph. Jounin"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\Tftpd32SVC"
+!ifndef PRODUCT_VERSION
+  !define PRODUCT_VERSION "undefined"
+!endif
 
 Outfile "..\Releases\Tftpd32_Service_Installer_v${PRODUCT_VERSION}.exe"
 InstallDir "$PROGRAMFILES32\Tftpd32-SVC"
@@ -48,8 +50,8 @@ Section "Install"
   SetOutPath "$INSTDIR"
 
   ; Install files
-  File /oname=tftpd32_gui.exe "..\bin\tftpd32_gui.x86.exe"
-  File /oname=tftpd32_svc.exe "..\bin\tftpd32_svc.x86.exe"
+  File "..\ARTS\bin\signed\tftpd32_gui.exe"
+  File "..\ARTS\bin\signed\tftpd32_svc.exe"
   File "..\doc-help\tftpd32.chm"
   File "tftpd32.ini"
   File "EUPL-EN.pdf"
