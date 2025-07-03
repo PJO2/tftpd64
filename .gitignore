@@ -22,3 +22,6 @@
 /.vs/tftpd32/v17
 /.vs/tftpd64/v17
 /.vs/tftpd32/FileContentIndex
+/src/OBJ
+/src/BIN/Release
+/ARTS
