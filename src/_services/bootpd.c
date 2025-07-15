@@ -466,11 +466,23 @@ static struct S_DhcpOptions sDhcpOpt [] =       // 0 for unspecified
    // from Philip Taff : choose the receiving interface instead of a loopback
    if (!pNearest) 
        pNearest = &(receivingAddress->sin_addr);
-  
+   //umm it currently overrides the hack so ill work here i think? ill add a box at gui for user specified siaaddr so
+   // TODO: add optional siaaddr
+   // find how to add a gui box at dhcp settings // Failed: couldn't add box
+   // use that data here // Failed: no data could be gathered
+   // also can check t for option 66 which is next server defined at dhcp protocol
    //HACK -- If we are the bootp server, we are also the tftpserver
-   if (sSettings.uServices & TFTPD32_TFTP_SERVER) 
-      pDhcpPkt->siaddr = *pNearest;   // Next server (TFTP server is enabled)
-   pDhcpPkt->siaddr = *pNearest;   // always fill siaddr
+   for (int i = 0; i < 10; i++) {
+	   if (sParamDHCP.t[i].nAddOption == 66) {
+		   pDhcpPkt->siaddr.S_un.S_addr = inet_addr(sParamDHCP.t[i].szAddOption);
+	   }
+   }
+   if (pDhcpPkt->siaddr.S_un.S_addr == INADDR_NONE) {
+	   if (sSettings.uServices & TFTPD32_TFTP_SERVER)
+		   pDhcpPkt->siaddr = *pNearest;   // Next server (TFTP server is enabled) // Error: idk whats going on here but it returns 192.168.1.1 which doesn't exist on my network
+	   pDhcpPkt->siaddr = *pNearest;   // always fill siaddr
+   }
+
    for (Ark=0 ; Ark<SizeOfTab(sDhcpOpt) ; Ark++)
    {
 	 // skip if linked to a service which is not started (change suggested by Colin)
