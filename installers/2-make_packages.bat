@@ -3,12 +3,14 @@ setlocal
 
 
 REM -- Release, will be inherited by NSIS scripts --
-set PRODUCT_VERSION=4.71
-
+if "%VERSION%"=="" (
+    echo [ERROR] VERSION is not defined. Please set it before running this script.
+    exit /b 1
+)
 
 REM -- Set paths --
 set NSIS_COMPILER="C:\Program Files (x86)\NSIS\makensis.exe"
-set SIGNED_BIN_DIR=..\ARTS\bin\signed
+set SIGNED_BIN_DIR=..\ARTS\bin\dist\%VERSION%\signed
 set DOC_DIR=..\doc-help
 set OUTPUT_DIR=..\releases
 set ZIP_APP="C:\Program Files\7-Zip\7z.exe"
@@ -40,7 +42,7 @@ for %%F in (
     echo ---------------------------------------------
     echo Building: %%F
     echo ---------------------------------------------
-    %NSIS_COMPILER% /DPRODUCT_VERSION=%PRODUCT_VERSION% "%%F"
+    %NSIS_COMPILER% /DPRODUCT_VERSION=%VERSION% "%%F"
     if errorlevel 1 (
         echo [ERROR] Failed to compile %%F
         exit /b 1
@@ -52,7 +54,7 @@ REM -- Create portable ZIPs --
 echo Creating portable packages...
 
 REM Create tftpd32 portable zip
-set ZIP_NAME=%OUTPUT_DIR%\tftpd32_portable_v%PRODUCT_VERSION%.zip
+set ZIP_NAME=%OUTPUT_DIR%\tftpd32_portable_v%VERSION%.zip
 %ZIP_APP% a -tzip "%ZIP_NAME%" ^
     tftpd32.ini EUPL-EN.pdf ^
     "%DOC_DIR%\tftpd32.chm" ^
@@ -63,7 +65,7 @@ if errorlevel 1 (
 )
 
 REM Create tftpd64 portable zip
-set ZIP_NAME=%OUTPUT_DIR%\tftpd64_portable_v%PRODUCT_VERSION%.zip
+set ZIP_NAME=%OUTPUT_DIR%\tftpd64_portable_v%VERSION%.zip
 %ZIP_APP% a -tzip "%ZIP_NAME%" ^
     tftpd32.ini EUPL-EN.pdf ^
     "%DOC_DIR%\tftpd32.chm" ^

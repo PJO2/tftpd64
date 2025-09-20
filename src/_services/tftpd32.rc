@@ -10,8 +10,8 @@
 // Versioning
 //
 1 VERSIONINFO
-	FILEVERSION 4,62,0,0
-	PRODUCTVERSION 4,62,0,0
+	FILEVERSION 4,72,0,0
+	PRODUCTVERSION 4,72,0,0
 	FILEOS  VOS__WINDOWS32
 	FILETYPE VFT_APP
 	{
@@ -23,11 +23,11 @@
 				VALUE "FileVersion",     ""
 				VALUE "FileDescription", "TFTP server"
 				VALUE "InternalName",    "tftpd32 service edition"
-				VALUE "LegalCopyright",  "Copyrighted 2018 by Ph. Jounin"
+				VALUE "LegalCopyright",  "Copyrighted 2025 by Ph. Jounin"
 				VALUE "LegalTrademarks", ""
 				VALUE "OriginalFileName", "tftpd32"
 				VALUE "ProductName",      "tftpd32 service edition"
-				VALUE "ProductVersion",   "4.62"
+				VALUE "ProductVersion",   "4.72"
 			}
 		}
 		BLOCK "VarFileInfo"

@@ -15,7 +15,7 @@ echo Signing only unsigned .exe files in %RELEASE_DIR% ...
 
 pushd %RELEASE_DIR%
 
-for %%F in (*.exe) do (
+for %%F in (*%VERSION%.exe) do (
     echo Checking %%F ...
     powershell -Command ^
       "if ((Get-AuthenticodeSignature '%%F').Status -eq 'Valid') { exit 0 } else { exit 1 }"
