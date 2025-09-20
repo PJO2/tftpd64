@@ -3,6 +3,8 @@
 // Projet TFTPD32.  Dec 2008 Ph.jounin
 // File DNS.c:  Domain name server
 //
+// Add many controls on input data, should now avoid buffer overflow
+// 
 // source released under European Union Public License
 //
 //////////////////////////////////////////////////////
@@ -21,6 +23,8 @@
 #define DNS_IPV6_ADDR 2
 #define CLASS_IN      1			// internet
 #define DNS_NOTIMPLEMENTED 4
+#define DNS_MAXMSG    512
+#define DNS_MAX_LABEL_LEN 63
 
 #pragma pack(1)
 
@@ -93,7 +97,7 @@ typedef struct
 	unsigned short    qclass;
 } DNS_ANSWER_EXP;
 
-static int ExplodeQname (DNS_QUESTION_EXP *req, const char *qname, int len);
+static int ExplodeQname (DNS_QUESTION_EXP *req, const unsigned char *qname, int qname_len);
 int AnswerDnsQuery (const DNS_HEADER *header, int len, char *buf, int *anslen);
 static int ProcessDnsQuery (const DNS_QUESTION_EXP *req, DNS_ANSWER_EXP *ans);
 static int CreateAnswerMsg (const DNS_HEADER *req,
@@ -153,17 +157,29 @@ DNS_QUESTION_EXP sDNSQuestion;
 DNS_ANSWER_EXP  ans;
 
 int Rc;
+	if (header == NULL || buf == NULL || anslen == NULL)
+		return 0;
+	// Check that header is complete
+	int rem = len - (int)sizeof(DNS_HEADER);
+	if (rem <= 0) {
+		LOG (1, "AnswerDnsQuery: no payload after DNS_HEADER");
+		return 0;
+	}
 
 	memset (& ans, 0, sizeof ans);
    // check that message is a query and only one host is required
 	if (htons (header->opcode) == 0 && htons (header->q_count)==1)
 	{
-		// go to request 
-		Rc = ExplodeQname (& sDNSQuestion, 
-					 	     (char *) header + sizeof (DNS_HEADER), 
-						 	 len - sizeof (DNS_HEADER) );
-		if (Rc && ( sDNSQuestion.qtype==DNS_A || sDNSQuestion.qtype==DNS_AAAA || sDNSQuestion.qtype==DNS_CNAME )
-			   && sDNSQuestion.qclass==CLASS_IN)
+		// go to request -> fill the DNS_QUESTION_EXP structure
+		Rc = ExplodeQname (& sDNSQuestion, (unsigned char *) header + sizeof (DNS_HEADER), rem );
+		if (!Rc)
+		{
+			LOG(2, "AnswerDnsQuery: ExplodeQname rejected malformed name");
+			return 0;
+		}
+
+		if (      (sDNSQuestion.qclass == CLASS_IN)
+			 &&   (sDNSQuestion.qtype == DNS_A || sDNSQuestion.qtype == DNS_AAAA || sDNSQuestion.qtype == DNS_CNAME) )
 		{
 			ProcessDnsQuery (& sDNSQuestion, &ans);
 			CreateAnswerMsg (  header, len, & sDNSQuestion, 
@@ -181,35 +197,56 @@ return 1;
 
 
 // Translate a qname string into a DNS_QUESTION_EXP structure
-static int ExplodeQname (DNS_QUESTION_EXP *req, const char *qname, int len)
+static int ExplodeQname (DNS_QUESTION_EXP *req, const unsigned char *qname, int qname_len)
 {
-int Ark;
-int host_len, n ;
-char *p;
-const char *q;
+unsigned char *p;
+const unsigned char* q;
+const unsigned char* qname_end = qname + (size_t)qname_len;
+const unsigned char* lbl_end;
+size_t p_rem;
+int n;
 
-  host_len = strnlen_s (qname, len)+1;
+  if (req == NULL || qname == NULL || qname_len < 0)  
+	  return FALSE;
+  if (qname_len < 1 + sizeof (DNS_QUESTION)) 
+	  return FALSE;
 
-  // drop misformed requests
-  if (     len > sizeof *req  
-	   ||  host_len> sizeof req->name - 1
-	   ||  host_len != len - sizeof (DNS_QUESTION) )  
-	   return FALSE;
+  // qname is : name followed by a zero byte, followed by a DNS_QUESTION structure
+  lbl_end = qname_end - sizeof(DNS_QUESTION); // / last byte allowed for label area
+  // p is the current pointer inside DNS_QUESTION_EXP.name
+  p = req->name;
+  p_rem = sizeof(req->name);	
+  // q is the current pointer inside qname
+  q = (const unsigned char*)qname;
 
-
-  // recompose the host name
-  for ( Ark=0, q=qname, p=req->name, --host_len ;  host_len>0 &&  *q!=0 ;  )
+  // descode q into req->name  
+  while (q < lbl_end)
   {
-      n = *q;
-	  host_len -= *q++;
-	  if (host_len >= 0)
-	     while (n--)  *p++ = *q++;
-	  if (--host_len>0) *p++ = '.';
-  } 
-  *p = 0;
-  q++;
-  req->qclass = htons ( ((DNS_QUESTION *) q)->qclass ) ;
-  req->qtype =  htons ( ((DNS_QUESTION *) q)->qtype ) ;
+	  n = *q++;                // length byte, but do not trust it too much
+	  if (n==0) break;
+	  if (     n > DNS_MAX_LABEL_LEN    // label too long
+	      ||  (n & 0xC0) == 0xC0        // compression not supported
+	      ||   n >= p_rem               // name too long
+	      ||   q + n > lbl_end )        // label exceed qname length
+		  return FALSE;
+
+	  // we can safely copy label
+	  memcpy(p, q, n);
+	  p += n;  p_rem -= n; q += n;
+	  if (p_rem < sizeof(".")) return FALSE; // need at least one byte for '.' or '\0'
+
+	  if (*q != 0) { *p++ = '.'; p_rem--; } // add '.' if not end of qname
+  } // while not end of qname
+
+  if (n != 0) return FALSE; // overflow detected
+  if (p_rem == 0) return FALSE;		 // no room for final '\0'
+  *p = '\0';
+  // ensure qtype/qclass are present
+  if ((size_t)(qname_end - q) < sizeof(DNS_QUESTION)) return FALSE;
+
+   // fill qclass and qtype
+   req->qclass = ntohs ( ((DNS_QUESTION *) q)->qclass ) ;
+   req->qtype =  ntohs ( ((DNS_QUESTION *) q)->qtype ) ;
 return TRUE;
 } // Explode Qname
 
