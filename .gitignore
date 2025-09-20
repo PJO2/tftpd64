@@ -4,15 +4,10 @@
 
 <<<<<<< HEAD
 *.ppj
+*.ppw
 /ARTS
-/.vs/tftpd32/
-/.vs/tftpd64/
-/src/.vs/tftpd32
-/src/.vs/tftpd64
+/.vs
+/src/.vs
 /src/obj/Win32/Release
-/src/.vs/
 .DS_Store
-/src/libs/libs/x64/Debug
-/src/OBJ
-/src/BIN/Release
 /src/_services/tftpd32.aps
