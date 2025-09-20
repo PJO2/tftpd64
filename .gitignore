@@ -5,6 +5,7 @@
 <<<<<<< HEAD
 *.ppj
 *.ppw
+.gitmodules
 /ARTS
 /.vs
 /src/.vs
