@@ -50,8 +50,8 @@ Section "Install"
   SetOutPath "$INSTDIR"
 
   ; Install files
-  File "..\ARTS\bin\signed\tftpd64_gui.exe"
-  File "..\ARTS\bin\signed\tftpd64_svc.exe"
+  File "..\ARTS\bin\dist\${PRODUCT_VERSION}\signed\tftpd64_gui.exe"
+  File "..\ARTS\bin\dist\${PRODUCT_VERSION}\signed\tftpd64_svc.exe"
   File "..\doc-help\tftpd32.chm"
   File "tftpd32.ini"
   File "EUPL-EN.pdf"

@@ -42,7 +42,7 @@ Section "Install"
 
   SetOutPath "$INSTDIR"
 
-  File "..\ARTS\bin\signed\tftpd32.exe"
+  File "..\ARTS\bin\dist\${PRODUCT_VERSION}\signed\tftpd32.exe"
   File "..\doc-help\tftpd32.chm"
   File "tftpd32.ini"
   File "EUPL-EN.pdf"

@@ -12,11 +12,11 @@
 #include "headers.h"
 
 #ifdef _M_X64
-#  define TFTPD_STRING   "TFTPD64 v4.71 Build " __DATE__ " " __TIME__
+#  define TFTPD_STRING   "TFTPD64 v4.72 Build " __DATE__ " " __TIME__
 #  define TFTPD_ABOUT_TITLE   "About TFTPD64"
 #else
 #ifndef TFTP_CLIENT_ONLY
-#     define TFTPD_STRING   "TFTPD32 v4.71 Build " __DATE__ " " __TIME__
+#     define TFTPD_STRING   "TFTPD32 v4.72 Build " __DATE__ " " __TIME__
 #else
 #     define TFTPD_STRING   "TFTPD32 Client v4.70 Build " __DATE__ " " __TIME__
 #endif
@@ -33,7 +33,7 @@
             "Please do not distribute\r\n"
             "NO WARRANTY\r\n\r\n"
             "Full credits will be given into release version\r\n"
-            "Official site: http://tftpd32.jounin.net";
+            "Official site: https://www.tftpd64.com";
 #elif defined BAE_SYSTEMS_LEN_WHITE
 const char LICENSE_TFTPD32 [] =
 "\r\n\r\n"
@@ -46,13 +46,13 @@ const char LICENSE_TFTPD32 [] =
 "TFTPD32_Client is copyrighted 2025 by Philippe Jounin (philippe@jounin.net) "
 "and released under the European Union Public License 1.1 "
 "(see either the help file or the file EUPL-EN.pdf for the full text of the license)\r\n\r\n"
-"Official site: http://tftpd32.jounin.net\r\n\r\n";
+"Official site: https://www.tftpd64.com\r\n\r\n";
 #elif defined STANDALONE_EDITION
 const char LICENSE_TFTPD32 [] =
 "TFTPD32 and TFTPD64 are copyrighted 1998-2025 by Philippe Jounin (philippe@jounin.net) "
 "and released under the European Union Public License 1.1 "
 "(see either the help file or the file EUPL-EN.pdf for the full text of the license)\r\n\r\n"
-"Official site: http://tftpd32.jounin.net\r\n\r\n"
+"Official site: https://www.tftpd64.com\r\n\r\n"
 "Tftpd32 and Tftpd64 use the following copyrights or contributions\r\n"
 "  - MD5 part is from RSA Data Security\r\n"
 "  - Icon designed by Marco\r\n"

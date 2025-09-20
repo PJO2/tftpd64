@@ -1,6 +1,6 @@
 //////////////////////////
 // Useful Window proc
-// released under european public license (see license.txt)
+// released under European Union Public License (see license.txt)
 //////////////////////////
 
 
