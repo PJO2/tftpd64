@@ -722,23 +722,7 @@ char  sz[128];
 
     GetWindowRect (hMainWnd, &R);
     wsprintf (sz, "%d %d %d %d ", R.left, R.top, R.right, R.bottom);
-
-    Rc = RegCreateKeyEx (
-#ifdef  _WIN64
-						 HKEY_CURRENT_USER,
-#else
-						 HKEY_LOCAL_MACHINE,
-#endif
-                         TFTPD32_MAIN_KEY,
-                         0,
-                         NULL,
-                         REG_OPTION_NON_VOLATILE,
-                         KEY_WRITE,
-                         NULL,
-                        &hKey,
-                        &dwState);
-    if (Rc == ERROR_SUCCESS)   SAVEKEY (KEY_WINDOW_POS,sz,REG_SZ);
-    if (hKey!=INVALID_HANDLE_VALUE)  RegCloseKey (hKey);
+    Rc = SaveKey(TFTPD32_MAIN_KEY, KEY_WINDOW_POS, sz, sizeof sz, REG_SZ, szTftpd32IniFile);
 return Rc;
 } // Tftpd32SaveWindowPos
 
@@ -749,52 +733,26 @@ BOOL Tftpd32RetrieveWindowPos (HWND hMainWnd)
 RECT  R;
 HKEY  hKey=INVALID_HANDLE_VALUE;
 DWORD dwSize;
-INT   Rc, Ark=0;
-char  sz[128], *pCur, *pNext;
+INT   Rc;
+char  sz[128];
 
+   Rc = ReadKey(TFTPD32_MAIN_KEY, KEY_WINDOW_POS, sz, sizeof sz, REG_SZ, szTftpd32IniFile);
+   if (Rc==0)  return FALSE;
 
-   Rc = RegOpenKeyEx ( // Key handle at root level.
-#ifdef  _WIN64
-					  HKEY_CURRENT_USER,
-#else
-					  HKEY_LOCAL_MACHINE,
-#endif
-					  TFTPD32_MAIN_KEY,      // Path name of child key.
-                      0,                      // Reserved.
-                      KEY_READ,                // Requesting read access.
-                    & hKey);                 // Address of key to be returned.
-    // Lire les données dans cette entrée
-    READKEY (KEY_WINDOW_POS, sz);
-    if (hKey!=INVALID_HANDLE_VALUE)
-            RegCloseKey (hKey);
-
-  // parse entry
- for (sz [sizeof sz - 1] = 0, pNext=pCur=sz ; *pNext!=0 ; pNext++)
-      if (*pNext==' ')
-       {
-          *pNext=0;
-          switch (Ark++)
-         {
-             case 0 : R.left   = atoi(pCur); break;
-             case 1 : R.top    = atoi(pCur); break;
-             case 2 : R.right  = atoi(pCur); break;
-             case 3 : R.bottom = atoi(pCur); break;
-         }
-          pCur=pNext+1;
-      }
-
- // The window should be visible (inside the screen)
-    if (Ark == 4
-        && R.left + 150 < GetSystemMetrics(SM_CXSCREEN)
-        && R.top  + 150 < GetSystemMetrics(SM_CYSCREEN)
-        && R.left < R.right
-        && R.top  < R.bottom
-        && R.left >= 0
-        && R.top  >= 0
-     )
-    {
-      MoveWindow (hMainWnd, R.left, R.top, R.right-R.left, R.bottom-R.top, TRUE);
-    }
+   // parse entry
+   sz[sizeof sz - 1] = 0;
+   if (sscanf_s(sz, "%d %d %d %d", &R.left, &R.top, &R.right, &R.bottom) == 4)
+   {
+	   // fit in the screen
+       if (   R.left < GetSystemMetrics(SM_CXSCREEN)
+           && R.top < GetSystemMetrics(SM_CYSCREEN)
+           && R.left < R.right
+           && R.top < R.bottom
+           && R.left >= 0
+           && R.top >= 0
+           )
+           MoveWindow(hMainWnd, R.left, R.top, R.right - R.left, R.bottom - R.top, TRUE);
+   }
 return Rc;
 } // Tftpd32RetrieveWindowPos
 

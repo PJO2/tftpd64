@@ -1,27 +1,29 @@
+
 !include "MUI2.nsh"
+!include "x64.nsh"
 !include "nsDialogs.nsh"
 
 ; ------------------------------------------------------------------
-; Metadata
+; Product Info - params : ARCH and PRODUCT_VERSION 
 ; ------------------------------------------------------------------
-!define PRODUCT_NAME "Tftpd32"
+!define PRODUCT_NAME "Tftpd${ARCH}"
 !define PRODUCT_PUBLISHER "Ph. Jounin"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !ifndef PRODUCT_VERSION
   !define PRODUCT_VERSION "undefined"
 !endif
 
-Outfile "..\Releases\Tftpd32_Installer_v${PRODUCT_VERSION}.exe"
-InstallDir "$PROGRAMFILES32\${PRODUCT_NAME}"
+Outfile "..\Releases\${PRODUCT_NAME}_Installer_v${PRODUCT_VERSION}.exe"
+InstallDir "$PROGRAMFILES${ARCH}\${PRODUCT_NAME}"
 RequestExecutionLevel admin
 
-Name "Tftpd32"
-BrandingText "Tftpd32 Installer"
-InstallDirRegKey HKLM "Software\Tftpd32" "InstallPath"
+Name "${PRODUCT_NAME}"
+BrandingText "${PRODUCT_NAME} Installer"
+InstallDirRegKey HKLM "Software\${PRODUCT_NAME}" "InstallPath"
 
 Var AllowFirewall
-Var hChkFirewall
 Var AddDesktopIcon
+Var hChkFirewall
 Var hChkDesktop
 
 
@@ -30,7 +32,8 @@ Var hChkDesktop
 ; ------------------------------------------------------------------
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_DIRECTORY
-Page custom FirewallPage
+; add a leave function to the custom page
+Page custom FirewallPage FirewallPageLeave
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
 !insertmacro MUI_LANGUAGE "English"
@@ -42,19 +45,37 @@ Section "Install"
 
   SetOutPath "$INSTDIR"
 
-  File "..\ARTS\bin\dist\${PRODUCT_VERSION}\signed\tftpd32.exe"
+  ; Install files
+  File "..\ARTS\bin\dist\${PRODUCT_VERSION}\signed\${PRODUCT_NAME}.exe"
   File "..\doc-help\tftpd32.chm"
   File "EUPL-EN.pdf"
 
-  ; Shortcuts
-  CreateDirectory "$SMPROGRAMS\Tftpd32"
-  CreateShortCut "$SMPROGRAMS\Tftpd32\Tftpd32.lnk" "$INSTDIR\tftpd32.exe"
-  CreateShortCut "$SMPROGRAMS\Tftpd32\Help.lnk"     "$INSTDIR\tftpd32.chm"
+
+  ; Generate uninstaller
+  WriteUninstaller "$INSTDIR\uninstall.exe"
+
+  ; Shortcuts in Start Menu
+  SetShellVarContext all
+  CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}"
+  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME}.lnk" "$INSTDIR\${PRODUCT_NAME}.exe"
+  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Help.lnk"            "$INSTDIR\tftpd32.chm"
+  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Uninstall.lnk"       "$INSTDIR\uninstall.exe"
+
+  ; Desktop shortcut if selected
   ${If} $AddDesktopIcon == ${BST_CHECKED}
-     CreateShortCut "$DESKTOP\Tftpd32.lnk" "$INSTDIR\tftpd32.exe"
+    SetShellVarContext current
+    CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\${PRODUCT_NAME}.exe"
+    SetShellVarContext all ; restore for the rest of the install
   ${EndIf}
 
-  ; create ini file in %AppData%tftpd32
+  ; Firewall rule if requested
+  ${If} $AllowFirewall == ${BST_CHECKED}
+    ExecWait 'netsh advfirewall firewall add rule name="${PRODUCT_NAME}" dir=in action=allow program="$INSTDIR\${PRODUCT_NAME}.exe" enable=yes profile=any'
+  ${EndIf}
+
+  ; ----------------------------------------------
+  ; create ini file in %AppData%${PRODUCT_NAME}
+  ; ----------------------------------------------
   ; Make sure $AppData resolves for the CURRENT user (not all users)
   SetShellVarContext current
   ; Target dir and file
@@ -68,44 +89,47 @@ Section "Install"
         CopyFiles /SILENT "$INSTDIR\tftpd32.ini" "$0\tftpd32.ini"
         Delete "$INSTDIR\tftpd32.ini"
   ; If there’s still no INI in %AppData%, drop the shipped default there.
-  IfFileExists "$0\tftpd32.ini" 0 +2
+  IfFileExists "$0\tftpd32.ini" +2 0
     File "/oname=$0\tftpd32.ini" "tftpd32.ini"
   ; let the app know where the INI is (only if your app can read it)
   WriteRegStr HKLM "Software\${PRODUCT_NAME}" "IniPath" "$0\tftpd32.ini"
+  ; ----------------------------------------------
 
-  ; Firewall rule if requested
-  ${If} $AllowFirewall == ${BST_CHECKED}
-    ExecWait 'netsh advfirewall firewall add rule name="Tftpd32" dir=in action=allow program="$INSTDIR\tftpd32.exe" enable=yes profile=any'
-  ${EndIf}
-
-  ; Uninstall registry
+  ; Add uninstall info
   WriteRegStr HKLM "${PRODUCT_UNINST_KEY}" "DisplayName" "${PRODUCT_NAME}"
   WriteRegStr HKLM "${PRODUCT_UNINST_KEY}" "DisplayVersion" "${PRODUCT_VERSION}"
   WriteRegStr HKLM "${PRODUCT_UNINST_KEY}" "Publisher" "${PRODUCT_PUBLISHER}"
   WriteRegStr HKLM "${PRODUCT_UNINST_KEY}" "InstallLocation" "$INSTDIR"
-  WriteRegStr HKLM "${PRODUCT_UNINST_KEY}" "DisplayIcon" "$INSTDIR\tftpd32.exe"
+  WriteRegStr HKLM "${PRODUCT_UNINST_KEY}" "DisplayIcon" "$INSTDIR\${PRODUCT_NAME}.exe"
   WriteRegStr HKLM "${PRODUCT_UNINST_KEY}" "UninstallString" "$INSTDIR\uninstall.exe"
 
   ; Save install path
   WriteRegStr HKLM "Software\${PRODUCT_NAME}" "InstallPath" "$INSTDIR"
 
-  WriteUninstaller "$INSTDIR\uninstall.exe"
-
 SectionEnd
 
 
+; ------------------------------------------------------------------
+; Uninstall Section
+; ------------------------------------------------------------------
 Section "Uninstall"
 
-  ; Remove shortcuts
-  Delete "$DESKTOP\Tftpd32.lnk"
-  Delete "$SMPROGRAMS\Tftpd32\Tftpd32.lnk"
-  Delete "$SMPROGRAMS\Tftpd32\Help.lnk"
-  Delete "$SMPROGRAMS\Tftpd32\Uninstall.lnk"
-  RMDir  "$SMPROGRAMS\Tftpd32"
+  SetShellVarContext all
+  Delete "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME}.lnk"
+  Delete "$SMPROGRAMS\${PRODUCT_NAME}\Help.lnk"
+  Delete "$SMPROGRAMS\${PRODUCT_NAME}\Uninstall.lnk"
+  RMDir  "$SMPROGRAMS\${PRODUCT_NAME}"
+
+  ; Delete shortcuts
+  SetShellVarContext current
+  Delete "$DESKTOP\${PRODUCT_NAME}.lnk"
+  SetShellVarContext all
+  Delete "$DESKTOP\${PRODUCT_NAME}.lnk"
 
   ; Remove installed files
-  Delete "$INSTDIR\tftpd32.exe"
+  Delete "$INSTDIR\${PRODUCT_NAME}.exe"
   Delete "$INSTDIR\tftpd32.chm"
+  Delete "$INSTDIR\tftpd32.ini"
   Delete "$INSTDIR\EUPL-EN.pdf"
   Delete "$INSTDIR\uninstall.exe"
   RMDir  "$INSTDIR"
@@ -124,31 +148,27 @@ Section "Uninstall"
 
 SectionEnd
 
+; ------------------------------------------------------------------
+; Custom Page for Firewall and Desktop Shortcut
+; ------------------------------------------------------------------
 
-; ------------------------------------------------------------------
-; Custom firewall checkbox page
-; ------------------------------------------------------------------
 Function FirewallPage
   nsDialogs::Create 1018
   Pop $0
-  ${NSD_CreateCheckbox} 0u 0u 100% 12u "Allow Tftpd32 through Windows Firewall"
+
+  ${NSD_CreateCheckbox} 0u 0u 100% 12u "Allow ${PRODUCT_NAME} through Windows Firewall"
   Pop $hChkFirewall
   ${NSD_SetState} $hChkFirewall ${BST_CHECKED}
-  ${NSD_OnClick} $hChkFirewall FirewallClicked
 
   ${NSD_CreateCheckbox} 0u 16u 100% 12u "Create Desktop Shortcut"
   Pop $hChkDesktop
   ${NSD_SetState} $hChkDesktop ${BST_CHECKED}
-  ${NSD_OnClick} $hChkDesktop DesktopClicked
 
   nsDialogs::Show
 FunctionEnd
 
-Function FirewallClicked
+Function FirewallPageLeave
   ${NSD_GetState} $hChkFirewall $AllowFirewall
-FunctionEnd
-
-Function DesktopClicked
-  ${NSD_GetState} $hChkDesktop $AddDesktopIcon
+  ${NSD_GetState} $hChkDesktop  $AddDesktopIcon
 FunctionEnd
 

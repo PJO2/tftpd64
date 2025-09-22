@@ -156,7 +156,6 @@
       <AdditionalIncludeDirectories>\tftpd32\source\_common;\tftpd32\source\%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <PrecompiledHeaderOutputFile>\Tftpd32\ipch\$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
     <Link>
@@ -183,7 +182,6 @@
       <AdditionalIncludeDirectories>\tftpd32\source\_common;\tftpd32\source\%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <PrecompiledHeaderOutputFile>\Tftpd32\ipch\$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
     <Link>

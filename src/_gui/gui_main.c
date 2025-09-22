@@ -1085,17 +1085,18 @@ INITCOMMONCONTROLSEX  InitCtrls;
    }
     // Locate help file
     SetIniFileName (HELPFILE, szTftpd32Help, sizeof szTftpd32Help);
+    // Opens socket
+#ifdef SERVICE_EDITION
+     // read host which may be not local
+    GetEnvironmentVariable(TFTP_HOST, szConsoleHost, sizeof szConsoleHost);
+    SetIniFileName(INI_FILE, szTftpd32IniFile, sizeof szTftpd32IniFile);    // GUI & services processes must have the Ini path
+#endif
 
      // Inits extended controls (ListView). MSDN says it is required, but seems really optional !
      InitCtrls.dwICC = ICC_LISTVIEW_CLASSES;
      InitCtrls.dwSize = sizeof(INITCOMMONCONTROLSEX);
      InitCommonControlsEx(&InitCtrls);
 
-     // Opens socket
-#ifdef SERVICE_EDITION
-	 // read host which may be not local
-	 GetEnvironmentVariable (TFTP_HOST, szConsoleHost, sizeof szConsoleHost);
-#endif
      if (! InitsConsoleConnection (szConsoleHost)) return 0;
 
 

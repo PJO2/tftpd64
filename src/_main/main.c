@@ -66,7 +66,7 @@ int                   Rc;
 	 // let the console opens its socket
 	 // Pause needs to be higher than the one in StartMultiWorkerThreads (start_threads.c)
 	 // otherwise DHCP settings will not be loaded in GUI
-	 //Sleep (500);
+	 Sleep (100);
      // opens Gui
      GuiMain (hInstance, hPrevInstance,lpszCmdLine, nCmdShow);
 

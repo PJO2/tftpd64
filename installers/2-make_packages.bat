@@ -17,7 +17,6 @@ set ZIP_APP="C:\Program Files\7-Zip\7z.exe"
 
 
 
-
 REM -- Check NSIS exists --
 if not exist %NSIS_COMPILER% (
     echo [ERROR] NSIS compiler not found at %NSIS_COMPILER%
@@ -34,15 +33,18 @@ if errorlevel 1 (
 
 REM -- Compile each NSI script --
 for %%F in (
-    tftpd32_installer.nsi
-    tftpd32_service_edition.nsi
-    tftpd64_installer.nsi
-    tftpd64_service_edition.nsi
+    tftpd_xx_installer.nsi
+    tftpd_xx_service_edition.nsi
 ) do (
     echo ---------------------------------------------
     echo Building: %%F
     echo ---------------------------------------------
-    %NSIS_COMPILER% /DPRODUCT_VERSION=%VERSION% "%%F"
+    %NSIS_COMPILER% /DPRODUCT_VERSION=%VERSION% /DARCH=32 "%%F"
+    if errorlevel 1 (
+        echo [ERROR] Failed to compile %%F
+        exit /b 1
+    )
+    %NSIS_COMPILER% /DPRODUCT_VERSION=%VERSION% /DARCH=64 "%%F"
     if errorlevel 1 (
         echo [ERROR] Failed to compile %%F
         exit /b 1

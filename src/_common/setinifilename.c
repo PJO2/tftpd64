@@ -47,7 +47,7 @@ const char* p;
 	szFullIniFile[0] = 0;
 	szFullIniFile[--len] = 0;
 	// try searching Tftpd32.ini in data directories
-	for (struct EnvInis *dir = EnvInisList; dir != NULL; dir++)
+	for (struct EnvInis *dir = EnvInisList; dir->env_var != NULL; dir++)
 	{
 		p = getenv(dir->env_var);
 		if (p != NULL)

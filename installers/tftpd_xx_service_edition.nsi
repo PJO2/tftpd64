@@ -3,22 +3,23 @@
 !include "nsDialogs.nsh"
 
 ; ------------------------------------------------------------------
-; Product Info
+; Product Info - params : ARCH and PRODUCT_VERSION 
 ; ------------------------------------------------------------------
-!define PRODUCT_NAME "Tftpd32 Service Edition"
+!define PRODUCT_NAME "Tftpd${ARCH}"
+!define RELEASE_NAME "${PRODUCT_NAME} Service Edition"
 !define PRODUCT_PUBLISHER "Ph. Jounin"
-!define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\Tftpd32SVC"
+!define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}SVC"
 !ifndef PRODUCT_VERSION
   !define PRODUCT_VERSION "undefined"
 !endif
 
-Outfile "..\Releases\Tftpd32_Service_Installer_v${PRODUCT_VERSION}.exe"
-InstallDir "$PROGRAMFILES32\Tftpd32-SVC"
+Outfile "..\Releases\${PRODUCT_NAME}_Service_Installer_v${PRODUCT_VERSION}.exe"
+InstallDir "$PROGRAMFILES${ARCH}\${PRODUCT_NAME}-SVC"
 RequestExecutionLevel admin
 
-Name "Tftpd32 Service Edition"
-BrandingText "Tftpd32 Service Installer"
-InstallDirRegKey HKLM "Software\Tftpd32SVC" "InstallPath"
+Name "${RELEASE_NAME}"
+BrandingText "${PRODUCT_NAME} Service Installer"
+InstallDirRegKey HKLM "Software\${PRODUCT_NAME}SVC" "InstallPath"
 
 ; service name defined also in the executable
 !define SERVICE_NAME "Tftpd32_svc"
@@ -50,8 +51,8 @@ Section "Install"
   SetOutPath "$INSTDIR"
 
   ; Install files
-  File "..\ARTS\bin\dist\${PRODUCT_VERSION}\signed\tftpd32_gui.exe"
-  File "..\ARTS\bin\dist\${PRODUCT_VERSION}\signed\tftpd32_svc.exe"
+  File "..\ARTS\bin\dist\${PRODUCT_VERSION}\signed\${PRODUCT_NAME}_gui.exe"
+  File "..\ARTS\bin\dist\${PRODUCT_VERSION}\signed\${PRODUCT_NAME}_svc.exe"
   File "..\doc-help\tftpd32.chm"
   File "tftpd32.ini"
   File "EUPL-EN.pdf"
@@ -60,39 +61,39 @@ Section "Install"
   WriteUninstaller "$INSTDIR\uninstall.exe"
 
   ; Start Menu shortcuts
-  CreateDirectory "$SMPROGRAMS\Tftpd32-SVC"
-  CreateShortCut "$SMPROGRAMS\Tftpd32-SVC\GUI.lnk" "$INSTDIR\tftpd32_gui.exe"
-  CreateShortCut "$SMPROGRAMS\Tftpd32-SVC\Help.lnk" "$INSTDIR\tftpd32.chm"
-  CreateShortCut "$SMPROGRAMS\Tftpd32-SVC\Uninstall.lnk" "$INSTDIR\uninstall.exe"
+  CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}-SVC"
+  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-SVC\GUI.lnk" "$INSTDIR\${PRODUCT_NAME}_gui.exe"
+  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-SVC\Help.lnk" "$INSTDIR\tftpd32.chm"
+  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}-SVC\Uninstall.lnk" "$INSTDIR\uninstall.exe"
 
   ; Desktop shortcut (optional)
   ${If} $AddDesktopIcon == ${BST_CHECKED}
-    CreateShortCut "$DESKTOP\Tftpd32 GUI.lnk" "$INSTDIR\tftpd32_gui.exe"
+    CreateShortCut "$DESKTOP\${PRODUCT_NAME} GUI.lnk" "$INSTDIR\${PRODUCT_NAME}_gui.exe"
   ${EndIf}
 
   ; Firewall rule (optional)
   ${If} $AllowFirewall == ${BST_CHECKED}
-    ExecWait 'netsh advfirewall firewall add rule name="Tftpd32 SVC" dir=in action=allow program="$INSTDIR\tftpd32_svc.exe" enable=yes profile=any'
+    ExecWait 'netsh advfirewall firewall add rule name="${PRODUCT_NAME} SVC" dir=in action=allow program="$INSTDIR\${PRODUCT_NAME}_svc.exe" enable=yes profile=any'
   ${EndIf}
 
   ; Register the service (optional)
    ${If} $InstallService == ${BST_CHECKED}
-    nsExec::Exec '"$INSTDIR\tftpd32_svc.exe" -install'
+    nsExec::Exec '"$INSTDIR\${PRODUCT_NAME}_svc.exe" -install'
       ${If} $StartService == ${BST_CHECKED}
          nsExec::ExecToLog 'net start "${SERVICE_NAME}"'
       ${EndIf}
    ${EndIf}
 
   ; Registry uninstall info
-  WriteRegStr HKLM "${PRODUCT_UNINST_KEY}" "DisplayName" "${PRODUCT_NAME}"
+  WriteRegStr HKLM "${PRODUCT_UNINST_KEY}" "DisplayName" "${RELEASE_NAME}"
   WriteRegStr HKLM "${PRODUCT_UNINST_KEY}" "UninstallString" "$INSTDIR\uninstall.exe"
   WriteRegStr HKLM "${PRODUCT_UNINST_KEY}" "DisplayVersion" "${PRODUCT_VERSION}"
   WriteRegStr HKLM "${PRODUCT_UNINST_KEY}" "Publisher" "${PRODUCT_PUBLISHER}"
   WriteRegStr HKLM "${PRODUCT_UNINST_KEY}" "InstallLocation" "$INSTDIR"
-  WriteRegStr HKLM "${PRODUCT_UNINST_KEY}" "DisplayIcon" "$INSTDIR\tftpd32_gui.exe"
+  WriteRegStr HKLM "${PRODUCT_UNINST_KEY}" "DisplayIcon" "$INSTDIR\${PRODUCT_NAME}_gui.exe"
 
   ; Save install location
-  WriteRegStr HKLM "Software\Tftpd32SVC" "InstallPath" "$INSTDIR"
+  WriteRegStr HKLM "Software\${PRODUCT_NAME}SVC" "InstallPath" "$INSTDIR"
 
 SectionEnd
 
@@ -103,18 +104,18 @@ Section "Uninstall"
 
   ; Stop and remove the service
   nsExec::ExecToLog 'sc stop "${SERVICE_NAME}"'
-  nsExec::Exec  '"$INSTDIR\tftpd32_svc.exe" -remove'
+  nsExec::Exec  '"$INSTDIR\${PRODUCT_NAME}_svc.exe" -remove'
 
   ; Delete shortcuts
-  Delete "$DESKTOP\Tftpd32 GUI.lnk"
-  Delete "$SMPROGRAMS\Tftpd32-SVC\GUI.lnk"
-  Delete "$SMPROGRAMS\Tftpd32-SVC\Help.lnk"
-  Delete "$SMPROGRAMS\Tftpd32-SVC\Uninstall.lnk"
-  RMDir "$SMPROGRAMS\Tftpd32-SVC"
+  Delete "$DESKTOP\${PRODUCT_NAME} GUI.lnk"
+  Delete "$SMPROGRAMS\${PRODUCT_NAME}-SVC\GUI.lnk"
+  Delete "$SMPROGRAMS\${PRODUCT_NAME}-SVC\Help.lnk"
+  Delete "$SMPROGRAMS\${PRODUCT_NAME}-SVC\Uninstall.lnk"
+  RMDir "$SMPROGRAMS\${PRODUCT_NAME}-SVC"
 
   ; Delete files
-  Delete "$INSTDIR\tftpd32_gui.exe"
-  Delete "$INSTDIR\tftpd32_svc.exe"
+  Delete "$INSTDIR\${PRODUCT_NAME}_gui.exe"
+  Delete "$INSTDIR\${PRODUCT_NAME}_svc.exe"
   Delete "$INSTDIR\tftpd32.chm"
   Delete "$INSTDIR\tftpd32.ini"
   Delete "$INSTDIR\EUPL-EN.pdf"
@@ -122,10 +123,10 @@ Section "Uninstall"
   RMDir "$INSTDIR"
 
   ; Remove firewall rule
-  ExecWait 'netsh advfirewall firewall delete rule name="Tftpd32 SVC"'
+  ExecWait 'netsh advfirewall firewall delete rule name="${PRODUCT_NAME} SVC"'
 
   ; Clean registry
-  DeleteRegKey HKLM "Software\Tftpd32SVC"
+  DeleteRegKey HKLM "Software\${PRODUCT_NAME}SVC"
   DeleteRegKey HKLM "${PRODUCT_UNINST_KEY}"
 
 SectionEnd
@@ -143,13 +144,13 @@ Function OptionsPage
   ${NSD_GetState} $hChkFirewall $AllowFirewall 
   ${NSD_OnClick} $hChkFirewall OnFirewallClicked
 
-  ${NSD_CreateCheckbox} 0u 16u 100% 12u "Create Desktop Shortcut for Tftpd32 GUI"
+  ${NSD_CreateCheckbox} 0u 16u 100% 12u "Create Desktop Shortcut for ${PRODUCT_NAME} GUI"
   Pop $hChkDesktop
   ${NSD_SetState} $hChkDesktop ${BST_CHECKED}
   ${NSD_GetState} $hChkDesktop $AddDesktopIcon
   ${NSD_OnClick} $hChkDesktop OnDesktopClicked
 
-  ${NSD_CreateCheckbox} 0u 32u 100% 12u "Install and start Tftpd32 as a Windows Service"
+  ${NSD_CreateCheckbox} 0u 32u 100% 12u "Install and start ${PRODUCT_NAME} as a Windows Service"
   Pop $hChkService
   ${NSD_SetState} $hChkService ${BST_CHECKED}
   ${NSD_GetState} $hChkService $InstallService

@@ -19,6 +19,7 @@
 
 // A few global variables
 char      szTftpd32Help [MAX_PATH];     // Full Path for Help file
+char      szTftpd32IniFile[MAX_PATH];  // Full Path for INI file
 
 /* ----------------------------- */
 /* WinMain                       */
