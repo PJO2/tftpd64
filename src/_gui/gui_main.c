@@ -1084,7 +1084,7 @@ INITCOMMONCONTROLSEX  InitCtrls;
         return 0;
    }
     // Locate help file
-    SetIniFileName (HELPFILE, szTftpd32Help);
+    SetIniFileName (HELPFILE, szTftpd32Help, sizeof szTftpd32Help);
 
      // Inits extended controls (ListView). MSDN says it is required, but seems really optional !
      InitCtrls.dwICC = ICC_LISTVIEW_CLASSES;

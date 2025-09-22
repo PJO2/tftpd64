@@ -22,7 +22,7 @@ RequestExecutionLevel admin
 
 Name "Tftpd64"
 BrandingText "Tftpd64 Installer"
-InstallDirRegKey HKLM "Software\Tftpd64" "InstallPath"
+InstallDirRegKey HKLM "Software\${PRODUCT_NAME}" "InstallPath"
 
 
 Var AllowFirewall
@@ -52,7 +52,6 @@ Section "Install"
   ; Install files
   File "..\ARTS\bin\dist\${PRODUCT_VERSION}\signed\tftpd64.exe"
   File "..\doc-help\tftpd32.chm"
-  File "tftpd32.ini"
   File "EUPL-EN.pdf"
 
   ; Generate uninstaller
@@ -63,6 +62,25 @@ Section "Install"
   CreateShortCut "$SMPROGRAMS\Tftpd64\Tftpd64.lnk" "$INSTDIR\tftpd64.exe"
   CreateShortCut "$SMPROGRAMS\Tftpd64\Help.lnk"     "$INSTDIR\tftpd32.chm"
   CreateShortCut "$SMPROGRAMS\Tftpd64\Uninstall.lnk" "$INSTDIR\uninstall.exe"
+
+  ; create ini file in %AppData%tftpd64
+  ; Make sure $AppData resolves for the CURRENT user (not all users)
+  SetShellVarContext current
+  ; Target dir and file
+  StrCpy $0 "$AppData\${PRODUCT_NAME}"
+  CreateDirectory "$0"
+  ; --- MIGRATION (legacy -> AppData) ---
+  ; If an old INI sits in $INSTDIR and there isn’t one yet in %AppData%, move it.
+  IfFileExists "$INSTDIR\tftpd32.ini" 0 +5
+     IfFileExists "$0\tftpd32.ini" +4 0
+        DetailPrint "Migrating settings to $0\tftpd32.ini"
+        CopyFiles /SILENT "$INSTDIR\tftpd32.ini" "$0\tftpd32.ini"
+        Delete "$INSTDIR\tftpd32.ini"
+  ; If there’s still no INI in %AppData%, drop the shipped default there.
+  IfFileExists "$0\tftpd32.ini" 0 +2
+    File "/oname=$0\tftpd32.ini" "tftpd32.ini"
+  ; let the app know where the INI is (only if your app can read it)
+  WriteRegStr HKLM "Software\${PRODUCT_NAME}" "IniPath" "$0\tftpd32.ini"
 
   ; Desktop shortcut if selected
   ${If} $AddDesktopIcon == ${BST_CHECKED}
@@ -83,7 +101,7 @@ Section "Install"
   WriteRegStr HKLM "${PRODUCT_UNINST_KEY}" "DisplayIcon" "$INSTDIR\tftpd64.exe"
 
   ; Remember install location
-  WriteRegStr HKLM "Software\Tftpd64" "InstallPath" "$INSTDIR"
+  WriteRegStr HKLM "Software\${PRODUCT_NAME}" "InstallPath" "$INSTDIR"
 
 SectionEnd
 
@@ -107,12 +125,17 @@ Section "Uninstall"
   Delete "$INSTDIR\uninstall.exe"
   RMDir  "$INSTDIR"
 
+  ; Remove ini
+  SetShellVarContext current
+  Delete "$AppData\${PRODUCT_NAME}\tftpd32.ini"
+  RMDir  "$AppData\${PRODUCT_NAME}"
+
   ; Delete registry keys
-  DeleteRegKey HKLM "Software\Tftpd64"
+  DeleteRegKey HKLM "Software\${PRODUCT_NAME}"
   DeleteRegKey HKLM "${PRODUCT_UNINST_KEY}"
 
   ; Remove firewall rule
-  ExecWait 'netsh advfirewall firewall delete rule name="Tftpd64"'
+  ExecWait 'netsh advfirewall firewall delete rule name="${PRODUCT_NAME}"'
 
 SectionEnd
 

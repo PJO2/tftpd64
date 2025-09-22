@@ -31,15 +31,15 @@ int ReadKey (const char *szRegPath, const char *szKey,
 int   Rc = FALSE;
 HKEY  hKey=INVALID_HANDLE_VALUE;
 char  szEntry [64], *q;  // Last registry "directory"
-char  szBuf[1024], *p;
+char  szBuf[1024], *p=NULL;
 
    // retrieves LastWord from szRegPath , this is the INI section
    q = strrchr (szRegPath, '\\');
    lstrcpyn (szEntry, q==NULL ?  szRegPath :  q+1, sizeof szEntry );
    szEntry[sizeof szEntry-1]= 0;
 
-   Rc = GetPrivateProfileString (szEntry, szKey, NULL, szBuf, sizeof szBuf, szIniFile);
-   if (Rc > 0)        // Key has been found into INI file
+   Rc = szIniFile!=NULL && GetPrivateProfileString (szEntry, szKey, NULL, szBuf, sizeof szBuf, szIniFile)>0;
+   if (Rc)        // Key has been found into INI file
    {
       switch (nType)
       {
@@ -53,10 +53,13 @@ char  szBuf[1024], *p;
    {
        // double check that key has not been found (for example you may have szLocalIP= with an empty value)
        // read full section then search for key
-       Rc = GetPrivateProfileString (szEntry, NULL, NULL, szBuf, sizeof szBuf, szIniFile);
-       for ( p = szBuf ; p - szBuf < Rc  &&  *p!=0  && strcmp (p, szKey)!=0 ; p += strlen (p)+1 );
+       if (szIniFile != NULL)
+       {
+           Rc = GetPrivateProfileString(szEntry, NULL, NULL, szBuf, sizeof szBuf, szIniFile);
+           for (p = szBuf; p - szBuf < Rc && *p != 0 && strcmp(p, szKey) != 0; p += strlen(p) + 1);
+       }
        // key not found
-       if (p - szBuf >= Rc ||  *p==0) 
+       if (p==NULL || p - szBuf >= Rc ||  *p==0) 
        {
            if (RegOpenKeyEx (HKEY_LOCAL_MACHINE,   // Key handle at root level.
                              szRegPath,              // Path name of child key.

@@ -62,6 +62,17 @@ extern const int g_VERSION;
 #define  HELPFILE               "Tftpd32.chm"
 #define  INI_FILE               "Tftpd32.ini"
 
+#ifdef _M_X64
+#   define APPLICATION_NAME   "Tftpd64"
+#else
+#   define APPLICATION_NAME   "Tftpd32"
+#endif
+
+#ifdef STANDALONE_EDITION
+#   define APP_TITLE        APPLICATION_NAME " by Ph. Jounin"
+#elif defined SERVICE_EDITION
+#   define APP_TITLE        APPLICATION_NAME " Service Edition by Ph. Jounin"
+#endif
 
 
 //////////////////////////
@@ -105,7 +116,7 @@ enum e_Services       { TFTPD32_NONE=0,
 // external files : .ini and .chm
 extern char                     szTftpd32Help [MAX_PATH];// Full path of the help file
 extern char                     szTftpd32IniFile [MAX_PATH];// Full path of the ini file
-char *SetIniFileName (const char *szIniFile, char *szFullIniFile);
+const char* SetIniFileName(const char* szIniFile, char* szFullIniFile, size_t len);
 
 // service and GUI main :
 void StartTftpd32Services (void *);

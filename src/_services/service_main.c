@@ -25,10 +25,8 @@ char sz[_MAX_PATH];
           sSettings.LogLvl = atoi (sz);
     else  sSettings.LogLvl = TFTPD32_DEF_LOG_LEVEL;
 
-    // Get the path in order to find the help file
-    if (GetEnvironmentVariable (TFTP_INI, sz, sizeof sz)!=0)
-          SetIniFileName (sz, szTftpd32IniFile);
-    else  SetIniFileName (INI_FILE, szTftpd32IniFile);
+	// search for the ini file
+    SetIniFileName(INI_FILE, szTftpd32IniFile, sizeof szTftpd32IniFile);
 
     // Read settings (tftpd32.ini)
 #ifndef TFTP_CLIENT_ONLY

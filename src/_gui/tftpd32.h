@@ -1,17 +1,4 @@
 /* Weditres generated include file. Do NOT edit */
-#ifdef STANDALONE_EDITION
-#  ifdef _M_X64
-#     define   APP_TITLE              "Tftpd64 by Ph. Jounin"
-#  else
-#     define   APP_TITLE              "Tftpd32 by Ph. Jounin"
-#  endif
-#elif defined SERVICE_EDITION
-#  ifdef _M_X64
-#     define   APP_TITLE              "Tftpd64 Service Edition by Ph. Jounin"
-#  else
-#     define   APP_TITLE              "Tftpd32 Service Edition by Ph. Jounin"
-#  endif
-#endif
 
 
 #define    IDC_BOOTP_NBFIELDS  3
