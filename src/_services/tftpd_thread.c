@@ -131,7 +131,7 @@ struct errmsg *pe;
     }
     lstrcpy(tp->th_msg, pe->e_msg);
     length = lstrlen(pe->e_msg);
-	// padd with 2 null char
+	// pad with 2 null char
     * (short *) & tp->th_msg[length] = 0;
     length += 2 + offsetof (struct tftphdr, th_msg) ;
 #if (defined DEBUG || defined DEB_TEST)
@@ -427,7 +427,7 @@ LARGE_INTEGER large_filesize;
     TftpExtendFileName (pTftp, tp->th_stuff, szExtendedName, sizeof szExtendedName);
     LOG (10, "final name : <%s>", szExtendedName);
     // ensure again extended file name is under _MAX_PATH (strlen will terminates)
-    // NB: we also may call CreateFileW instaed of CreateFileA, but Windows95/Me will not support
+    // NB: we also may call CreateFileW instead of CreateFileA, but Windows95/Me will not support
     if (strnlen_s (szExtendedName, _MAX_PATH) >= _MAX_PATH)
     {
         LOG (0, "File name too long, return EBADOP to peer");
@@ -637,7 +637,7 @@ return TRUE;        // job done
 
 
 /////////////////////////////
-// display report after successfull end of transfer
+// display report after successful end of transfer
 /////////////////////////////
 static void TftpEndOfTransfer (struct LL_TftpInfo *pTftp)
 {

@@ -660,7 +660,7 @@ struct LL_IP  *pCurIP=NULL, *pProposedIP=NULL;	// Thanks Sam Leitch !
 int            Ark, nDhcpType = 0;
 struct in_addr in_RequestedAddr;
 DWORD sStaticIP;
-unsigned short iLastArch = 0;	// architecture required by client, defaut is x86
+unsigned short iLastArch = 0;	// architecture required by client, default is x86
 
     if (IsDHCP (*pDhcpPkt))
     {

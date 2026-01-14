@@ -296,7 +296,7 @@ int         Rc;
                  LvItem.mask = LVIF_PARAM;
                  if ( ListView_GetItem (hListV, & LvItem) )
                      PostMessage ( hWnd, WM_DELETE_ASSIGNATION, 0, LvItem.lParam );
-			 } // ListView_GetNextItem succesful
+			 } // ListView_GetNextItem successful
            } //ID_DELETE_ASSIGNATION
            break;
 
@@ -632,7 +632,7 @@ int       Rc;
   switch (message)
   {
 
-       // Ths Inits parts is splitted into 5 parts, at the end of a part a message is posted in order
+       // Ths Inits parts is split into 5 parts, at the end of a part a message is posted in order
        // to invoke the next part and let Windows (98 !) parse its own messages
        case WM_INITDIALOG :
 			Tftpd32InitGui (hWnd, &hIcon, &hMenu);

@@ -1,6 +1,6 @@
 This is the complete source code for Tftpd32 and Tftpd64, the industry standard TFTP server.
 
-The code is splitted into 2 parts : 
+The code is split into 2 parts : 
   - the GUI management (main thread)
   - the background process (other threads)
 

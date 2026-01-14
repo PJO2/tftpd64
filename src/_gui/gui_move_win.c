@@ -311,7 +311,7 @@ return TabCtrlItem.lParam ;
 } // ChangeTabControl
 
 
-// Open all tabs refering to a started service
+// Open all tabs referring to a started service
 // used to answer to message C_REPLY_GET_SERVICES
 int TR_OpenAllTabs (HWND hDlgWnd, int nService)
 {

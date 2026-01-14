@@ -18,7 +18,7 @@
 #include "bootpd_functions.h"
 
 
-// IANA PXE Architceture Name (conflicting with RFC 4578)
+// IANA PXE Architecture Name (conflicting with RFC 4578)
 const struct S_PXE_Option93_Architecture sPXE_Architecture [] =
 {
         //Type   Architecture Name
@@ -662,7 +662,7 @@ void LoadLeases(void)
  
    // From Nick : I realized that there was a race condition in that code, 
    // particularly with the reading and saving of KEY_LEASE_NUMLEASES
-   // I’ve added a function, which LoadLeases calls immediately on entry:
+   // I've added a function, which LoadLeases calls immediately on entry:
    WaitForMsgQueueToFinish (LL_ID_SETTINGS);
 
    nAllocatedIP = 0;
